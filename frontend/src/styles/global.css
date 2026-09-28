@@ -68,3 +68,8 @@
   border: 1px solid var(--govuk-border-colour);
   vertical-align: middle;
 }
+
+.app-masthead h1,
+.app-masthead p {
+  color: #fff;
+}
