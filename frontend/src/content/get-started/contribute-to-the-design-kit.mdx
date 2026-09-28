@@ -1,0 +1,78 @@
+---
+title: Contribute to the Design Kit
+description: How the kit forum decides what goes into the i.AI kit.
+---
+
+Anyone in i.AI can add a component, pattern or improvement to the Design Kit. You do not need permission to start.
+
+> You do not have to wait for a decision. Keep using your version in your product while it's reviewed. When the kit version is published, swap yours for it.
+
+Keeping this lightweight matters. Use this agent skill to help draft your contribution.
+
+## Contribute a component
+
+### 1. Check the kit first
+
+Search the kit site. If the component already exists, use it.
+
+If something nearly works but does not quite fit, tell us in Slack. A near miss shows us where the kit falls short, so it counts as a contribution.
+
+### 2. Post in Slack before you build
+
+Post in #iai-design-kit with:
+
+- what you need
+- what you've tried
+- anything that nearly works
+- a screenshot or link
+
+> This is not an approval step. You can keep building while you wait for a reply. Posting early helps us spot duplication and point you to existing work.
+
+## 3. Open a pull request
+
+Open a pull request against the [component library repository](https://github.com/i-dot-ai/component-library). The template asks for everything a kit page needs:
+
+- what the component is, in one sentence
+- when to use it
+- when not to use it
+- the HTML for each variant, ready to copy
+- options and modifiers
+- accessibility notes, including anything the component does not enforce
+- a provenance tag and status
+- links to any decision records and deviation records
+
+> Get your AI agent to draft this from your component's code and your Slack thread — it can pull out the variants, options and a first pass at "when to use" guidance for you to check and edit.
+
+If you cannot complete a section, say so in the pull request. An incomplete pull request is better than no pull request.
+
+### 4. Respond to review
+
+Three people review your pull request:
+
+- the technical maintainer checks the code can be maintained
+- the accessibility reviewer checks accessibility
+- a design reviewer checks design quality
+
+They may ask for changes. You can make these yourself, or ask the core team to take over. If the core team takes over, it may take longer to publish.
+
+## What happens next
+
+When all three reviewers approve, the core team merges and publishes your component, and announces it in Slack. The kit site updates automatically.
+
+If your component is not accepted, we'll explain why in the pull request. We keep a record of components that were not added, because they still show us where the kit falls short.
+
+## Expect your component to change
+
+A component built for one product nearly always needs some work before it can go in the kit. This is normal — it is not a judgement on your work.
+
+Common changes include:
+
+- removing anything specific to your product
+- replacing fixed colours, spacing and fonts with design tokens
+- adding variants other products need
+- fixing accessibility issues found in review
+- writing guidance so other teams know when to use it
+
+Not every submission will be complete and ready to publish as it is — that's expected, and it's fine. The reviewers are there to help close the gap, not to catch you out.
+
+If you maintain the Design Kit, read the guidance on [reviewing, merging and publishing contributions](/get-started/maintain-the-design-kit).

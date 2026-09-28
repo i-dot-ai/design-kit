@@ -11,24 +11,28 @@ import {
 
 const currentPath = Astro.url.pathname;
 
-const useTheKitPages = [
+const guides = [
     {
-        text: "Prototype with the Design Kit",
-        href: "/get-started/prototype-with-the-kit",
+        text: "Design a prototype",
+        href: "/get-started/design-a-prototype",
     },
     {
-        text: "Start a new product or experiment",
-        href: "/get-started/start-a-new-product-or-experiment",
+        text: "Build a product interface",
+        href: "/get-started/build-a-product-interface",
     },
     {
-        text: "Apply the Design Kit to an existing product",
-        href: "/get-started/apply-the-kit-to-an-existing-product",
+        text: "Update a product interface",
+        href: "/get-started/update-a-product-interface",
+    },
+    {
+        text: "Contribute to the Design Kit",
+        href: "/get-started/contribute-to-the-design-kit",
     },
 ];
-const collaboratePages = [
+const maintainersGuides = [
     {
-        text: "Add to the Design kit",
-        href: "/get-started/kit-forum",
+        text: "Maintain the Design Kit",
+        href: "/get-started/maintain-the-design-kit",
     },
 ];
 ---
@@ -38,12 +42,10 @@ const collaboratePages = [
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
                 <ContentsPanel>
-                    <ContentsPanelListHeading
-                        >Set up guides</ContentsPanelListHeading
-                    >
+                    <ContentsPanelListHeading>Guides</ContentsPanelListHeading>
                     <ContentsPanelList>
                         {
-                            useTheKitPages.map((category) => (
+                            guides.map((category) => (
                                 <ContentsPanelItem
                                     href={category.href}
                                     current={currentPath.includes(
@@ -56,11 +58,11 @@ const collaboratePages = [
                         }
                     </ContentsPanelList>
                     <ContentsPanelListHeading
-                        >Contribution guides</ContentsPanelListHeading
+                        >For maintainers</ContentsPanelListHeading
                     >
                     <ContentsPanelList>
                         {
-                            collaboratePages.map((category) => (
+                            maintainersGuides.map((category) => (
                                 <ContentsPanelItem
                                     href={category.href}
                                     current={currentPath.includes(

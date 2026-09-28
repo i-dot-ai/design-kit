@@ -1,5 +1,5 @@
 ---
-title: "Apply the kit to an existing product"
+title: Apply the kit to an existing product
 description: For bringing a product onto the kit for the first time.
 ---
 
@@ -14,11 +14,11 @@ coming soon.
 
 Install Sass, govuk-frontend and i.AI amended frontend:
 
-<CodeBlock collection="get-started" component="apply-the-kit-to-an-existing-product" code="./examples/install.sh" />
+<CodeBlock collection="get-started" component="update-a-product-interface" code="./examples/install.sh" />
 
 Create a idotai.scss file and copy this into it:
 
-<CodeBlock collection="get-started" component="apply-the-kit-to-an-existing-product" code="./examples/idotai.scss" />
+<CodeBlock collection="get-started" component="update-a-product-interface" code="./examples/idotai.scss" />
 <br />
 
 This is the recommended way to adapt GOV.UK Frontend for services that
@@ -27,7 +27,7 @@ are not on the gov.uk domain. There is more on this in the
 
 To change the brand colour, update `$govuk-functional-colours`:
 
-<CodeBlock collection="get-started" component="apply-the-kit-to-an-existing-product" code="./examples/brand-colour.scss" />
+<CodeBlock collection="get-started" component="update-a-product-interface" code="./examples/brand-colour.scss" />
 
 If your product is department-branded, this is where the department's
 colour goes. Check it passes contrast on white surfaces before you set
@@ -39,18 +39,18 @@ Link to the idotai.scss file in your main layout. In astro this will be in the l
 
 In Astro:
 
-<CodeBlock collection="get-started" component="apply-the-kit-to-an-existing-product" code="./examples/import-styles.astro" />
+<CodeBlock collection="get-started" component="update-a-product-interface" code="./examples/import-styles.astro" />
 
 In html:
 
-<CodeBlock collection="get-started" component="apply-the-kit-to-an-existing-product" code="./examples/link-styles.html" />
+<CodeBlock collection="get-started" component="update-a-product-interface" code="./examples/link-styles.html" />
 
 
 
 After the closing body tag, import initAll from govuk-frontend and
 initAllIAIDesignSystem from the i.AI JavaScript file:
 
-<CodeBlock collection="get-started" component="apply-the-kit-to-an-existing-product" code="./examples/init-scripts.html" />
+<CodeBlock collection="get-started" component="update-a-product-interface" code="./examples/init-scripts.html" />
 
 ## 3. Add component library in language of your choice
 
