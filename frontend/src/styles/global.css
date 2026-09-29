@@ -30,6 +30,18 @@
   padding: 0 15px;
 }
 
+/*
+ * Brand colour override for the GOV.UK-branded component previews.
+ * govuk-frontend drives the brand colour (footer top border, header, etc.)
+ * from the --govuk-brand-colour custom property, which defaults to the i.AI
+ * brand colour. On the GOV.UK header/footer docs pages we scope it to GOV.UK
+ * blue so the preview reads as GOV.UK. This affects the docs preview only.
+ */
+.component-page--govuk-header .component-container,
+.component-page--govuk-footer .component-container {
+  --govuk-brand-colour: #1d70b8;
+}
+
 .component-container--inverse {
   background-color: #16548a;
   padding: 20px;
