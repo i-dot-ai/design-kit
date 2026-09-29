@@ -1,0 +1,3 @@
+@use "govuk-frontend" as * with ( // Use the i.AI font stack (GDS Transport is GOV.UK-branded).
+    $govuk-font-family: ("Inter", Helvetica, Arial, sans-serif),
+)
