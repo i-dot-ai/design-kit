@@ -41,5 +41,7 @@ const tag = entry.data.status ? STATUS_TAG[entry.data.status] : undefined;
             </ul>
         )
     }
-    <Content components={{ Example }} />
+    <div class={`component-page component-page--${entry.id}`}>
+        <Content components={{ Example }} />
+    </div>
 </Layout>

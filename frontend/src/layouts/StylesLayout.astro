@@ -9,11 +9,25 @@ import {
     ContentsPanelListHeading,
 } from "@i-dot-ai-npm/component-library-astro";
 
-import SideNavTitle from "@components/side-nav/side-nav-title.astro";
-
 const currentPath = Astro.url.pathname;
 
-const structurePages = [
+const pages = [
+    {
+        text: "Branding",
+        href: "/styles/branding",
+    },
+    {
+        text: "Typography",
+        href: "/styles/typography",
+    },
+    {
+        text: "Colour palette",
+        href: "/styles/colour-palette",
+    },
+    {
+        text: "Chart colours",
+        href: "/styles/chart-colours",
+    },
     {
         text: "Public facing landing page",
         href: "/styles/public-facing-landing-page",
@@ -23,24 +37,6 @@ const structurePages = [
         href: "/styles/main-application-structure",
     },
 ];
-
-const brandingPages = [
-    {
-        text: "Branding guidelines",
-        href: "/styles/branding",
-    },
-];
-
-const visualPages = [
-    {
-        text: "Colour palette",
-        href: "/styles/colour-palette",
-    },
-    {
-        text: "Chart colours",
-        href: "/styles/chart-colours",
-    },
-];
 ---
 
 <Layout>
@@ -48,39 +44,9 @@ const visualPages = [
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
                 <ContentsPanel>
-                    <ContentsPanelListHeading>Branding</ContentsPanelListHeading
-                    >
                     <ContentsPanelList>
                         {
-                            brandingPages.map((page) => (
-                                <ContentsPanelItem
-                                    href={page.href}
-                                    current={currentPath.includes(page.href)}
-                                >
-                                    {page.text}
-                                </ContentsPanelItem>
-                            ))
-                        }
-                    </ContentsPanelList>
-                    <ContentsPanelListHeading
-                        >Structure</ContentsPanelListHeading
-                    >
-                    <ContentsPanelList>
-                        {
-                            structurePages.map((page) => (
-                                <ContentsPanelItem
-                                    href={page.href}
-                                    current={currentPath.includes(page.href)}
-                                >
-                                    {page.text}
-                                </ContentsPanelItem>
-                            ))
-                        }
-                    </ContentsPanelList>
-                    <ContentsPanelListHeading>Colour</ContentsPanelListHeading>
-                    <ContentsPanelList>
-                        {
-                            visualPages.map((page) => (
+                            pages.map((page) => (
                                 <ContentsPanelItem
                                     href={page.href}
                                     current={currentPath.includes(page.href)}
