@@ -133,6 +133,18 @@ const getStarted = defineCollection({
     }),
 });
 
+// Principles — design principles, heuristics and the decisions record.
+// Rendered like styles/get-started: Markdown/MDX body with live <Example>
+// demos. The /principles landing page (principles/index.mdx) shares this
+// shape; it is told apart by its `index` id, not a discriminant.
+const principles = defineCollection({
+    loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/principles" }),
+    schema: z.object({
+        title: z.string(),
+        description: z.string().optional(),
+    }),
+});
+
 // Home — the site landing page (/). Authored in-folder as home/index.mdx, its
 // own collection since `/` belongs to no section.
 const home = defineCollection({
@@ -151,5 +163,6 @@ export const collections = {
     layouts,
     guides,
     "get-started": getStarted,
+    principles,
     home,
 };

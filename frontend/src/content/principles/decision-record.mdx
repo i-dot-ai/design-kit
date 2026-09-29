@@ -1,0 +1,144 @@
+---
+title: Decisions record
+description: A decision record for the i.AI Design Kit that captures the main design and architectural decisions made, including the context, options considered, and rationale for the chosen approach.
+---
+This is a decision record for the i.AI Design Kit. It captures the main design and architectural decisions made, including the context, options considered, and rationale for the chosen approach.
+
+## Decisions
+
+1. [We'll brand products according to the needs of their users](#1-well-brand-products-according-to-the-needs-of-their-users)
+2. [We'll use an adapted version of the GOV.UK Design System](#2-well-use-an-adapted-version-of-the-govuk-design-system)
+3. [We'll only extend the GOV.UK Design System where necessary](#3-well-only-extend-the-govuk-design-system-where-necessary)
+4. [We'll optimise the Design Kit for use by AI agents as well as humans](#4-well-optimise-the-design-kit-for-use-by-ai-agents-as-well-as-humans)
+5. [We'll optimise the Design Kit for designing in code, not Figma](#5-well-optimise-the-design-kit-for-designing-in-code-not-figma)
+6. [We'll provide lightweight framework wrappers around plain HTML](#6-well-provide-lightweight-framework-wrappers-around-plain-html)
+7. [We'll assume that the Design Kit will not have a dedicated team](#7-well-assume-that-the-design-kit-will-not-have-a-dedicated-team)
+
+## 1. We'll brand products according to the needs of their users
+
+### Context
+For each product we develop, we need to decide how to brand it.
+
+### Options considered
+1. Brand all products as i.AI
+2. Brand all products as GOV.UK
+3. Brand each product according to it's department
+4. Brand each product according to the needs of it's users
+
+### Decision
+We will brand each product according to the needs of it's users.
+
+### Rationale
+i.AI develops products for a wide range of users and departments. It's important that people trust our products. They should not need to know who i.AI is in order to do this. Therefore, we will brand each product according to their needs.
+
+For example, if a product forms part of a public service on GOV.UK, we'll brand it as GOV.UK. If it's for use across the civil service, we'll also brand it as GOV.UK. If a product is for internal use in a department, we'll brand it as that department.
+
+Internal i.AI products, early experiments from i.AI, or sites that promote i.AI as an organisation can be branded as i.AI.
+
+## 2. We'll use an adapted version of the GOV.UK Design System
+
+### Context
+To avoid duplication of effort across teams and inconsistent products, we need to establish an agreed way to design and build product interfaces in i.AI.
+
+### Options considered
+1. Use the GOV.UK Design System
+2. Adapt the GOV.UK Design System
+3. Use an off-the-shelf design system
+4. Develop our own design system
+
+### Decision
+We will use an adapted version of the GOV.UK Design System.
+
+### Rationale
+Some of our products will need to be branded as GOV.UK, so we will always need to use the GOV.UK Design System some of the time. It will be simpler therefore to use the GOV.UK Design System across all of our products.
+
+However, on it's own the GOV.UK Design System doesn't provide all of the components and patterns we need to build our products, and we also need to apply non-GOV.UK branding to some products.
+
+Therefore, we will adapt the GOV.UK Design System; adding the styles, components and patterns we need to build and brand the products we make.
+
+## 3. We'll only extend the GOV.UK Design System where necessary
+
+### Context
+We need a way of deciding when and how to extend and adapt the GOV.UK Design System
+
+### Options considered
+1. Add and change things whenever we like
+2. Only add things, never change things
+3. Only add things if they meet a currently unmet need
+
+### Decision
+We'll only add things to the Design Kit if they meet a currently unmet need. We'll use existing styles to create new components and patterns. We'll avoid changing existing styles unless they form part of a brand.
+
+### Rationale
+We should favour reusing existing styles, components and patterns where we can. This reduces maintenance overheads and design drift between products, and stops the Design Kit from becoming bloated over time.
+
+## 4. We'll optimise the Design Kit for use by AI agents as well as humans
+
+### Context
+We need to support the workflows we want to encourage within i.AI.
+
+### Options considered
+1. Optimise the Design Kit for use by humans only
+2. Optimise the Design Kit for use by AI agents only
+3. Optimise the Design Kit for use by both humans and AI agents
+
+### Decision
+We'll optimise the Design Kit for use by both humans and AI agents.
+
+### Rationale
+Products teams in i.AI are often small and fast paced, so where possible we want to empower designers to design in code and developers to do design. This will be easier if they are able to use AI agents with the Design Kit.
+
+At the same time, we don't want to build too much reliance on AI into our design and engineering workflows. Therefore, we need to support both AI and human usage of the Design Kit.
+
+## 5. We'll optimise the Design Kit for designing in code, not Figma
+
+### Context
+We need to support the workflows we want to encourage within i.AI.
+
+### Options considered
+1. Support workflows involving Figma
+2. Support workflows involving code
+3. Support both workflows
+
+### Decision
+We will optimise the Design Kit for working in code. We won't support Figma.
+
+### Rationale
+We want to encourage teams to design in code, as it allows us to build products faster, and to test and iterate on them more easily. Using AI agents, designers can also design in code without needing to learn how to code themselves.
+
+Additionally, maintaining an Figma version of the Design Kit would require more resources that we can dedicate to this product.
+
+## 6. We'll provide lightweight framework wrappers around plain HTML
+
+### Context
+We need to make components available in a way that is easy to maintain, and that supports the frontend frameworks our teams use.
+
+### Options considered
+1. Create Nunjucks versions of i.AI components
+2. Generate components in multiple frameworks
+3. Provide lightweight framework wrappers around plain HTML
+
+### Decision
+We'll provide lightweight framework wrappers around plain HTML.
+
+### Rationale
+Creating Nunjucks components would be consistent with the GOV.UK Design System. But Nunjucks is not a templating language used in i.AI, outside of prototyping.
+
+Whilst it's technically possible to generate components in multiple frameworks, the process is quite fragile and prone to error. Instead, we'll create simple wrappers around plain HTML. This is a task that can be easily automated.
+
+Based on the current needs of our teams, we are supporting React, Svelte, Solid.js and Web Components.
+
+## 7. We'll assume that the Design Kit will not have a dedicated team
+
+### Context
+The i.AI Design Kit is a shared resource for all teams in i.AI. It will need to be maintained and updated over time.
+
+### Options considered
+1. Assume that the Design Kit will have a dedicated team
+2. Assume that the Design Kit will not have a dedicated team
+
+### Decision
+We will assume that the Design Kit will not have a dedicated team.
+
+### Rationale
+i.AI is a relatively small organisation. We don't have the resources to dedicate a team to maintaining the Design Kit. Therefore, we'll design it such that the burden of supporting, maintaining and contributing to it is shared across our teams.

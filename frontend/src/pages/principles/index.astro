@@ -1,0 +1,14 @@
+---
+import Layout from "@layouts/PrinciplesLayout.astro";
+import Example from "@components/docs/example.astro";
+import { getEntry, render } from "astro:content";
+
+const entry = await getEntry("principles", "index");
+if (!entry) throw new Error("Missing principles/index.mdx");
+const { Content } = await render(entry);
+---
+
+<Layout>
+    <h1 class="govuk-heading-xl">{entry.data.title}</h1>
+    <Content components={{ Example }} />
+</Layout>

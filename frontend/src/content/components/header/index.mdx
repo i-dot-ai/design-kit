@@ -5,25 +5,17 @@ status: standard
 
 ## Default
 
-Add the product name and the logo of the product to the header component.
+Add the product name and the i.AI logo to the header.
 
 <Example component="header" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" />
 
 ## When to use this component
 
-Use the generic header for departmental products, and for products that are not tied
-to a specific department (where the department defaults to i.AI). Products are
-branded either as GOV.UK or as a government department depending on their audience —
-see [Products are branded either GOV.UK or a government
-department](/decisions-record/branding-determined-by-audience).
+Use this header when building a product that is for i.AI or another department in 
+government.
 
-The header is one of the elements that carries the brand — see [Brand is the product
-name, header, font, brand colour and
-logo](/decisions-record/brand-is-header-font-colour-logo). Set the product name,
-logo and brand colour here to brand a departmental product.
-
-The departmental brand is the default. An experimental product, or one whose
-audience is not yet settled, starts with the generic header and can switch to the
+This header is the default. An experimental product, or one whose
+audience is not yet settled, starts with this header and can switch to the
 [GOV.UK header](/components/govuk-header) later.
 
 ## When not to use this component
@@ -31,8 +23,3 @@ audience is not yet settled, starts with the generic header and can switch to th
 Do not use the generic header for a public-facing or cross-government service. Use
 the [GOV.UK header](/components/govuk-header) instead so the product reads as
 GOV.UK.
-
-Do not use the generic header to present an i.AI corporate identity. The i.AI brand
-is a corporate brand and is not applied to product interfaces — see [The i.AI brand
-is a corporate brand and is not applied to product
-interfaces](/decisions-record/corporate-brand-not-applied-to-products).
