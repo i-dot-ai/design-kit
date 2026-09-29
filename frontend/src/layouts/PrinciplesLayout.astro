@@ -1,0 +1,59 @@
+---
+import Layout from "@layouts/Layout.astro";
+import {
+    Breadcrumbs,
+    BreadcrumbItem,
+    ContentsPanel,
+    ContentsPanelList,
+    ContentsPanelItem,
+} from "@i-dot-ai-npm/component-library-astro";
+
+const currentPath = Astro.url.pathname;
+
+const pages = [
+    {
+        text: "Design heuristics",
+        href: "/principles/design-heuristics",
+    },
+    {
+        text: "Decision record",
+        href: "/principles/decision-record",
+    },
+];
+---
+
+<Layout>
+    <div class="govuk-main-wrapper govuk-width-container">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-quarter">
+                <ContentsPanel>
+                    <ContentsPanelList>
+                        {
+                            pages.map((page) => (
+                                <ContentsPanelItem
+                                    href={page.href}
+                                    current={currentPath === page.href}
+                                >
+                                    {page.text}
+                                </ContentsPanelItem>
+                            ))
+                        }
+                    </ContentsPanelList>
+                </ContentsPanel>
+            </div>
+            <div class="govuk-grid-column-three-quarters">
+                <Breadcrumbs>
+                    <BreadcrumbItem href="/">Home</BreadcrumbItem>
+                    {
+                        currentPath !== "/principles" && (
+                            <BreadcrumbItem href="/principles">
+                                Principles
+                            </BreadcrumbItem>
+                        )
+                    }
+                </Breadcrumbs>
+                <slot />
+            </div>
+        </div>
+    </div>
+</Layout>

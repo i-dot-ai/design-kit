@@ -1,0 +1,26 @@
+---
+import Layout from "@layouts/PrinciplesLayout.astro";
+import Example from "@components/docs/example.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+    // The in-folder landing page (principles/index.mdx) is rendered by
+    // principles/index.astro, not as a principle slug.
+    const entries = await getCollection(
+        "principles",
+        ({ id }) => id !== "index",
+    );
+    return entries.map((entry) => ({
+        params: { slug: entry.id },
+        props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<Layout>
+    <h1 class="govuk-heading-xl">{entry.data.title}</h1>
+    <Content components={{ Example }} />
+</Layout>
