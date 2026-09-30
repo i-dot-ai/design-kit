@@ -17,6 +17,7 @@ The content for the i.AI design kit lives in markdown and example code files in 
 Pull the content from here before any job.
  
 `content/get-started` page describes how to use the design kit.
+
 ## Output
  
 Output a single self-contained HTML file: inline the CSS and JS, don't link to them.
