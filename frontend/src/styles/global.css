@@ -43,7 +43,7 @@
 }
 
 .component-container--inverse {
-  background-color: #16548a;
+  background-color: var(--govuk-brand-colour);
   padding: 20px;
   margin-bottom: 20px;
 }
