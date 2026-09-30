@@ -1,6 +1,6 @@
 ---
-name: "iai-prototype"
-description: "description: Instructions on how to get the latest guidance and the expected output when prototyping products in i.AI"
+name: iai-prototype
+description: Instructions on how to get the latest guidance and the expected output when prototyping products in i.AI
 ---
  
  
