@@ -1,0 +1,244 @@
+---
+name: GOV.UK generation
+status: new
+---
+
+# Add Generation status component
+
+**Status:** `new` · **Provenance:** New (no GOV.UK equivalent)
+**Slack thread:** [TODO: link to #iai-design-kit post]
+**Deviation record:** [TODO: #issue-number, from the draft in `deviation-issue-generation-status.md`]
+**Prototype:** `generation-status-prototype.html` (attached)
+
+## What it is
+
+A status block with an optional timeline of steps that tells users what is happening while a long-running AI task runs, whether it worked, and what to do next.
+
+## When to use this component
+
+Use generation status when a user starts an AI task that takes more than a few seconds to finish and they have to wait for the result, for example:
+
+- analysing or summarising documents
+- extracting information from files
+- transcribing audio
+- drafting content from source material
+
+Show the timeline of steps when the task has stages the user would recognise and that help them understand what is happening. Do not show steps just to make the task look busy. Only show steps the product can really report on.
+
+Tell the user if they can leave the page, and where the result will be when it is ready.
+
+## When not to use this component
+
+Do not use generation status:
+
+- for anything that finishes in under a few seconds. Show the result instead
+- as a loading spinner or decorative "thinking" indicator. The pulse only marks the current step, and it stops after a few seconds
+- for a task the user completes themselves in several sections. Use the [Task list component](https://i-ai-design-system.internal.i.ai.gov.uk/components/task-list/) instead
+- to report something that does not relate to the task on this page. Use the [Notification banner component](https://i-ai-design-system.internal.i.ai.gov.uk/components/notification-banner/) instead
+- to show a validation error in something the user entered. Use the [Error message](https://i-ai-design-system.internal.i.ai.gov.uk/components/error-message/) and [Error summary](https://i-ai-design-system.internal.i.ai.gov.uk/components/error-summary/) components instead
+- to redirect the user automatically when the task finishes. Show the complete state with a link and let them choose when to move on
+
+## HTML for each variant
+
+The component needs no JavaScript. Products update the text and modifier classes however their stack does it (polling, server-sent events, or a **Check progress** link that reloads the page).
+
+### In progress
+
+```html
+<div class="iai-generation-status">
+  <h2 class="govuk-heading-m iai-generation-status__heading">Analysing your documents</h2>
+  <p class="govuk-body iai-generation-status__meta">Started at 10:42am. This usually takes about 2 minutes.</p>
+  <p class="govuk-body iai-generation-status__message" role="status">In progress</p>
+</div>
+```
+
+### In progress, with steps
+
+```html
+<div class="iai-generation-status">
+  <h2 class="govuk-heading-m iai-generation-status__heading">Analysing your documents</h2>
+  <p class="govuk-body iai-generation-status__meta">Started at 10:42am. This usually takes 3 to 5 minutes.</p>
+  <p class="govuk-body iai-generation-status__message" role="status">Step 2 of 4: finding key information</p>
+  <ol class="govuk-list iai-generation-status__steps">
+    <li class="iai-generation-status__step iai-generation-status__step--complete">
+      <span class="iai-generation-status__step-name">Reading documents</span>
+      <span class="govuk-body-s iai-generation-status__step-status">Done</span>
+    </li>
+    <li class="iai-generation-status__step iai-generation-status__step--current" aria-current="step">
+      <span class="iai-generation-status__step-name">Finding key information</span>
+      <span class="govuk-body-s iai-generation-status__step-status">In progress</span>
+    </li>
+    <li class="iai-generation-status__step">
+      <span class="iai-generation-status__step-name">Writing summary</span>
+      <span class="govuk-body-s iai-generation-status__step-status">Not started</span>
+    </li>
+    <li class="iai-generation-status__step">
+      <span class="iai-generation-status__step-name">Checking results</span>
+      <span class="govuk-body-s iai-generation-status__step-status">Not started</span>
+    </li>
+  </ol>
+  <p class="govuk-body iai-generation-status__hint">You can leave this page. Your analysis will be in your documents list when it is ready.</p>
+</div>
+```
+
+### Complete
+
+```html
+<div class="iai-generation-status iai-generation-status--complete">
+  <h2 class="govuk-heading-m iai-generation-status__heading">Analysis ready</h2>
+  <p class="govuk-body iai-generation-status__message" role="status">Your analysis is ready</p>
+  <p class="govuk-body iai-generation-status__actions">
+    <a href="#" class="govuk-link">View analysis</a>
+  </p>
+</div>
+```
+
+You can keep the timeline in the complete state, with every step marked `__step--complete`. The dots and line turn green.
+
+### Failed
+
+```html
+<div class="iai-generation-status iai-generation-status--failed">
+  <h2 class="govuk-heading-m iai-generation-status__heading">Analysis not finished</h2>
+  <p class="govuk-body iai-generation-status__message" role="status">We could not finish analysing your documents</p>
+  <ol class="govuk-list iai-generation-status__steps">
+    <li class="iai-generation-status__step iai-generation-status__step--complete">
+      <span class="iai-generation-status__step-name">Reading documents</span>
+      <span class="govuk-body-s iai-generation-status__step-status">Done</span>
+    </li>
+    <li class="iai-generation-status__step iai-generation-status__step--complete">
+      <span class="iai-generation-status__step-name">Finding key information</span>
+      <span class="govuk-body-s iai-generation-status__step-status">Done</span>
+    </li>
+    <li class="iai-generation-status__step iai-generation-status__step--failed" aria-current="step">
+      <span class="iai-generation-status__step-name">Writing summary</span>
+      <span class="govuk-body-s iai-generation-status__step-status">Could not finish</span>
+    </li>
+    <li class="iai-generation-status__step">
+      <span class="iai-generation-status__step-name">Checking results</span>
+      <span class="govuk-body-s iai-generation-status__step-status">Not started</span>
+    </li>
+  </ol>
+  <p class="govuk-body iai-generation-status__hint">This was a problem on our side. Your documents have been saved.</p>
+  <div class="iai-generation-status__actions">
+    <button type="button" class="govuk-button" data-module="govuk-button">Try again</button>
+  </div>
+</div>
+```
+
+The timeline is optional in the failed state. Leave it out if the task has only one stage.
+
+## Options and modifiers
+
+| Class | Type | Required | What it does |
+|---|---|---|---|
+| `iai-generation-status` | Block | Yes | Container. Brand-colour left border while the task is in progress |
+| `iai-generation-status--complete` | Modifier | No | Success colour for the border, dots and line. Use when the task has finished |
+| `iai-generation-status--failed` | Modifier | No | Error colour for the border. Completed steps stay brand colour so they do not read as errors |
+| `__heading` | Element | Yes | Names the task. Set the heading level to fit the page; the size class (`govuk-heading-m`) is separate from the level |
+| `__meta` | Element | No | Secondary text: start time, typical duration |
+| `__message` | Element | Yes | The live region (`role="status"`). The one line that changes and gets announced |
+| `__steps` | Element | No | The timeline: an ordered list of stages joined by a vertical line. Use with `govuk-list` |
+| `__step` | Element | With `__steps` | One stage, containing `__step-name` and `__step-status`. Not started by default: hollow dot, grey line |
+| `__step--complete` | Modifier | No | Stage finished. Filled dot with a tick. The line to the next step fills with colour |
+| `__step--current` | Modifier | No | Stage in progress. Ringed dot that pulses three times, then stops. Bold text. Add `aria-current="step"` |
+| `__step--failed` | Modifier | No | Stage that stopped. Red dot with a cross. Bold text. Add `aria-current="step"` |
+| `__hint` | Element | No | Whether the user can leave, or what happened on failure |
+| `__actions` | Element | No | Link or button for the next action |
+
+Colours use GOV.UK Frontend v6 functional colours (`brand`, `success`, `error`, `border`, `secondary-text`), so the component follows the product's theme with no extra tokens.
+
+### Motion
+
+- **Pulse:** when a step becomes current, its dot pulses 3 times over 1.5 seconds each (4.5 seconds in total) and then stops. The pulse starts again whenever the current step moves, which tells the user that something has changed.
+- **Line fill:** when a step is marked complete, the line to the next step fills from the top over 600ms.
+- **Reduced motion:** when the user has turned on reduced motion (`prefers-reduced-motion: reduce`), neither animation runs. The dots and line change state without moving.
+
+The pulse duration and count are Sass variables (`$iai-generation-status-pulse-duration`, `$iai-generation-status-pulse-count`). Keep the total under 5 seconds.
+
+## Accessibility
+
+### What the component does
+
+- The `__message` element has `role="status"`, which is a polite live region. Screen readers announce changes to it without moving focus or interrupting the user (WCAG 2.2 SC 4.1.3 Status messages).
+- Status is always given in words (Done, In progress, Not started, Could not finish). The dots also differ in shape (tick, ring, hollow, cross), so meaning does not rely on colour alone (SC 1.4.1 Use of colour).
+- Dot borders use the secondary text or functional colours, which meet 3:1 against white (SC 1.4.11 Non-text contrast). The grey line is decorative.
+- The pulse stops within 5 seconds, so no pause control is needed (SC 2.2.2 Pause, stop, hide). It is a slow, low-contrast glow with no flashing (SC 2.3.1).
+- Motion is switched off when the user has turned on reduced motion (SC 2.3.3 Animation from interactions).
+- The dots are CSS pseudo-elements, so screen readers do not read them.
+- The current or failed step uses `aria-current="step"`.
+- The timeline stacks with no horizontal scrolling at 360px wide (SC 1.4.10 Reflow).
+
+### What the component does not enforce
+
+Teams must handle these themselves:
+
+- **The live region must be in the page on first load.** Update the text of the existing `__message` element. Do not insert a new `role="status"` element or replace the element, or some screen readers will not announce the change.
+- **Only one `__message` should change at a time.** If a page has several generation status blocks, announcements can pile up.
+- **How often it announces.** Update the message when the stage changes, not every few seconds or every percentage point. The component cannot throttle this.
+- **Changes to the timeline are not announced.** Only `__message` is live. Keep the message in step with the timeline.
+- **Keep the pulse short.** If a team overrides the pulse to loop indefinitely, the component will fail SC 2.2.2.
+- **Honest steps.** Only show stages the backend really reports. Do not use steps on a timer to make the task look busy.
+- **Focus.** The component never moves focus. If a product moves focus to the result when the task finishes, it must not do this while the user is typing or reading something else.
+- **No automatic redirect or page refresh.** Do not use `<meta http-equiv="refresh">` or redirect when the task finishes (WCAG failure F41, SC 2.2.1 and 3.2.5). Without JavaScript, give the user a **Check progress** link or button.
+- **Heading level.** Set it to fit the page outline.
+- **Accurate time estimates.** Only show a duration if it is realistic. Remove it if the task often runs over.
+- **What happens if the user leaves.** The component shows the hint. The product has to keep the task running and put the result where the hint says it will be.
+- **Failure content.** Say what happened, whether anything was lost, and what to do. The component cannot check the words.
+
+### Testing done
+
+- Visual check of all 4 variants at 1000px and 360px wide, with no horizontal scrolling.
+- Ran the prototype demo through the success and failure paths and checked that it updates the existing live region in place.
+- **Not done:** screen reader testing (NVDA, JAWS, VoiceOver), automated axe check, voice control, 400% zoom, Windows high contrast mode.
+
+The accessibility reviewer should check:
+
+- that `role="status"` on a `<p>` announces reliably across the GOV.UK testing matrix
+- whether the failed state should use `role="alert"`. I've used `status` for every state so there's one live region that never changes role, but a failure might need to interrupt the user
+- whether the dots stay visible in forced colours mode. They use backgrounds, which forced colours can remove
+
+## Provenance and status
+
+- **Provenance:** New
+- **Status for kit page front matter:** `status: new`
+- **Why new:** GOV.UK Design System has no loading, progress or spinner component. A [loading spinner](https://github.com/alphagov/govuk-design-system-backlog/issues/28) and an [indeterminate progress indicator](https://github.com/alphagov/govuk-design-system-backlog/issues/164) are open on the community backlog but not published. The Home Office Design System has a [loading spinner](https://design.homeoffice.gov.uk/components?name=Loading+spinner). This component is not a spinner: it tells users in words what stage the task has reached, and the timeline and pulse support the text.
+- **Closest kit components checked:** Task list (for user-completed tasks, not system progress), Notification banner (for information outside the current task), Tag (status label only, no live region or next action), Inset text (no status semantics).
+- **Reversibility:** the component is built only from GOV.UK typography, list, link and button classes plus `iai-generation-status` classes. Removing it leaves valid GOV.UK markup (a heading, paragraphs and an ordered list) with no further edits needed.
+
+Proposed kit page front matter:
+
+```yaml
+---
+name: Generation status
+status: new
+decisionRecord: /decisions-record/document-departures-from-govuk
+---
+```
+
+## Decision records and deviation records
+
+**Decision records** (all currently at `proposal` status):
+
+- [004: We will use GOV.UK Frontend as our basis](https://i-ai-design-system.internal.i.ai.gov.uk/decisions-record/build-from-govuk-frontend-first). Built from GOV.UK classes and functional colours.
+- [005: We will adapt GOV.UK Frontend to meet our needs](https://i-ai-design-system.internal.i.ai.gov.uk/decisions-record/adapt-govuk-frontend-to-our-needs). i.AI products wait on AI tasks far more than typical GOV.UK services.
+- [006: We will document where we have departed from GOV.UK Frontend and why](https://i-ai-design-system.internal.i.ai.gov.uk/decisions-record/document-departures-from-govuk). This PR and the linked deviation record.
+- [007: We will record deviations as answers to pain points](https://i-ai-design-system.internal.i.ai.gov.uk/decisions-record/deviations-as-answers-to-pain-points). This answers the pain point of unclear or inaccessible waiting states. It is not a default for every page.
+- [009: Single CSS and JS files that work with HTML as a basis](https://i-ai-design-system.internal.i.ai.gov.uk/decisions-record/single-css-and-js-files-html-basis). CSS only, HTML-first, no JavaScript.
+
+**Deviation record:** [TODO: link the issue once opened]
+
+## Files in this PR
+
+- `packages/frontend/src/components/_generation-status.scss`: component styles
+- `packages/frontend/src/index.scss`: import added [TODO]
+
+## Not included yet
+
+This is incomplete. The core team or I can pick these up in review:
+
+- [ ] React, Svelte, Solid and Astro wrappers (`GenerationStatus`, `GenerationStatusHeading`, `GenerationStatusMessage`, `GenerationStatusSteps`, `GenerationStatusStep`)
+- [ ] `tests/src/component-tests/generation-status/expected.html` and i.AI variant class tests (`iai-variants.ts`)
+- [ ] Kit site page: `frontend/src/content/components/generation-status/index.mdx` and example files in the i-ai-design-system repo
+- [ ] Screen reader and forced colours testing (see Accessibility)
+- [ ] Evidence from a second product. Several i.AI products appear to have long AI waiting states, but I have not yet confirmed how they currently handle them
