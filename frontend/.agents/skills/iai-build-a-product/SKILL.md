@@ -4,7 +4,7 @@ description: Instructions on how to get the latest guidance and the expected out
 ---
  
  
-# i.AI Prototype
+# i.AI Build a Product
  
 Before you start any job be sure to fetch the latest guidance to ensure that you are working from the latest advice.
  

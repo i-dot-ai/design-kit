@@ -6,6 +6,7 @@ import {
 	ServiceNavigation,
 	ServiceNavigationItem,
 	Header,
+	Footer,
 } from "@i-dot-ai-npm/component-library-astro";
 const pathName = Astro.url.pathname;
 ---
@@ -81,6 +82,7 @@ const pathName = Astro.url.pathname;
 		<main id="main-content" role="main">
 			<slot />
 		</main>
+		<Footer />
 		<script>
 			import { initAll } from "govuk-frontend";
 			import { initAllIAIDesignSystem } from "../scripts/i-ai-design-system.js";
