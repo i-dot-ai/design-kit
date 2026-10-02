@@ -1,4 +1,4 @@
-name: release
+name: release-infrastructure
 run-name: Release - ${{ inputs.env || 'prod (auto)' }}
 
 on:
