@@ -1,32 +1,97 @@
 ---
 title: Design a prototype
-description: Work with an agent to prototype using the Design Kit.
+description: Use the i.AI prototype skill to design and build prototypes with AI assistance.
 ---
-You can use an AI agent to prototype with the i.AI Design Kit by using the skill file below. The file has been tested with Claude, but should work with other AI agents.
 
-## Add the skill 
+There are 3 ways to use the i.AI prototype skill. Choose the one that fits how you work.
 
-To add the skill to Claude:
+1. [Use Claude.ai in your browser](#1-use-claudeai-in-your-browser)
+2. [Use the skill in an IDE with Claude Code or OpenCode](#2-use-the-skill-in-an-ide-with-claude-code-or-opencode)
+3. [Use the GOV.UK Prototype Kit](#3-use-the-govuk-prototype-kit)
+
+<h2 class="govuk-heading-l govuk-!-margin-top-9" id="1-use-claudeai-in-your-browser">1. Use Claude.ai in your browser</h2>
+
+This is the quickest way to get started. You do not need a coding environment.
+
+<h3 class="govuk-heading-m govuk-!-margin-top-7">Add the skill</h3>
 
 1. <a
     class="govuk-link"
     href="/downloads/iai-prototype-skill.zip"
-    download="iai-prototype-skill.zip">Download this zipped skill file</a>
-2. From the left menu of [Claude.ai](https://claude.ai), click the Customize section
-3. From the top-right menu, click Add and then Upload skill
-4. Upload the zipped skill file you downloaded in step 1 and click save
+    download="iai-prototype-skill.zip">Download the skill file</a>
+2. Go to [Claude.ai](https://claude.ai) and open the left menu
+3. Select **Customize**, then from the top-right menu select **Add** and **Upload skill**
+4. Upload the file you downloaded and select **Save**
 
-<div style="display: flex">
-  <img src="/images/screenshot-customise-panel.webp" />
-  <img src="/images/screenshot-add-upload-button.webp" />
+<video
+  src="/images/add-skill-claude.webm"
+  aria-label="Screen recording of uploading the skill in Claude.ai: opening Customize, selecting Add, then Upload skill"
+  controls
+  autoplay
+  muted
+  loop
+  playsinline
+  style="width: 100%; height: auto"
+>
+  Your browser does not support embedded videos.
+</video>
+
+<h3 class="govuk-heading-m govuk-!-margin-top-7">Use the skill</h3>
+
+Type `/iai-prototype` into Claude and press enter.
+
+<h3 class="govuk-heading-m govuk-!-margin-top-7">Edit the skill</h3>
+
+You can edit the skill in the Customize section of Claude.ai.
+
+<div class="govuk-inset-text">
+  If you make changes that others would benefit from, raise a pull request on GitHub so we can review and merge your contribution.
 </div>
 
-## Use the skill
+<h2 class="govuk-heading-l govuk-!-margin-top-9" id="2-use-the-skill-in-an-ide-with-claude-code-or-opencode">2. Use the skill in an IDE with Claude Code or OpenCode</h2>
 
-To use the skill, type `/iai-prototype` into Claude and hit enter.
+Use this approach if you are already working in VS Code, Cursor, or another IDE with Claude Code or OpenCode set up.
 
-## Edit the skill
+<h3 class="govuk-heading-m govuk-!-margin-top-7">Get the skill</h3>
 
-You can edit the skill in the Customize section of.
+The i.AI prototype skill is available from the i.AI central skills repositories. Each repository explains how to install and use its skills.
 
-> If you edit the skill in ways that you think other people would benefit from, please raise a pull request on GitHub so that we can review and merge your contribution.
+- If you are a **developer**, use the [i.AI config repository](https://github.com/i-dot-ai/config) for developer skills and workflows
+- If you are **not an engineer**, use the [i.AI skills and projects repository](https://github.com/i-dot-ai/skills-and-projects/tree/main/skills)
+
+<h3 class="govuk-heading-m govuk-!-margin-top-7">Use the skill</h3>
+
+Follow the instructions in the repository you chose to add the skill to your IDE. Then type `/iai-prototype` to trigger the skill.
+
+<h2 class="govuk-heading-l govuk-!-margin-top-9" id="3-use-the-govuk-prototype-kit">3. Use the GOV.UK Prototype Kit</h2>
+
+Use this approach if you are working in the [GOV.UK Prototype Kit](https://prototype-kit.service.gov.uk/docs/) and want to use AI assistance to generate pages.
+
+The GOV.UK Prototype Kit lets you build interactive prototypes that look and feel like GOV.UK pages. You can use it for design work and user research.
+
+<h3 class="govuk-heading-m govuk-!-margin-top-7">Before you start</h3>
+
+You need to have the GOV.UK Prototype Kit installed and running. If you have not set it up yet, follow the [getting started guide](https://prototype-kit.service.gov.uk/docs/install/introduction) on the Prototype Kit site.
+
+You also need Claude Code or OpenCode set up in your IDE.
+
+<h3 class="govuk-heading-m govuk-!-margin-top-7">Add the skill</h3>
+
+1. <a
+    class="govuk-link"
+    href="/downloads/iai-prototype-skill.zip"
+    download="iai-prototype-skill.zip">Download the skill file</a> and unzip it
+2. Copy the skill file into the `.opencode/skills/` folder at the root of your prototype kit project
+3. Open a Claude conversation in your IDE
+
+<h3 class="govuk-heading-m govuk-!-margin-top-7">Use the skill</h3>
+
+Type `/iai-prototype` to trigger the skill. The skill will generate pages inside your prototype kit project, which you can preview in your browser using the kit's local server.
+
+To run the local server, open a terminal in your project folder and run:
+
+```bash
+npm run dev
+```
+
+Then go to `http://localhost:3000` in your browser to preview your prototype.
