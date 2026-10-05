@@ -29,7 +29,7 @@ jobs:
       ENVIRONMENT: dev
       COMMIT_HASH: ${{ github.sha }}
       SITE_URL: https://i-ai-design-system.dev.ai.gov.uk
-      BUILD_DIRECTORY: frontend/dist
+      BUILD_DIRECTORY: frontend/dist/client
       INSTALL_COMMAND: cd frontend && npm ci
       BUILD_COMMAND: cd frontend && npm run build
     secrets: inherit
@@ -41,7 +41,7 @@ jobs:
       ENVIRONMENT: preprod
       COMMIT_HASH: ${{ github.sha }}
       SITE_URL: https://i-ai-design-system.preprod.ai.gov.uk
-      BUILD_DIRECTORY: frontend/dist
+      BUILD_DIRECTORY: frontend/dist/client
       INSTALL_COMMAND: cd frontend && npm ci
       BUILD_COMMAND: cd frontend && npm run build
     secrets: inherit
@@ -54,7 +54,7 @@ jobs:
       ENVIRONMENT: prod
       COMMIT_HASH: ${{ github.sha }}
       SITE_URL: https://i-ai-design-system.ai.gov.uk
-      BUILD_DIRECTORY: frontend/dist
+      BUILD_DIRECTORY: frontend/dist/client
       INSTALL_COMMAND: cd frontend && npm ci
       BUILD_COMMAND: cd frontend && npm run build
     secrets: inherit
@@ -67,7 +67,7 @@ jobs:
       ENVIRONMENT: prod
       COMMIT_HASH: ${{ github.sha }}
       SITE_URL: https://i-ai-design-system.ai.gov.uk
-      BUILD_DIRECTORY: frontend/dist
+      BUILD_DIRECTORY: frontend/dist/client
       INSTALL_COMMAND: cd frontend && npm ci
       BUILD_COMMAND: cd frontend && npm run build
     secrets: inherit
