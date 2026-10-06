@@ -14,7 +14,11 @@ It includes:
 - The `govuk-template__body--iai-theme` class to apply the i.AI brand to your application if it is branded i.AI. Read the [branding guidance](/styles/branding) to see when to use the i.AI brand
 
 
-<Example collection="styles" component="main-application-structure" astro="./examples/default.astro" html="./examples/default.html" />
+<Example collection="styles" component="main-application-structure" astro="./examples/default.astro" html="./examples/default.html" next="./examples/default.react.tsx" />
+
+For react projects you will have to add a `DesignKitInit` function to your application to initialise the design kit. This is not required for other frameworks.
+
+<CodeBlock collection="styles" component="main-application-structure" code="./examples/design-kit-init.react.tsx" lang="react" />
 
 ## Dealing with "crampt" applications
 
