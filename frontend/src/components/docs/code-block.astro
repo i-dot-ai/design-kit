@@ -24,7 +24,7 @@ interface Props {
 const { code, component, collection = "components" } = Astro.props;
 
 const files = import.meta.glob(
-    "/src/content/{components,styles,decisions,get-started,patterns}/**/examples/*.{astro,html,svelte,tsx,scss,css,sh,txt}",
+    "/src/content/{components,styles,decisions,get-started,patterns}/**/examples/*.{astro,html,svelte,tsx,scss,css,sh}",
     { query: "?raw", import: "default", eager: true },
 ) as Record<string, string>;
 
@@ -42,7 +42,6 @@ const SHIKI: Record<string, string> = {
     scss: "scss",
     css: "css",
     sh: "sh",
-    txt: "txt",
 };
 const ext = tail.split(".").pop() ?? "";
 const lang = SHIKI[ext] ?? "html";
