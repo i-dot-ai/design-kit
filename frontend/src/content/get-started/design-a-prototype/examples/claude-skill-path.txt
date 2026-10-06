@@ -1,1 +1,0 @@
-.claude/skills/iai-prototype/SKILL.md
