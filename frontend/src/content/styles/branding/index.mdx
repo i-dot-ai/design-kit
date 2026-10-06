@@ -19,12 +19,15 @@ To apply the i.AI brand:
 - Use the [i.AI footer component](/components/footer)
 - Include this line in your Sass file to update fonts and brand colour:
   <CodeBlock collection="styles" component="branding" code="./examples/font-styles.scss" />
-
+- Add the `govuk-template__body--iai-theme` class to the body tag in your HTML or layout file.
+  <CodeBlock collection="styles" component="branding" code="./examples/layout-with-ia-styles.html" />
 ## How to apply the GOV.UK brand
 
 To apply the GOV.UK brand:
 
 - Use the [GOV.UK header component](/components/govuk-header)
 - Use the [GOV.UK footer component](/components/govuk-footer)
+- Remove the Sass variable overrides if they were added from above
+- Remove the `govuk-template__body--iai-theme` class from the body tag in your HTML or layout file if it was added
 
 For more guidance, see the Service Manual guide; [How to make your service look like GOV.UK](https://www.gov.uk/service-manual/design/making-your-service-look-like-govuk).
