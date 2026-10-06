@@ -1,0 +1,108 @@
+---
+title: Design a prototype
+description: Use the i.AI prototype skill to design and build prototypes with AI assistance.
+---
+
+There are 3 ways to use the i.AI prototype skill. Choose the one that fits how you work.
+
+- [Use Claude.ai in your browser](#use-claudeai-in-your-browser)
+- [Use the skill in an IDE with Claude Code or OpenCode](#use-the-skill-in-an-ide-with-claude-code-or-opencode)
+- [Use the GOV.UK Prototype Kit](#use-the-govuk-prototype-kit)
+
+## Use Claude.ai in your browser
+
+This is the quickest way to get started. You do not need a coding environment.
+
+### Add the skill
+
+1. <a
+    class="govuk-link"
+    href="/downloads/iai-prototype-skill.zip"
+    download="iai-prototype-skill.zip">Download the skill file</a>
+2. Go to [Claude.ai](https://claude.ai) and open the left menu
+3. Select **Customize**, then from the top-right menu select **Add** and **Upload skill**
+4. Upload the file you downloaded and select **Save**
+
+<video
+  src="/images/add-skill-claude.webm"
+  aria-label="Screen recording of uploading the skill in Claude.ai: opening Customize, selecting Add, then Upload skill"
+  controls
+  autoplay
+  muted
+  loop
+  playsinline
+  style="width: 100%; height: auto"
+>
+  Your browser does not support embedded videos.
+</video>
+
+<br />
+### Use the skill
+
+Type `/iai-prototype` into Claude and press enter.
+
+### Edit the skill
+
+You can edit the skill in the Customize section of Claude.ai.
+
+> If you make changes that others would benefit from, raise a pull request on GitHub so we can review and merge your contribution.
+
+
+## Use the skill in an IDE with Claude Code or OpenCode
+
+Use this approach if you are already working in VS Code, Cursor, or another IDE with Claude Code or OpenCode set up.
+
+### Get the skill
+
+The i.AI prototype skill is available from the [i.Ai skills repository](https://github.com/i-dot-ai/skills-and-projects/tree/main/skills)
+
+### Use the skill
+
+Follow the instructions in the repository you chose to add the skill to your IDE. Then type `/iai-prototype` to trigger the skill.
+
+<br />
+
+## Use the GOV.UK Prototype Kit
+
+Use this approach if you are working in the [GOV.UK Prototype Kit](https://prototype-kit.service.gov.uk/docs/) and want to use AI assistance to generate pages.
+
+The GOV.UK Prototype Kit lets you build interactive prototypes that look and feel like GOV.UK pages. You can use it for design work and user research.
+
+### Before you start
+
+You need to have the GOV.UK Prototype Kit installed and running. If you have not set it up yet, follow the [getting started guide](https://prototype-kit.service.gov.uk/docs/install/introduction) on the Prototype Kit site.
+
+You also need Claude Code or OpenCode set up in your IDE.
+
+### Add the skill
+
+1. <a
+    class="govuk-link"
+    href="/downloads/iai-prototype-skill.zip"
+    download="iai-prototype-skill.zip">Download the skill file</a> and unzip it. You'll get a folder called iai-prototype containing a SKILL.md file.
+2. Open your prototype's root folder in your IDE. This is the folder you created with the Prototype Kit, the one containing package.json, app and node_modules.
+3. Open your IDE's terminal. The prompt should show your prototype's name. If it doesn't, use cd to move into your prototype's root folder.
+4. Create the skills folder and open it in Finder.
+
+   For Claude Code, run:
+
+   <CodeBlock collection="get-started" component="design-a-prototype" code="./examples/claude-skills-folder.sh" />
+
+   For OpenCode, run:
+
+   <CodeBlock collection="get-started" component="design-a-prototype" code="./examples/opencode-skills-folder.sh" />
+
+   The command will not print anything in the terminal, but a Finder window will open. The folder is hidden because its name starts with a dot, so you won't see it in your IDE's file list or in Finder.
+
+5. Copy the unzipped iai-prototype folder into the Finder window(s). 
+6. Start a new Claude Code or OpenCode conversation in your IDE. 
+
+### Use the skill
+
+Type `/iai-prototype` to trigger the skill. The skill will generate pages inside your prototype kit project, which you can preview in your browser using the kit's local server.
+
+To run the local server, open a terminal in your project folder and run:
+
+<CodeBlock collection="get-started" component="design-a-prototype" code="./examples/npm-run-dev.sh" /> 
+
+Then go to `http://localhost:3000` in your browser to preview your prototype.

@@ -15,8 +15,8 @@ const port = 4321;
  */
 const govukClasses = {
   p: 'govuk-body',
-  h2: 'govuk-heading-m',
-  h3: 'govuk-heading-s',
+  h2: 'govuk-heading-l',
+  h3: 'govuk-heading-m',
   h4: 'govuk-heading-s',
   a: 'govuk-link',
   blockquote: 'govuk-inset-text',
