@@ -17,6 +17,7 @@ interface Props {
     astro?: string;
     html?: string;
     react?: string;
+    next?: string;
     svelte?: string;
     solid?: string;
     /** Entry folder slug (from the page), used to resolve example paths. */
@@ -30,6 +31,7 @@ const {
     astro,
     html,
     react,
+    next,
     svelte,
     solid,
     component,
@@ -53,6 +55,7 @@ function resolve(relPath?: string): string | undefined {
 const astroCode = resolve(astro);
 const htmlCode = resolve(html);
 const reactCode = resolve(react);
+const nextCode = resolve(next);
 const svelteCode = resolve(svelte);
 const solidCode = resolve(solid);
 
@@ -61,19 +64,20 @@ const containerClass =
         ? "component-container--inverse"
         : "component-container";
 
-const base = (astro || html || react || svelte || solid || "example")
+const base = (astro || html || react || next || svelte || solid || "example")
     .replace(/^\.\//, "")
     .replace(/\//g, "-")
     .replace(/\.(astro|html|svelte|tsx)$/, "")
     .replace(/\.(react|solid)$/, "");
 
-type TabLang = "html" | "astro" | "react" | "svelte" | "solid";
+type TabLang = "html" | "astro" | "react" | "next" | "svelte" | "solid";
 const tabs: Array<{ lang: TabLang; code: string; label: string; shiki: string }> =
     [];
-// Order: HTML, Astro, React, Svelte, Solid
+// Order: HTML, Astro, React, Next, Svelte, Solid
 if (htmlCode) tabs.push({ lang: "html", code: htmlCode, label: "HTML", shiki: "html" });
 if (astroCode) tabs.push({ lang: "astro", code: astroCode, label: "Astro", shiki: "astro" });
 if (reactCode) tabs.push({ lang: "react", code: reactCode, label: "React", shiki: "tsx" });
+if (nextCode) tabs.push({ lang: "next", code: nextCode, label: "Next", shiki: "tsx" });
 if (svelteCode) tabs.push({ lang: "svelte", code: svelteCode, label: "Svelte", shiki: "svelte" });
 if (solidCode) tabs.push({ lang: "solid", code: solidCode, label: "Solid", shiki: "tsx" });
 ---

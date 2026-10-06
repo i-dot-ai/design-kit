@@ -5,19 +5,31 @@
  * entry, so the code shown is the single source of truth (same strings an MCP
  * server would serve to an agent).
  */
-import { Tabs, TabsList, Tab, TabPanel, Details, DetailsSummary, DetailsText } from "@i-dot-ai-npm/component-library-astro";
+import {
+    Tabs,
+    TabsList,
+    Tab,
+    TabPanel,
+    Details,
+    DetailsSummary,
+    DetailsText,
+} from "@i-dot-ai-npm/component-library-astro";
 import { Code } from "astro:components";
 
 interface Props {
     /** Stable id used to build unique tab anchors, e.g. "button-default". */
     id: string;
     /** Snippets keyed by language, e.g. { astro: "…", html: "…" }. */
-    snippets: Partial<Record<"astro" | "html", string>>;
+    snippets: Partial<Record<"astro" | "html" | "next", string>>;
 }
 
 const { id, snippets } = Astro.props;
 
-const LABELS: Record<string, string> = { astro: "Astro", html: "HTML" };
+const LABELS: Record<string, string> = {
+    astro: "Astro",
+    html: "HTML",
+    next: "Next.js",
+};
 const langs = (Object.keys(snippets) as Array<keyof typeof snippets>).filter(
     (lang) => snippets[lang],
 );

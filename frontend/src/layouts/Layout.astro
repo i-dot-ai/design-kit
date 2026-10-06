@@ -6,6 +6,7 @@ import {
 	ServiceNavigation,
 	ServiceNavigationItem,
 	Header,
+	SkipLink,
 	Footer,
 } from "@i-dot-ai-npm/component-library-astro";
 const pathName = Astro.url.pathname;
@@ -27,14 +28,14 @@ const pathName = Astro.url.pathname;
 					? " govuk-frontend-supported"
 					: "");
 		</script>
-		<a href="#main-content" class="govuk-skip-link">Skip to main content</a>
+		<SkipLink href="#main-content">Skip to main content</SkipLink>
 		<Header href="/">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="28"
 				height="30"
 				viewBox="0 0 995 1053"
-				aria-lable="i.AI"
+				aria-label="i.AI"
 			>
 				<g>
 					<path
