@@ -3,7 +3,7 @@
 //
 // Change the values below to match your service's branding.
 @use "govuk-frontend" as * with ( // Use a non-GDS Transport font stack (GDS Transport is GOV.UK-branded).
-  $govuk-font-family: ("Helvetica Neue", Helvetica, Arial, sans-serif),
+  $govuk-font-family: ("Inter", Helvetica, Arial, sans-serif),
   // Set your own brand colour (used e.g. for footer border).
   $govuk-functional-colours: (brand: #ca357c, surface-background: #f3f3f3, surface-border: #ca357c, template-background: #f3f3f3));
 
