@@ -12,7 +12,7 @@ Before you start any job be sure to fetch the latest guidance to ensure that you
  
 The content for the i.AI design kit lives in markdown and example code files in the following folder
  
-`https://github.com/i-dot-ai/i-ai-design-system/tree/main/frontend/src/content`
+`https://github.com/i-dot-ai/design-kit/tree/main/frontend/src/content`
  
 Pull the content from here before any job.
  

@@ -9,7 +9,7 @@ terraform {
   required_version = ">= 1.2.2"
 
   backend "s3" {
-    key = "i-ai-design-system/terraform.tfstate"
+    key = "design-kit/terraform.tfstate"
   }
 
 }

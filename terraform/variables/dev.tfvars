@@ -1,7 +1,7 @@
 env            = "dev"
 universal_tags = {
   "Environment" = "dev",
-  "Project"     = "i-ai-design-system",
+  "Project"     = "design-kit",
   "Owner"       = "i-dot-ai"
   "Deployed"    = "Terraform"
 }

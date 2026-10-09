@@ -1,4 +1,4 @@
-[![build](https://github.com/i-dot-ai/i-ai-design-system/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/i-dot-ai/i-ai-design-system/actions/workflows/build.yml?query=branch%3Amain)
+[![build](https://github.com/i-dot-ai/design-kit/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/i-dot-ai/design-kit/actions/workflows/build.yml?query=branch%3Amain)
 
 # i.AI Design System
 
@@ -81,14 +81,14 @@ curl -X 'GET' 'https://$app-name-backend-external.i.ai.gov.uk/healthcheck' -H 'a
 ## Deployment
 
 When you cut and deploy your application, it will initially be available at the following addresses in the different environments:
-- Dev - `https://i-ai-design-system.internal.dev.i.ai.gov.uk`
-- Preprod - `https://i-ai-design-system.internal.preprod.i.ai.gov.uk`
-- Prod - `https://i-ai-design-system.internal.i.ai.gov.uk`
+- Dev - `https://design-kit.internal.dev.i.ai.gov.uk`
+- Preprod - `https://design-kit.internal.preprod.i.ai.gov.uk`
+- Prod - `https://design-kit.internal.i.ai.gov.uk`
 
 Applications can also be added to the i.AI Edge Network, which will provide a public-facing (i.e. non-whitelisted) URL for production:
-- Dev - `https://i-ai-design-system.dev.ai.gov.uk`
-- Preprod - `https://i-ai-design-system.preprod.ai.gov.uk`
-- Prod - `https://i-ai-design-system.ai.gov.uk`
+- Dev - `https://design-kit.dev.ai.gov.uk`
+- Preprod - `https://design-kit.preprod.ai.gov.uk`
+- Prod - `https://design-kit.ai.gov.uk`
 
 > Note: All three "Edge" URLs will be created, but only the production URL will have the whitelist removed.
 
@@ -189,7 +189,7 @@ Secrets can be updated in SSM by navigating to SSM Parameter Store in the AWS co
 
 ### Data
 
-An S3 bucket will have been created for your application per environment. This can be used to store any data that your application needs to persist. It will be called: `i-dot-ai-<env>-i-ai-design-system-data`
+An S3 bucket will have been created for your application per environment. This can be used to store any data that your application needs to persist. It will be called: `i-dot-ai-<env>-design-kit-data`
 
 
 ### Debugging
@@ -201,9 +201,9 @@ To get the logs of your apps for any issues, you can do the following:
 - Login to the AWS Console
 - Navigate to ECS
 - Select Clusters
-- Select your cluster: `i-dot-ai-<env>-i-ai-design-system-cluster`
+- Select your cluster: `i-dot-ai-<env>-design-kit-cluster`
 
-- Select your service: `i-dot-ai-<env>-i-ai-design-system-<frontend>-service`
+- Select your service: `i-dot-ai-<env>-design-kit-<frontend>-service`
 
 - Select the logs tab (you can also click view in cloudwatch for a more details breakdown)
 
@@ -226,7 +226,7 @@ aws ecs execute-command \
 
 #### Diagrams Module Dependency
 
-The `diagrams` module is used in the `i-ai-design-system/terraform/diagram_script.py` file. To generate the `diagrams`, follow the instructions below:
+The `diagrams` module is used in the `design-kit/terraform/diagram_script.py` file. To generate the `diagrams`, follow the instructions below:
 
 ``` bash
 make generate_aws_diagram
