@@ -3,9 +3,9 @@
 </script>
 
 <ButtonGroup>
-    <Button variant="tertiary">Action 1</Button>
-    <Button variant="tertiary">Action 2</Button>
-    <Button variant="tertiary">Action 3</Button>
-    <Button variant="tertiary">Action 4</Button>
-    <Button variant="tertiary">Action 5</Button>
+    <Button type="button" tertiary>Action 1</Button>
+    <Button type="button" tertiary>Action 2</Button>
+    <Button type="button" tertiary>Action 3</Button>
+    <Button type="button" tertiary>Action 4</Button>
+    <Button type="button" tertiary>Action 5</Button>
 </ButtonGroup>

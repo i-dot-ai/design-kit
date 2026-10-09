@@ -3,10 +3,10 @@ import { Button, ButtonGroup } from "@i-dot-ai-npm/component-library-react";
 export default function Example() {
   return (
     <ButtonGroup>
-      <Button variant="tertiary" small>Edit</Button>
-      <Button variant="tertiary" small>Export</Button>
-      <Button variant="tertiary" small>Download</Button>
-      <Button variant="primary" small>Save</Button>
+      <Button tertiary type="button" small>Edit</Button>
+      <Button tertiary type="button" small>Export</Button>
+      <Button tertiary type="button" small>Download</Button>
+      <Button type="button" small>Save</Button>
     </ButtonGroup>
   );
 }

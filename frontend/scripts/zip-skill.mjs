@@ -1,4 +1,4 @@
-// Zips the prototyping skill (.agents/skills/iai-prototype) into
+// Zips the prototyping skill (.agents/skills/design-kit-prototype) into
 // public/downloads/ so it can be offered as a download on the docs site.
 //
 // Runs as part of `sync:assets` (before dev and build), mirroring the
@@ -17,7 +17,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
 
 // Source skill folder and the name it should keep inside the zip.
-const skillName = "iai-prototype";
+const skillName = "design-kit-prototype";
 const srcDir = join(root, ".agents", "skills", skillName);
 const outDir = join(root, "public", "downloads");
 const outFile = join(outDir, `${skillName}-skill.zip`);
@@ -46,7 +46,7 @@ archive.on("error", (err) => {
 });
 
 archive.pipe(output);
-// Keep a top-level "iai-prototype/" folder inside the archive so it unzips
+// Keep a top-level "design-kit-prototype/" folder inside the archive so it unzips
 // straight into a drop-in skill directory.
 archive.directory(srcDir, skillName);
 await archive.finalize();

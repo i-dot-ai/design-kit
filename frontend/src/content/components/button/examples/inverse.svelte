@@ -3,5 +3,5 @@
 </script>
 
 <ButtonGroup>
-    <Button variant="inverse">Primary action</Button>
+    <Button inverse type="button">Primary action</Button>
 </ButtonGroup>

@@ -3,8 +3,8 @@
 </script>
 
 <ButtonGroup>
-  <Button variant="tertiary" small>Edit</Button>
-  <Button variant="tertiary" small>Export</Button>
-  <Button variant="tertiary" small>Download</Button>
-  <Button variant="primary" small>Save</Button>
+  <Button type="button" tertiary small>Edit</Button>
+  <Button type="button" tertiary small>Export</Button>
+  <Button type="button" tertiary small>Download</Button>
+  <Button type="button" small>Save</Button>
 </ButtonGroup>

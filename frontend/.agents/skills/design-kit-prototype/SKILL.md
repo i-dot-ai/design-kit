@@ -1,10 +1,10 @@
 ---
-name: iai-prototype
+name: design-kit-prototype
 description: Instructions on how to get the latest guidance and the expected output when prototyping products in i.AI
 ---
  
  
-# i.AI Prototype
+# Design Kit Prototype
  
 Before you start any job be sure to fetch the latest guidance to ensure that you are working from the latest advice.
  
