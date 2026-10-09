@@ -1,7 +1,7 @@
 env = "preprod"
 universal_tags = {
   "Environment" = "preprod",
-  "Project"     = "i-ai-design-system"
+  "Project"     = "design-kit"
   "Owner"       = "i-dot-ai"
   "Deployed"    = "Terraform"
 }

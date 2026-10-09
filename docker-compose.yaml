@@ -11,9 +11,9 @@ services:
     env_file:
       - .env
     networks:
-      - i-ai-design-system-network
+      - design-kit-network
     
 
 networks:
-  i-ai-design-system-network:
+  design-kit-network:
     driver: bridge

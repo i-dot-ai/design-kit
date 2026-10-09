@@ -16,7 +16,7 @@ module "frontend" {
   #source                      = "../../i-dot-ai-core-terraform-modules//modules/infrastructure/ecs" # For testing local changes
   source                       = "git::https://github.com/i-dot-ai/i-dot-ai-core-terraform-modules.git//modules/infrastructure/ecs?ref=v7.1.1-ecs"
   image_tag                    = var.image_tag
-  ecr_repository_uri           = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.region}.amazonaws.com/i-ai-design-system-frontend"
+  ecr_repository_uri           = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.region}.amazonaws.com/design-kit-frontend"
   vpc_id                       = data.terraform_remote_state.vpc.outputs.vpc_id
   private_subnets              = data.terraform_remote_state.vpc.outputs.private_subnets
   host                         = local.host
@@ -28,16 +28,16 @@ module "frontend" {
   task_additional_iam_policies = local.additional_policy_arns
   create_listener              = true
   certificate_arn              = module.acm_certificate.arn
-  target_group_name_override   = "i-ai-design-system-fe-${var.env}-tg"
-  task_role_name_override      = "i-dot-ai-${var.env}-i-ai-design-system-fe-ecs-exec-task-role"
-  permissions_boundary_name    = "infra/i-dot-ai-${var.env}-i-ai-design-system-perms-boundary-app"
+  target_group_name_override   = "design-kit-fe-${var.env}-tg"
+  task_role_name_override      = "i-dot-ai-${var.env}-design-kit-fe-ecs-exec-task-role"
+  permissions_boundary_name    = "infra/i-dot-ai-${var.env}-design-kit-perms-boundary-app"
 
   environment_variables = {
     "ENVIRONMENT" : terraform.workspace,
     "APP_NAME" : "${local.name}-frontend"
     "PORT" : local.frontend_port,
-    "REPO" : "i-ai-design-system",
-    "DOCKER_BUILDER_CONTAINER": "i-ai-design-system",
+    "REPO" : "design-kit",
+    "DOCKER_BUILDER_CONTAINER": "design-kit",
     "AUTH_API_URL": data.aws_ssm_parameter.auth_api_invoke_url.value,
     
   }
@@ -79,7 +79,7 @@ module "sns_topic" {
   name                         = local.name
   slack_webhook                = data.aws_secretsmanager_secret_version.platform_slack_webhook.secret_string
 
-  permissions_boundary_name    = "infra/i-dot-ai-${var.env}-i-ai-design-system-perms-boundary-app"
+  permissions_boundary_name    = "infra/i-dot-ai-${var.env}-design-kit-perms-boundary-app"
 }
 
 module "frontend-ecs-alarm" {

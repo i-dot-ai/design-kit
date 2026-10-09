@@ -21,7 +21,7 @@ testpaths = [
 ]
 
 [project]
-name = "i-ai-design-system"
+name = "design-kit"
 version = "0.1.0"
 description = ""
 readme = "README.md"
