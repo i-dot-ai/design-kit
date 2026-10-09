@@ -3,6 +3,6 @@
 </script>
 
 <ButtonGroup>
-  <Button variant="primary">Main action</Button>
-  <Button variant="secondary">Secondary action</Button>
+  <Button type="button">Main action</Button>
+  <Button type="button">Secondary action</Button>
 </ButtonGroup>

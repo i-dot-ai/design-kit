@@ -3,7 +3,17 @@ title: Design a prototype
 description: Use the i.AI prototype skill to design and build prototypes with AI assistance.
 ---
 
-There are 3 ways to use the i.AI prototype skill. Choose the one that fits how you work.
+All the content in this site lives in markdown files in the 
+[design-kit-repo](https://github.com/i-dot-ai/i-ai-design-system/tree/main/frontend/src/content).
+You can point your coding agent manually to these files or use the skill below to prototype 
+in code using the design kit components and principles.
+
+## Design Kit Prototype skill
+
+The skill [design kit prototype](https://github.com/i-dot-ai/skills-and-projects/tree/main/skills/design-kit-prototype)
+has been designed to read this design kit site and output a prototype as a single HTML file.
+
+There are 3 ways to use the design kit prototype. Choose the one that fits how you work.
 
 - [Use Claude.ai in your browser](#use-claudeai-in-your-browser)
 - [Use the skill in an IDE with Claude Code or OpenCode](#use-the-skill-in-an-ide-with-claude-code-or-opencode)
@@ -17,8 +27,8 @@ This is the quickest way to get started. You do not need a coding environment.
 
 1. <a
     class="govuk-link"
-    href="/downloads/iai-prototype-skill.zip"
-    download="iai-prototype-skill.zip">Download the skill file</a>
+    href="/downloads/design-kit-prototype-skill.zip"
+    download="design-kit-prototype-skill.zip">Download the skill file</a>
 2. Go to [Claude.ai](https://claude.ai) and open the left menu
 3. Select **Customize**, then from the top-right menu select **Add** and **Upload skill**
 4. Upload the file you downloaded and select **Save**
@@ -39,7 +49,7 @@ This is the quickest way to get started. You do not need a coding environment.
 <br />
 ### Use the skill
 
-Type `/iai-prototype` into Claude and press enter.
+Type `/design-kit-prototype` into Claude and press enter.
 
 ### Edit the skill
 
@@ -58,7 +68,7 @@ The i.AI prototype skill is available from the [i.Ai skills repository](https://
 
 ### Use the skill
 
-Follow the instructions in the repository you chose to add the skill to your IDE. Then type `/iai-prototype` to trigger the skill.
+Follow the instructions in the repository you chose to add the skill to your IDE. Then type `/design-kit-prototype` to trigger the skill.
 
 <br />
 
@@ -78,8 +88,8 @@ You also need Claude Code or OpenCode set up in your IDE.
 
 1. <a
     class="govuk-link"
-    href="/downloads/iai-prototype-skill.zip"
-    download="iai-prototype-skill.zip">Download the skill file</a> and unzip it. You'll get a folder called iai-prototype containing a SKILL.md file.
+    href="/downloads/design-kit-prototype-skill.zip"
+    download="design-kit-prototype-skill.zip">Download the skill file</a> and unzip it. You'll get a folder called design-kit-prototype containing a SKILL.md file.
 2. Open your prototype's root folder in your IDE. This is the folder you created with the Prototype Kit, the one containing package.json, app and node_modules.
 3. Open your IDE's terminal. The prompt should show your prototype's name. If it doesn't, use cd to move into your prototype's root folder.
 4. Create the skills folder and open it in Finder.
@@ -94,12 +104,12 @@ You also need Claude Code or OpenCode set up in your IDE.
 
    The command will not print anything in the terminal, but a Finder window will open. The folder is hidden because its name starts with a dot, so you won't see it in your IDE's file list or in Finder.
 
-5. Copy the unzipped iai-prototype folder into the Finder window(s). 
+5. Copy the unzipped design-kit-prototype folder into the Finder window(s). 
 6. Start a new Claude Code or OpenCode conversation in your IDE. 
 
 ### Use the skill
 
-Type `/iai-prototype` to trigger the skill. The skill will generate pages inside your prototype kit project, which you can preview in your browser using the kit's local server.
+Type `/design-kit-prototype` to trigger the skill. The skill will generate pages inside your prototype kit project, which you can preview in your browser using the kit's local server.
 
 To run the local server, open a terminal in your project folder and run:
 

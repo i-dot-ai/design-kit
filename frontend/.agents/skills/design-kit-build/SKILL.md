@@ -1,10 +1,10 @@
 ---
-name: iai-build-a-product
+name: design-kit-build
 description: Instructions on how to get the latest guidance and the expected output when building products in i.AI
 ---
  
  
-# i.AI Build a Product
+# Design Kit Build
  
 Before you start any job be sure to fetch the latest guidance to ensure that you are working from the latest advice.
  
