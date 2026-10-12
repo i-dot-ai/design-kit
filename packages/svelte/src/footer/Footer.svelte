@@ -4,7 +4,7 @@
 
     type FooterLink = { href?: string; text?: string; attributes?: Record<string, string> };
 
-    type Props = HTMLAttributes<HTMLDivElement> & {
+    type Props = HTMLAttributes<HTMLElement> & {
         links?: FooterLink[];
         visuallyHiddenTitle?: string;
         containerClasses?: string;
@@ -27,7 +27,7 @@
     );
 </script>
 
-<div class={classes} {...rest}>
+<footer class={classes} {...rest}>
     <div class={containerClass}>
         <div class="govuk-footer__meta">
             <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
@@ -48,4 +48,4 @@
             <div class="govuk-footer__meta-item">{@render children?.()}</div>
         </div>
     </div>
-</div>
+</footer>

@@ -9,6 +9,6 @@ const links = [
     { text: "Contact the team", href: "#" },
 ];
 
-export function ExampleFooter() {
+export default function ExampleFooter() {
     return <Footer links={links} />;
 }

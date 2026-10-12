@@ -5,7 +5,7 @@ import type { JSX } from "solid-js";
 
 type FooterLink = { href?: string; text?: string; attributes?: Record<string, string> };
 
-type FooterProps = JSX.IntrinsicElements['div'] & {
+type FooterProps = JSX.IntrinsicElements['footer'] & {
     /** Support links shown in the inline list (e.g. Accessibility statement, Cookies, Privacy). */
     links?: FooterLink[];
     /** Visually-hidden heading above the support links. */
@@ -22,7 +22,7 @@ export default function Footer(props: FooterProps) {
         ["govuk-width-container", props.containerClasses ?? ""].filter(Boolean).join(" ");
 
     return (
-        <div class={classes()}>
+        <footer class={classes()}>
             <div class={containerClass()}>
                 <div class="govuk-footer__meta">
                     <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
@@ -56,6 +56,6 @@ export default function Footer(props: FooterProps) {
                     <div class="govuk-footer__meta-item">{props.children}</div>
                 </div>
             </div>
-        </div>
+        </footer>
     );
 }

@@ -1,4 +1,4 @@
-import type { ComponentMapping } from "../match-govuk-mappings.js";
+import type { ComponentMapping } from "../../matches-govuk-helpers/mapping.js";
 
 export const tagMapping: ComponentMapping = {
     classesToProps(classes) {
