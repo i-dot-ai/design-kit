@@ -1,0 +1,15 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"label">;
+
+const { class: className, ...rest } = Astro.props;
+
+const classes = ["govuk-label govuk-radios__label", className ?? ""]
+    .filter(Boolean)
+    .join(" ");
+---
+
+<label class={classes} {...rest}>
+    <slot />
+</label>

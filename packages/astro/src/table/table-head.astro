@@ -1,0 +1,15 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"thead">;
+
+const { class: className, ...rest } = Astro.props;
+
+const classes = ["govuk-table__head", className ?? ""]
+    .filter(Boolean)
+    .join(" ");
+---
+
+<thead class={classes} {...rest}>
+    <slot />
+</thead>

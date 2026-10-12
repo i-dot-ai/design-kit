@@ -1,0 +1,14 @@
+@use "pkg:govuk-frontend/base" as *;
+
+.govuk-template__body--iai-theme {
+
+    .govuk-service-navigation__item {
+        border-color: govuk-functional-colour("brand");
+    }
+
+    .govuk-service-navigation__link,
+    .govuk-service-navigation__link:visited,
+    .govuk-service-navigation__link:hover {
+        color: govuk-functional-colour("text");
+    }
+}

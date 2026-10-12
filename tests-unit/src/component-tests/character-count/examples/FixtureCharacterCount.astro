@@ -1,0 +1,37 @@
+---
+import {
+    FormGroup,
+    InputLabel,
+    Hint,
+    ErrorMessage,
+    CharacterCount,
+    CharacterCountMessage,
+} from "@i-dot-ai-npm/component-library-astro";
+
+const { id, fieldName, labelText, labelClasses, isPageHeading, hintText, errorText, hasError, rows, describedBy, value, countMessage, maxlength, maxwords, threshold } = Astro.props;
+
+const groupExtra = [hasError ? "govuk-form-group--error" : "", "govuk-character-count"].filter(Boolean).join(" ");
+const textareaExtra = hasError ? "govuk-textarea--error" : undefined;
+const dataAttrs = {
+    "data-module": "govuk-character-count",
+    ...(maxlength !== undefined ? { "data-maxlength": maxlength } : {}),
+    ...(maxwords !== undefined ? { "data-maxwords": maxwords } : {}),
+    ...(threshold !== undefined ? { "data-threshold": threshold } : {}),
+};
+---
+
+<FormGroup class={groupExtra} {...dataAttrs}>
+    {
+        isPageHeading ? (
+            <h1 class="govuk-label-wrapper">
+                <InputLabel class={labelClasses} for={id}>{labelText}</InputLabel>
+            </h1>
+        ) : (
+            <InputLabel class={labelClasses} for={id}>{labelText}</InputLabel>
+        )
+    }
+    {hintText !== undefined && <Hint id={`${id}-hint`}>{hintText}</Hint>}
+    {errorText !== undefined && <ErrorMessage id={`${id}-error`}>{errorText}</ErrorMessage>}
+    <CharacterCount class={textareaExtra} id={id} name={fieldName} rows={rows} aria-describedby={describedBy}>{value ?? ""}</CharacterCount>
+    <CharacterCountMessage id={`${id}-info`}>{countMessage}</CharacterCountMessage>
+</FormGroup>

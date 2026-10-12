@@ -1,0 +1,17 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"h2">;
+
+const { class: className, ...rest } = Astro.props;
+
+const classes = ["govuk-accordion__section-button", className ?? ""]
+    .filter(Boolean)
+    .join(" ");
+---
+
+<h2 class="govuk-accordion__section-heading">
+    <span class={classes} {...rest}>
+        <slot />
+    </span>
+</h2>

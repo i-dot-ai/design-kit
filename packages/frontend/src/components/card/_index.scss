@@ -1,0 +1,80 @@
+@use "pkg:govuk-frontend/base" as *;
+
+// Card (i.AI component).
+
+.iai-card-group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+    .iai-card-group {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.iai-card-group__item {
+    height: 100%;
+}
+
+.iai-card {
+    position: relative;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    background-color: govuk-colour("white");
+    border: 2px solid govuk-colour("black", $variant: "tint-80");
+}
+
+.iai-card__icon {
+    margin-bottom: 15px;
+    color: govuk-colour("black", $variant: "tint-25");
+}
+
+.iai-card__icon svg {
+    display: block;
+}
+
+.iai-card:hover .iai-card__icon {
+    color: govuk-colour("white");
+}
+
+.iai-card:hover {
+    background-color: govuk-colour("black");
+}
+
+.iai-card__heading {
+    margin: 0 0 5px;
+    font-size: 1.1875rem;
+    line-height: 1.3157894737;
+}
+
+.iai-card__link {
+    color: govuk-functional-colour("link");
+    text-decoration: underline;
+}
+
+.iai-card__link:after {
+    content: "";
+    position: absolute;
+    inset: 0;
+}
+
+.iai-card__content {
+    margin: 0;
+    color: govuk-functional-colour("text");
+}
+
+.iai-card:hover .iai-card__link,
+.iai-card:hover .iai-card__content {
+    color: govuk-colour("white") !important;
+}
+
+.iai-card--secondary {
+    padding: 15px 20px;
+    background-color: govuk-colour("black", $variant: "tint-95");
+    border: none;
+}

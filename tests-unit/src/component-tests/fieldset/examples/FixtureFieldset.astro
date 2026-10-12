@@ -1,0 +1,9 @@
+---
+import { Fieldset, FieldsetLegend } from "@i-dot-ai-npm/component-library-astro";
+
+const { size, isPageHeading, legendText } = Astro.props;
+---
+
+<Fieldset>
+    <FieldsetLegend size={size} isPageHeading={isPageHeading}>{legendText}</FieldsetLegend>
+</Fieldset>

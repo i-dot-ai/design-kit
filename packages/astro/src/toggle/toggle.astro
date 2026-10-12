@@ -1,0 +1,13 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"input">;
+
+const { class: className, ...rest } = Astro.props;
+
+const classes = ["iai-toggle__input", className ?? ""]
+    .filter(Boolean)
+    .join(" ");
+---
+
+<input class={classes} type="checkbox" role="switch" {...rest} />

@@ -1,0 +1,13 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"input">;
+
+const { class: className, ...rest } = Astro.props;
+
+const classes = ["govuk-file-upload", className ?? ""]
+    .filter(Boolean)
+    .join(" ");
+---
+
+<input class={classes} type="file" {...rest} />

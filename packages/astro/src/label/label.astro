@@ -1,0 +1,30 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"label"> {
+    size?: string;
+    isPageHeading?: boolean;
+}
+
+const { size, isPageHeading = false, class: className, ...rest } = Astro.props;
+
+const classes = [
+    "govuk-label",
+    ({ "small": "govuk-label--s", "medium": "govuk-label--m", "large": "govuk-label--l", "xl": "govuk-label--xl" }[size] ?? ""),
+    className ?? "",
+]
+    .filter(Boolean)
+    .join(" ");
+---
+
+{isPageHeading ? (
+    <h1 class="govuk-label-wrapper">
+        <label class={classes} {...rest}>
+            <slot />
+        </label>
+    </h1>
+) : (
+    <label class={classes} {...rest}>
+        <slot />
+    </label>
+)}

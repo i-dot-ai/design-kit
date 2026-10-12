@@ -1,0 +1,18 @@
+packages:
+  - "frontend"
+  - "packages/*"
+  - "tests-unit"
+
+overrides:
+  "@types/react": "19.3.0"
+  "@types/react-dom": "19.3.0"
+  "react": "19.3.0"
+  "react-dom": "19.3.0"
+
+allowBuilds:
+  esbuild: true
+  "@parcel/watcher": true
+  "@sentry/cli": true
+  sharp: true
+
+autoInstallPeers: false

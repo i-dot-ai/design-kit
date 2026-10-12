@@ -1,0 +1,15 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"span">;
+
+const { class: className, ...rest } = Astro.props;
+
+const classes = ["govuk-phase-banner__text", className ?? ""]
+    .filter(Boolean)
+    .join(" ");
+---
+
+<span class={classes} {...rest}>
+    <slot />
+</span>

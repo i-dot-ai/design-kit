@@ -1,0 +1,14 @@
+@use "pkg:govuk-frontend/base" as *;
+
+.govuk-generic-header {
+    --govuk-text-colour: #0b0c0c;
+    background-color: govuk-functional-colour("surface-background");
+}
+
+.govuk-generic-header__homepage-link svg {
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    margin-top: -15px;
+    margin-right: 10px;
+}

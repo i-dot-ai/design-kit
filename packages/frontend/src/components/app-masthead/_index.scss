@@ -1,0 +1,10 @@
+@use "pkg:govuk-frontend/base" as *;
+
+.app-masthead {
+    background-color: govuk-functional-colour("brand")
+}
+
+.app-masthead__title,
+.app-masthead__body {
+    color: govuk-functional-colour("inverse-text")
+}

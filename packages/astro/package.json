@@ -1,0 +1,34 @@
+{
+  "name": "@i-dot-ai-npm/component-library-astro",
+  "version": "0.0.10",
+  "description": "Astro components for i.AI GOV.UK",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./*": "./src/*"
+  },
+  "files": [
+    "src"
+  ],
+  "peerDependencies": {
+    "astro": ">=4",
+    "govuk-frontend": ">=6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/i-dot-ai/design-kit.git",
+    "directory": "packages/astro"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "astro": "^7.3.2",
+    "govuk-frontend": "^6.5.0"
+  }
+}

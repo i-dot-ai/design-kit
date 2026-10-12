@@ -1,0 +1,29 @@
+---
+import {
+    ErrorSummary,
+    ErrorSummaryTitle,
+    ErrorSummaryBody,
+    ErrorSummaryList,
+    ErrorSummaryItem,
+} from "@i-dot-ai-npm/component-library-astro";
+
+const { titleText, descriptionText, errorList } = Astro.props;
+
+type Item = { text: string; href?: string };
+---
+
+<ErrorSummary>
+    <ErrorSummaryTitle>{titleText}</ErrorSummaryTitle>
+    <ErrorSummaryBody>
+        {descriptionText !== undefined && <p>{descriptionText}</p>}
+        {
+            errorList.length > 0 && (
+                <ErrorSummaryList>
+                    {(errorList as Item[]).map((item) => (
+                        <ErrorSummaryItem href={item.href}>{item.text}</ErrorSummaryItem>
+                    ))}
+                </ErrorSummaryList>
+            )
+        }
+    </ErrorSummaryBody>
+</ErrorSummary>

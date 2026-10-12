@@ -1,0 +1,13 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"h2">;
+
+const { class: className, ...rest } = Astro.props;
+
+const classes = ["side-nav__title", className ?? ""].filter(Boolean).join(" ");
+---
+
+<h2 class={classes} {...rest}>
+    <slot />
+</h2>

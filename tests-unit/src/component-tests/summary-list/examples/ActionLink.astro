@@ -1,0 +1,8 @@
+---
+import { hiddenSuffix } from "../match-govuk-mappings.js";
+
+const { action, cardTitle } = Astro.props;
+const suffix = hiddenSuffix(action.visuallyHiddenText, cardTitle);
+---
+
+<a class="govuk-link" href={action.href}>{action.text}{suffix && <span class="govuk-visually-hidden">{suffix}</span>}</a>

@@ -1,0 +1,7 @@
+@use "pkg:govuk-frontend/base" as *;
+
+// Text input overrides.
+
+.govuk-input--subtle {
+    border: 1px solid govuk-colour("black", $variant: "tint-50");
+}

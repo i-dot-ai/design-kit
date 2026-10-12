@@ -1,0 +1,19 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"div">;
+
+const { class: className, ...rest } = Astro.props;
+
+const classes = ["govuk-warning-text", className ?? ""]
+    .filter(Boolean)
+    .join(" ");
+---
+
+<div class={classes} {...rest}>
+    <span class="govuk-warning-text__icon" aria-hidden="true"> ! </span>
+    <strong class="govuk-warning-text__text">
+        <span class="govuk-visually-hidden"> Warning </span>
+        <slot />
+    </strong>
+</div>

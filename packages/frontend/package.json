@@ -1,0 +1,42 @@
+{
+  "name": "@i-dot-ai-npm/component-library-frontend",
+  "version": "0.0.10",
+  "description": "i.AI GOV.UK design-system override layer (SCSS + JS). Layered on top of govuk-frontend.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./scss": "./src/index.scss",
+    "./css": "./dist/i-ai-design-system.min.css",
+    "./min.js": "./dist/i-ai-design-system.min.js"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run build:css && npm run build:js",
+    "build:css": "sass --no-source-map --style=compressed --pkg-importer=node src/index.scss dist/i-ai-design-system.min.css",
+    "build:js": "esbuild src/index.js --bundle --minify --format=esm --outfile=dist/i-ai-design-system.min.js"
+  },
+  "peerDependencies": {
+    "govuk-frontend": ">=6"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "govuk-frontend": "^6.5.0",
+    "sass": "^1.103.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/i-dot-ai/design-kit.git",
+    "directory": "packages/frontend"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "license": "MIT"
+}

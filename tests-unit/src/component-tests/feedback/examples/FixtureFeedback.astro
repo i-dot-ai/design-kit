@@ -1,0 +1,9 @@
+---
+import { Feedback } from "@i-dot-ai-npm/component-library-astro";
+
+const { classes, titleText, titleHtml, text, html } = Astro.props;
+---
+
+<Feedback title={titleHtml ?? titleText} class={classes}>
+    {html ? <Fragment set:html={html} /> : text}
+</Feedback>

@@ -38,12 +38,16 @@ Brewfile.lock.json
 *.ppt
 *.docx
 
+node_modules
+
 # Rendered presentations
 *.html
 *_files/
 
 # ...but keep component example HTML tracked
 !frontend/src/content/**/*.html
+!packages/**/*.html
+!tests-unit/**/*.html
 
 # Docker cache
 .build-cache
@@ -54,14 +58,9 @@ poetry.lock
 # Frontend dependencies (applies to all frontend frameworks)
 frontend/node_modules/
 frontend/.astro/
-frontend/.
 frontend/dist/
 
-
-
-
-
-
-
-
+# Playwright test output
+test-results/
+playwright-report/
 

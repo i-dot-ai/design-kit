@@ -1,0 +1,26 @@
+---
+import { ServiceNavigation, ServiceNavigationItem } from "@i-dot-ai-npm/component-library-astro";
+
+const { classes, serviceName, serviceUrl, hasNavigation, collapseNavigationOnMobile, endSlotHtml, endSlotInline, items } = Astro.props;
+
+type Item = { href?: string; text?: string; html?: string; current: boolean; active: boolean };
+---
+
+<ServiceNavigation
+    class={classes}
+    serviceName={serviceName}
+    serviceUrl={serviceUrl}
+    hasNavigation={hasNavigation}
+    collapseNavigationOnMobile={collapseNavigationOnMobile}
+    endSlotInline={endSlotInline}
+    hasEndSlot={endSlotHtml !== undefined}
+>
+    {
+        (items as Item[]).map((item) => (
+            <ServiceNavigationItem href={item.href} current={item.current} active={item.active}>
+                {item.html !== undefined ? <Fragment set:html={item.html} /> : item.text}
+            </ServiceNavigationItem>
+        ))
+    }
+    {endSlotHtml !== undefined && <Fragment slot="end" set:html={endSlotHtml} />}
+</ServiceNavigation>

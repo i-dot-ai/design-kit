@@ -1,0 +1,31 @@
+---
+import {
+    Tabs,
+    TabsTitle,
+    TabsList,
+    Tab,
+    TabPanel,
+} from "@i-dot-ai-npm/component-library-astro";
+
+const { title, items } = Astro.props;
+---
+
+<Tabs>
+    <TabsTitle>{title}</TabsTitle>
+    <TabsList>
+        {
+            items.map((item: { id: string; label: string; selected: boolean }) => (
+                <Tab href={`#${item.id}`} selected={item.selected}>
+                    {item.label}
+                </Tab>
+            ))
+        }
+    </TabsList>
+    {
+        items.map((item: { id: string; selected: boolean; panelHtml?: string; panelText?: string }) => (
+            <TabPanel id={item.id} hidden={!item.selected}>
+                {item.panelHtml ? <Fragment set:html={item.panelHtml} /> : <p class="govuk-body">{item.panelText}</p>}
+            </TabPanel>
+        ))
+    }
+</Tabs>

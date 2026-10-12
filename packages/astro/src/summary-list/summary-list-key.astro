@@ -1,0 +1,15 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"dt">;
+
+const { class: className, ...rest } = Astro.props;
+
+const classes = ["govuk-summary-list__key", className ?? ""]
+    .filter(Boolean)
+    .join(" ");
+---
+
+<dt class={classes} {...rest}>
+    <slot />
+</dt>

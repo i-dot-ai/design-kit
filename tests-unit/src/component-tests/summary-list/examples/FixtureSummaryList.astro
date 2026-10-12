@@ -1,0 +1,91 @@
+---
+import {
+    SummaryList,
+    SummaryListRow,
+    SummaryListKey,
+    SummaryListValue,
+    SummaryListActions,
+    SummaryCard,
+    SummaryCardTitleWrapper,
+    SummaryCardTitle,
+    SummaryCardActions,
+    SummaryCardAction,
+    SummaryCardContent,
+} from "@i-dot-ai-npm/component-library-astro";
+import { hiddenSuffix } from "../match-govuk-mappings.js";
+import ActionLink from "./ActionLink.astro";
+
+const { noBorder, rows, card } = Astro.props;
+
+type Action = { href: string; text: string; visuallyHiddenText?: string };
+type Row = {
+    keyText: string;
+    valueText?: string;
+    valueHtml?: string;
+    rowClass?: string;
+    actions: Action[];
+};
+
+const cardTitle: string | undefined = card?.titleText;
+const rowList = rows as Row[];
+---
+
+<!-- The summary list, reused inside or outside a card. -->
+{
+    (() => {
+        const list = (
+            <SummaryList noBorder={noBorder}>
+                {rowList.map((row) => (
+                    <SummaryListRow class={row.rowClass}>
+                        <SummaryListKey>{row.keyText}</SummaryListKey>
+                        <SummaryListValue>
+                            {row.valueHtml ? <Fragment set:html={row.valueHtml} /> : row.valueText}
+                        </SummaryListValue>
+                        {row.actions.length > 0 && (
+                            <SummaryListActions>
+                                {row.actions.length === 1 ? (
+                                    <ActionLink action={row.actions[0]} cardTitle={cardTitle} />
+                                ) : (
+                                    <ul class="govuk-summary-list__actions-list">
+                                        {row.actions.map((action) => (
+                                            <li class="govuk-summary-list__actions-list-item">
+                                                <ActionLink action={action} cardTitle={cardTitle} />
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </SummaryListActions>
+                        )}
+                    </SummaryListRow>
+                ))}
+            </SummaryList>
+        );
+
+        if (!card) return list;
+
+        return (
+            <SummaryCard>
+                <SummaryCardTitleWrapper>
+                    <SummaryCardTitle>
+                        {card.titleHtml ? <Fragment set:html={card.titleHtml} /> : card.titleText}
+                    </SummaryCardTitle>
+                    {card.actions.length === 1 && (
+                        <SummaryCardActions single>
+                            <ActionLink action={card.actions[0]} cardTitle={cardTitle} />
+                        </SummaryCardActions>
+                    )}
+                    {card.actions.length > 1 && (
+                        <SummaryCardActions>
+                            {card.actions.map((action: Action) => (
+                                <SummaryCardAction>
+                                    <ActionLink action={action} cardTitle={cardTitle} />
+                                </SummaryCardAction>
+                            ))}
+                        </SummaryCardActions>
+                    )}
+                </SummaryCardTitleWrapper>
+                <SummaryCardContent>{list}</SummaryCardContent>
+            </SummaryCard>
+        );
+    })()
+}

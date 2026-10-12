@@ -1,0 +1,22 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"nav"> {
+    heading?: string;
+    headingId?: string;
+}
+
+const {
+    heading = "Pages in this section",
+    headingId = "contents-panel-heading",
+    class: className,
+    ...rest
+} = Astro.props;
+
+const classes = ["contents-panel", className ?? ""].filter(Boolean).join(" ");
+---
+
+<nav class={classes} aria-labelledby={headingId} {...rest}>
+    <h2 class="govuk-visually-hidden" id={headingId}>{heading}</h2>
+    <slot />
+</nav>

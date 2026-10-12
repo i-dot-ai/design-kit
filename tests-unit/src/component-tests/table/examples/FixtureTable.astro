@@ -1,0 +1,45 @@
+---
+import {
+    Table,
+    TableCaption,
+    TableHead,
+    TableBody,
+    TableRow,
+    TableHeader,
+    TableCell,
+} from "@i-dot-ai-npm/component-library-astro";
+
+const { caption, captionSize, firstCellIsHeader, head, rows } = Astro.props;
+
+type Cell = { text: string; numeric: boolean };
+---
+
+<Table>
+    {caption && <TableCaption size={captionSize}>{caption}</TableCaption>}
+    {
+        head && (
+            <TableHead>
+                <TableRow>
+                    {(head as Cell[]).map((cell) => (
+                        <TableHeader numeric={cell.numeric}>{cell.text}</TableHeader>
+                    ))}
+                </TableRow>
+            </TableHead>
+        )
+    }
+    <TableBody>
+        {
+            (rows as Cell[][]).map((row) => (
+                <TableRow>
+                    {row.map((cell, c) =>
+                        firstCellIsHeader && c === 0 ? (
+                            <TableHeader scope="row">{cell.text}</TableHeader>
+                        ) : (
+                            <TableCell numeric={cell.numeric}>{cell.text}</TableCell>
+                        ),
+                    )}
+                </TableRow>
+            ))
+        }
+    </TableBody>
+</Table>

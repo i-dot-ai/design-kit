@@ -1,0 +1,100 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"nav"> {
+    sideNav?: boolean;
+    inverse?: boolean;
+    serviceName?: string;
+    serviceUrl?: string;
+    navigationId?: string;
+    menuButtonText?: string;
+    ariaLabel?: string;
+    hasNavigation?: boolean;
+    collapseNavigationOnMobile?: boolean;
+    endSlotInline?: boolean;
+    hasEndSlot?: boolean;
+}
+
+const {
+    sideNav = false,
+    inverse = false,
+    serviceName,
+    serviceUrl,
+    navigationId = "navigation",
+    menuButtonText = "Menu",
+    ariaLabel,
+    hasNavigation = true,
+    collapseNavigationOnMobile = false,
+    endSlotInline = false,
+    hasEndSlot = false,
+    class: className,
+    ...rest
+} = Astro.props;
+
+const classes = [
+    "govuk-service-navigation",
+    sideNav ? "govuk-service-navigation--side-nav" : "",
+    inverse ? "govuk-service-navigation--inverse" : "",
+    className ?? "",
+]
+    .filter(Boolean)
+    .join(" ");
+
+const navLabel = ariaLabel ?? menuButtonText;
+const containerClasses = [
+    "govuk-width-container",
+    endSlotInline ? "govuk-service-navigation__inlining-container" : "",
+]
+    .filter(Boolean)
+    .join(" ");
+
+const hasEnd = hasEndSlot;
+const useSection = serviceName !== undefined || hasEnd;
+const Tag = useSection ? "section" : "div";
+---
+
+<Tag
+    class={classes}
+    data-module="govuk-service-navigation"
+    aria-label={useSection ? (ariaLabel ?? "Service information") : undefined}
+    {...rest}
+>
+    <div class={containerClasses}>
+        <div class="govuk-service-navigation__container">
+            {
+                serviceName !== undefined && (
+                    <span class="govuk-service-navigation__service-name">
+                        {serviceUrl !== undefined ? (
+                            <a href={serviceUrl} class="govuk-service-navigation__link">
+                                {serviceName}
+                            </a>
+                        ) : (
+                            <span class="govuk-service-navigation__text">{serviceName}</span>
+                        )}
+                    </span>
+                )
+            }
+            {
+                hasNavigation && (
+                    <nav aria-label={navLabel} class="govuk-service-navigation__wrapper">
+                        {collapseNavigationOnMobile && (
+                            <button
+                                type="button"
+                                class="govuk-service-navigation__toggle govuk-js-service-navigation-toggle"
+                                aria-controls={navigationId}
+                                hidden
+                                aria-hidden="true"
+                            >
+                                {menuButtonText}
+                            </button>
+                        )}
+                        <ul class="govuk-service-navigation__list" id={navigationId}>
+                            <slot />
+                        </ul>
+                    </nav>
+                )
+            }
+        </div>
+        {hasEnd && <slot name="end" />}
+    </div>
+</Tag>

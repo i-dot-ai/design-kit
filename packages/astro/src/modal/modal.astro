@@ -1,0 +1,19 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"dialog"> & {
+    /** Render the modal open on initial load. Interactivity is handled by the
+     *  central behaviour layer via `data-iai-modal-open`/`data-iai-modal-close`. */
+    open?: boolean;
+};
+
+const { class: className, open, ...rest } = Astro.props;
+
+const classes = ["iai-modal", className ?? ""].filter(Boolean).join(" ");
+---
+
+<dialog class={classes} tabindex="-1" data-module="iai-modal" open={open} {...rest}>
+    <div class="iai-modal__container">
+        <slot />
+    </div>
+</dialog>

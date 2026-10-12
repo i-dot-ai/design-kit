@@ -1,0 +1,21 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"div">;
+
+const { class: className, ...rest } = Astro.props;
+
+const classes = ["govuk-cookie-banner", className ?? ""]
+    .filter(Boolean)
+    .join(" ");
+---
+
+<div
+    class={classes}
+    data-nosnippet=""
+    role="region"
+    aria-label="Cookie banner"
+    {...rest}
+>
+    <slot />
+</div>

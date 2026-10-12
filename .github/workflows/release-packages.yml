@@ -1,0 +1,67 @@
+name: Release packages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "packages/**"
+
+concurrency: release-packages
+
+permissions:
+  contents: read
+  id-token: write # Required for npm trusted publishing (OIDC)
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+          cache: pnpm
+
+      - name: Upgrade npm for trusted publishing
+        run: |
+          # Node 22 bundles an npm older than the 11.5.1 OIDC floor.
+          npm install -g npm@11.5.1
+          npm -v
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Build packages that need it
+        run: pnpm --filter @i-dot-ai-npm/component-library-frontend build
+
+      - name: Publish changed packages
+        run: |
+          # Each package is versioned independently. Publish any whose own
+          # package.json version is not yet on npm; skip the rest.
+          #
+          # GUARDRAIL: we publish with raw `npm publish` (needed for OIDC trusted
+          # publishing, which `pnpm publish` doesn't support). Raw npm does NOT
+          # rewrite `workspace:*`. Safe only because inter-package links live in
+          # devDependencies while SHIPPED links are semver peerDependencies.
+          # NEVER move a `workspace:*` into dependencies/peerDependencies.
+          for fw in react solid svelte astro frontend; do
+            dir="packages/$fw"
+            name=$(node -p "require('./$dir/package.json').name")
+            version=$(node -p "require('./$dir/package.json').version")
+            if npm view "$name@$version" version >/dev/null 2>&1; then
+              echo "::notice::$name@$version already published — skipping."
+              continue
+            fi
+            echo "Publishing $name@$version"
+            # Publish with the npm CLI, as pnpm publish does not support OIDC.
+            ( cd "$dir" && npm publish --access public )
+          done

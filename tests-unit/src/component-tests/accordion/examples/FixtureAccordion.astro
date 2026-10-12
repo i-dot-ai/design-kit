@@ -1,0 +1,44 @@
+---
+import {
+    Accordion,
+    AccordionSection,
+    AccordionSectionHeader,
+    AccordionSectionHeading,
+    AccordionSectionSummary,
+    AccordionSectionContent,
+} from "@i-dot-ai-npm/component-library-astro";
+
+const { id, sections } = Astro.props;
+---
+
+<Accordion {id}>
+    {
+        sections.map((section: any) => (
+            <AccordionSection
+                class={section.expanded ? "govuk-accordion__section--expanded" : undefined}
+            >
+                <AccordionSectionHeader>
+                    <AccordionSectionHeading id={section.headingId}>
+                        {section.heading}
+                    </AccordionSectionHeading>
+                    {section.summaryId && (
+                        <AccordionSectionSummary id={section.summaryId}>
+                            {section.summaryHtml ? (
+                                <Fragment set:html={section.summaryHtml} />
+                            ) : (
+                                section.summaryText
+                            )}
+                        </AccordionSectionSummary>
+                    )}
+                </AccordionSectionHeader>
+                <AccordionSectionContent id={section.contentId}>
+                    {section.contentHtml ? (
+                        <Fragment set:html={section.contentHtml} />
+                    ) : (
+                        <p class="govuk-body">{section.contentText}</p>
+                    )}
+                </AccordionSectionContent>
+            </AccordionSection>
+        ))
+    }
+</Accordion>

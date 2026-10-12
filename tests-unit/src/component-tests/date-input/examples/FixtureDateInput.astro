@@ -1,0 +1,44 @@
+---
+import {
+    FormGroup,
+    Fieldset,
+    FieldsetLegend,
+    Hint,
+    ErrorMessage,
+    InputLabel,
+    DateInput,
+    DateInputItem,
+    DateInputField,
+} from "@i-dot-ai-npm/component-library-astro";
+
+const { id, legend, hintId, hintText, errorId, errorText, hasError, describedBy, items } = Astro.props;
+
+type Item = { id: string; name: string; label: string; value?: string; inputClasses: string };
+---
+
+<FormGroup class={hasError ? "govuk-form-group--error" : undefined}>
+    <Fieldset role="group" aria-describedby={describedBy || undefined}>
+        <FieldsetLegend>{legend}</FieldsetLegend>
+        {hintText !== undefined && <Hint id={hintId}>{hintText}</Hint>}
+        {errorText !== undefined && <ErrorMessage id={errorId}>{errorText}</ErrorMessage>}
+        <DateInput id={id}>
+            {
+                (items as Item[]).map((item) => (
+                    <DateInputItem>
+                        <FormGroup>
+                            <InputLabel class="govuk-date-input__label" for={item.id}>
+                                {item.label}
+                            </InputLabel>
+                            <DateInputField
+                                id={item.id}
+                                name={item.name}
+                                class={item.inputClasses}
+                                value={item.value}
+                            />
+                        </FormGroup>
+                    </DateInputItem>
+                ))
+            }
+        </DateInput>
+    </Fieldset>
+</FormGroup>
