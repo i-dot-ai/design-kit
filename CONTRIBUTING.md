@@ -8,6 +8,7 @@ This is a pnpm monorepo containing both the i.AI Design Kit site and the compone
 - [Adding to the Component Library](#adding-to-the-component-library)
   - [Things to consider before you build your component](#things-to-consider-before-you-build-your-component)
   - [tests](#tests)
+  - [Documentation](#documentation)
   - [Techincal requirements](#technical-requirements)
 - [Releases](#releases)
 
