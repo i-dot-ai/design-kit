@@ -9,7 +9,10 @@
     "types": ["node", "vitest/globals"],
     "jsx": "preserve",
     "noEmit": true,
-    "verbatimModuleSyntax": false
+    "verbatimModuleSyntax": false,
+    "paths": {
+      "@content/*": ["../frontend/src/content/*"]
+    }
   },
   "include": ["src", "vitest.config.ts"]
 }
