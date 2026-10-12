@@ -1,0 +1,31 @@
+---
+import Layout from "@layouts/TestLayout.astro";
+
+const modules = import.meta.glob("/src/content/components/*/examples/*.astro", {
+    import: "default",
+    eager: true,
+}) as Record<string, any>;
+
+export function getStaticPaths() {
+    const files = import.meta.glob(
+        "/src/content/components/*/examples/*.astro",
+    );
+    return Object.keys(files).map((path) => {
+        const [, rest] = path.split("/content/components/");
+        const component = rest.split("/")[0];
+        const variant = rest
+            .split("/")
+            .pop()!
+            .replace(/\.astro$/, "");
+        return { params: { component, variant } };
+    });
+}
+
+const { component, variant } = Astro.params;
+const Example =
+    modules[`/src/content/components/${component}/examples/${variant}.astro`];
+---
+
+<Layout>
+    {Example && <Example />}
+</Layout>

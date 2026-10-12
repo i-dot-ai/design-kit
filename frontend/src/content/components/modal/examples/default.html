@@ -1,0 +1,24 @@
+<button type="button" class="govuk-button" data-iai-modal-open="html-modal" data-testid="open">
+    Open modal
+</button>
+
+<dialog id="html-modal" class="iai-modal" tabindex="-1" aria-labelledby="html-modal-title" data-module="iai-modal"
+    data-testid="modal">
+    <div class="iai-modal__container">
+        <h2 class="govuk-heading-m iai-modal__title" id="html-modal-title">
+            Delete item
+        </h2>
+        <div class="iai-modal__body">
+            <p class="govuk-body">Are you sure you want to delete this item?</p>
+        </div>
+        <div class="iai-modal__footer govuk-button-group">
+            <button type="button" class="govuk-button govuk-button--warning" data-iai-modal-close data-testid="confirm">
+                Delete
+            </button>
+            <button type="button" class="govuk-button govuk-button--secondary" data-iai-modal-close
+                data-testid="cancel">
+                Cancel
+            </button>
+        </div>
+    </div>
+</dialog>

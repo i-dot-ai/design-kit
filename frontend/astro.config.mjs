@@ -50,8 +50,12 @@ export default defineConfig({
   },
   integrations: [
     mdx(),
-    react({ include: ['**/*.react.tsx'] }),
-    solid({ include: ['**/*.solid.tsx'] }),
+    react({
+      include: ['**/*.react.tsx', '**/packages/react/**/*.tsx'],
+    }),
+    solid({
+      include: ['**/*.solid.tsx', '**/packages/solid/**/*.tsx'],
+    }),
     svelte(),
     // Uncomment if using Sentry
     /*

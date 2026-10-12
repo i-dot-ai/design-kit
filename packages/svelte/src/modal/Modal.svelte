@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { Snippet } from "svelte";
     import type { HTMLDialogAttributes } from "svelte/elements";
+    import { initModal, openModal, closeModal } from "@i-dot-ai-npm/component-library-frontend";
 
     type Props = Omit<HTMLDialogAttributes, "onclose"> & {
         class?: string;
@@ -23,15 +24,9 @@
     $effect(() => {
         const el = dialog;
         if (!el) return;
-        const isOpen = open;
-        void import("@i-dot-ai-npm/component-library-frontend").then(
-            ({ initModal, openModal, closeModal }) => {
-                if (dialog !== el) return;
-                initModal(el);
-                if (isOpen) openModal(el);
-                else closeModal(el);
-            },
-        );
+        initModal(el);
+        if (open) openModal(el);
+        else closeModal(el);
     });
 </script>
 

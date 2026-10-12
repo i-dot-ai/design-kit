@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import { initModal, openModal, closeModal } from "@i-dot-ai-npm/component-library-frontend";
 
 type ModalProps = Omit<ComponentPropsWithoutRef<"dialog">, "onClose"> & {
     class?: string;
@@ -27,14 +28,9 @@ export default function Modal({
     useEffect(() => {
         const dialog = ref.current;
         if (!dialog) return;
-        void import("@i-dot-ai-npm/component-library-frontend").then(
-            ({ initModal, openModal, closeModal }) => {
-                if (ref.current !== dialog) return;
-                initModal(dialog);
-                if (open) openModal(dialog);
-                else closeModal(dialog);
-            },
-        );
+        initModal(dialog);
+        if (open) openModal(dialog);
+        else closeModal(dialog);
     }, [open]);
 
     useEffect(() => {

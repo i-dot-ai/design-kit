@@ -1,10 +1,5 @@
-import { test, expect, type Page } from "@playwright/test";
-import { MODAL_PAGES } from "./modal-pages";
-
-async function openModal(page: Page) {
-    await page.getByTestId("open").click();
-    await expect(page.getByTestId("modal")).toBeVisible();
-}
+import { test, expect } from "@playwright/test";
+import { MODAL_PAGES, openModal } from "./modal-pages";
 
 for (const target of MODAL_PAGES) {
     test.describe(`behaviour: ${target.name}`, () => {
@@ -53,8 +48,7 @@ for (const target of MODAL_PAGES) {
             test.skip(browserName === "webkit", "webkit fires false negative, tested manually in Safari");
 
             const trigger = page.getByTestId("open");
-            await trigger.click();
-            await expect(page.getByTestId("modal")).toBeVisible();
+            await openModal(page);
             await page.keyboard.press("Escape");
             await expect(page.getByTestId("modal")).toBeHidden();
             await expect(trigger).toBeFocused();
