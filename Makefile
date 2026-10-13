@@ -28,22 +28,13 @@ run_e2e_behaviour_tests:
 
 run_all_tests: run_unit_tests run_e2e_tests
 
-run:
-	docker compose up -d --wait
-
-stop:
-	docker compose down
-
-
-
-
 .PHONY: generate_aws_diagram
 generate_aws_diagram:
 	uv lock
 	uv sync --group dev
 	uv run python terraform/diagram_script.py
 
-# Docker
+# ECR image tagging (used by the ECS/Terraform deploy path)
 
 SERVICE_NAME=$(subst pipelines/,,$(service))
 ECR_REPO_NAME=$(APP_NAME)-$(SERVICE_NAME)
@@ -52,24 +43,6 @@ ECR_REPO_URL=$(ECR_URL)/$(ECR_REPO_NAME)
 
 IMAGE_TAG=$$(git rev-parse HEAD)
 IMAGE=$(ECR_REPO_URL):$(IMAGE_TAG)
-
-DOCKER_BUILDER_CONTAINER=$(APP_NAME)
-cache ?= ./.build-cache
-APP_CACHE_DIR = $(cache)/$(APP_NAME)/$(service)
-
-docker_login:
-	aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin $(ECR_URL)
-
-docker_build: ## Build the docker container for the specified service when running in CI/CD
-	DOCKER_BUILDKIT=1 docker buildx build --platform linux/amd64 --load --builder=$(DOCKER_BUILDER_CONTAINER) -t $(IMAGE) \
-	--cache-to type=local,dest=$(APP_CACHE_DIR) \
-	--cache-from type=local,src=$(APP_CACHE_DIR) -f $(service)/Dockerfile .
-
-docker_build_local: ## Build the docker container for the specified service locally
-	DOCKER_BUILDKIT=1 docker build --platform=linux/amd64 -t $(IMAGE) -f $(service)/Dockerfile .
-
-docker_push:
-	docker push $(IMAGE)
 
 docker_tag_is_present_on_image:
 	aws ecr describe-images --repository-name $(repo) --image-ids imageTag=$(IMAGE_TAG) --query 'imageDetails[].imageTags' | jq -e '.[]|any(. == "$(tag)")' >/dev/null
@@ -84,9 +57,6 @@ docker_update_tag: ## Tag the docker image with the specified tag
 	if make docker_tag_is_present_on_image 2>/dev/null; then echo "Image already tagged with $(tag)" && exit 0; fi && \
 	MANIFEST=$$(aws ecr batch-get-image --repository-name $(repo) --image-ids imageTag=$(IMAGE_TAG) --query 'images[].imageManifest' --output text) && \
 	aws ecr put-image --repository-name $(repo) --image-tag $(tag) --image-manifest "$$MANIFEST"
-
-docker_echo:
-	echo $($(value))
 
 ## Terraform 
 

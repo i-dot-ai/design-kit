@@ -21,7 +21,8 @@ make run_frontend
 
 
 ``` bash
-make docker_build_local service=frontend
+make install
+make run_frontend
 ```
 
 
@@ -109,7 +110,7 @@ To create users for your app, you'll need to add them to our Auth API deployment
 
 #### Builds
 
-The docker images for the services will be built on every push to any branch by the github actions.
+The public site is built as a static site and deployed on push to `main` by the GitHub Actions workflow in `.github/workflows/release-public-site.yml`.
 
 #### Releases
 
