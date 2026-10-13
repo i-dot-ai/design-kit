@@ -1,14 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { fileURLToPath } from "node:url";
 import { renderSvelte } from "../../../render/svelte";
-import { expectedShape, renderedShape } from "../../../match-iai-expected-html-helpers/expected";
-import ExampleToggle from "../examples/ExampleToggle.svelte";
-
-const expectedPath = fileURLToPath(new URL("../expected.html", import.meta.url));
+import { renderedShape } from "../../../match-iai-expected-html-helpers/expected";
+import ExampleToggle from "@content/components/toggle/examples/default.svelte";
+import expectedHtml from "@content/components/toggle/examples/default.html?raw";
 
 describe("Matches i.AI expected HTML - Toggle", () => {
     it("composition", () => {
         const html = renderSvelte(ExampleToggle as never, {});
-        expect(renderedShape(html)).toEqual(expectedShape(expectedPath));
+        expect(renderedShape(html)).toEqual(renderedShape(expectedHtml));
     });
 });

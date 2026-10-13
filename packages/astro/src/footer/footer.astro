@@ -1,7 +1,7 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 
-interface Props extends HTMLAttributes<"div"> {
+interface Props extends HTMLAttributes<"footer"> {
     links?: unknown[];
     visuallyHiddenTitle?: string;
     containerClasses?: string;
@@ -21,7 +21,7 @@ const containerClass = ["govuk-width-container", containerClasses ?? ""]
     .join(" ");
 ---
 
-<div class={classes} {...rest}>
+<footer class={classes} {...rest}>
     <div class={containerClass}>
         <div class="govuk-footer__meta">
             <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
@@ -42,4 +42,4 @@ const containerClass = ["govuk-width-container", containerClasses ?? ""]
             <div class="govuk-footer__meta-item"><slot /></div>
         </div>
     </div>
-</div>
+</footer>

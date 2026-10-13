@@ -2,7 +2,7 @@ import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 
 type FooterLink = { href?: string; text?: string; attributes?: Record<string, string> };
 
-type FooterProps = ComponentPropsWithoutRef<'div'> & {
+type FooterProps = ComponentPropsWithoutRef<'footer'> & {
     /** Support links shown in the inline list (e.g. Accessibility statement, Cookies, Privacy). */
     links?: FooterLink[];
     /** Visually-hidden heading above the support links. */
@@ -26,7 +26,7 @@ export default function Footer({
         .join(' ');
 
     return (
-        <div className={classes} {...rest}>
+        <footer className={classes} {...rest}>
             <div className={containerClass}>
                 <div className="govuk-footer__meta">
                     <div className="govuk-footer__meta-item govuk-footer__meta-item--grow">
@@ -58,6 +58,6 @@ export default function Footer({
                     <div className="govuk-footer__meta-item">{children}</div>
                 </div>
             </div>
-        </div>
+        </footer>
     );
 }

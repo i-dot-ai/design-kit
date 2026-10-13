@@ -1,130 +1,198 @@
-# Contributing
+# Contributing to the Component Library
 
-This is a pnpm monorepo containing both the i.AI Design Kit site and the component library packages. Each module under `packages/` is published as an independent package on npmjs. This guide covers the day-to-day workflow, our conventions, and how to add a component.
+This is a pnpm monorepo. It holds the i.AI Design Kit site (`frontend/`) and the component library packages (`packages/`). Each package under `packages/` is published independently on npm.
 
 ## Table of contents
 
-- [Repo structure and where to work](#repo-structure-and-where-to-work)
-- [Adding to the Component Library](#adding-to-the-component-library)
-  - [Things to consider before you build your component](#things-to-consider-before-you-build-your-component)
-  - [tests](#tests)
-  - [Documentation](#documentation)
-  - [Techincal requirements](#technical-requirements)
+- [How we work: test-led](#how-we-work-test-led)
+- [Setup](#setup)
+- [Repo map](#repo-map)
+- [Adding a component](#adding-a-component)
+- [Modifying a component](#modifying-a-component)
+- [Tests reference](#tests-reference)
+  - [Unit tests](#unit-tests)
+    - [i.AI variant](#iai-variant)
+    - [i.AI expected HTML](#iai-expected-html)
+    - [match-govuk](#match-govuk)
+  - [E2E tests](#e2e-tests)
+    - [Test pages](#test-pages)
+    - [accessibility](#accessibility)
+    - [behaviour](#behaviour)
+- [Conventions](#conventions)
 - [Releases](#releases)
+- [Before you open a PR](#before-you-open-a-pr)
 
-## Repo structure and where to work
+## How we work: spec-led
 
-This repo has been set up to have a central frontend package which holds all the CSS and JS needed for the components to work. Each framework then has it's own package which holds light wrappers to make authoring components in each framework as straight forward as possible.
+Write the spec first, then build the component until it passes. The spec is the tests, together with the files they assert against. For a new component the spec is your `default.html` example in the design kit; for variants it is your `iai-variants.ts` map. So writing the example and writing the test is one step, done before you build the component.
 
-The design kit site (`frontend/`) is both the documentation site and where you build and test components: you author example files per component, and per-framework test pages are generated from them at `/test/<component>/<variant>/<framework>`.
+This matters most when an AI agent does the work: the tests define "done", not the agent's judgement.
 
-You should split your work across the following:
+A component is done when `make run_all_tests` passes across all frameworks and browsers.
 
-- [Design kit site](/frontend/) - Documentation and component examples. Draft your component's examples in `frontend/src/content/components/<component>/examples/` (one file per framework, e.g. `default.html`, `default.react.tsx`).
-- [Frontend package](/packages/frontend/) - You should put your final central CSS and js files here
-- Framework packages - where the final wrapper components should live.
-  - [Svelte packages](/packages/svelte)
-  - [React packages](/packages/react)
-  - [Solid packages](/packages/solid)
-  - [Astro packages](/packages/astro)
+### Guidelines
 
-## Adding to the Component Library
+- Any enhancement to a GOV.UK component is expected to be confined to adding variant classes. The GOV.UK expected output is loaded live from the `govuk-frontend` package, so there is nothing in this repo to edit anyway.
+- Do not weaken a test to make it pass. If a conformance test fails, fix the component.
 
-This repo has been built so that your agent can help you add components to this library. In order to add to this library you should consider the following:
+## Setup
 
-### Things to consider before you build your component
+```
+make install          # install dependencies
+make run_frontend     # run the design kit site
+make run_unit_tests   # conformance, variant and expected-HTML tests
+make run_e2e_tests    # behaviour and accessibility tests
+make run_all_tests    # everything
+```
 
-1. There should be a real need for the component:
-  - Check that it is not already present in the i.AI component library
-2. Check if another government department has already designed this component
-  - If so, you can use this as a basis for your component
+## Repo map
 
-### Tests
+A component is spread across these places:
 
-Your component should be testing lead. Depending on your use case you will need to ensure that the following tests fully cover your component and all pass:
+- `frontend/src/content/components/<component>/` — docs (`index.mdx`) and `examples/`
+- `packages/frontend` — the component's final CSS and JS
+- `packages/{astro,react,svelte,solid}` — the framework wrappers
+- `tests-unit/src/component-tests/<component>/` — conformance, variant and HTML tests
+- `tests-e2e/tests/<component>/` — behaviour and accessibility specs
 
-Unique to GOV.UK components:
+## Adding a component
 
-- Match GOV.UK Fixtures tests
+1. Check it's needed. Make sure it isn't already in the library. If another government department has designed it, use that as a basis.
+2. Write the spec first. Author the example files in `frontend/src/content/components/<component>/examples/`, one per framework: `default.html`, `default.astro`, `default.react.tsx`, `default.svelte`, `default.solid.tsx`. Then write the tests that apply (see [Tests reference](#tests-reference)), pointing them at these examples. Run them and confirm they fail.
+3. Build the central CSS and JS in `packages/frontend`.
+4. Build the wrappers in `packages/{astro,react,svelte,solid}`.
+5. Write the docs page as `index.mdx` with `name` and `status` frontmatter. Cover what the component is, when to use it and when not to. Render each example with `<Example />` (no import needed).
+6. Run `make run_all_tests` and confirm it passes across all frameworks and browsers.
 
-  These check to see if it matches the expected output given by GOV.UK Frontend. You will have to write a matching function which matches the variant prop to the expected class or attribute output.
+The plain HTML and Astro test pages are generated from your examples. For interactive components, add the React, Solid and Svelte test pages by hand under `frontend/src/pages/test/`. The [modal component](/frontend/src/content/components/modal/) is a full worked example.
 
-  If it is a simple component where the only check is to match attributes, html structure and classes you can follow the example of the [details component tests](/tests-unit/src/component-tests/details/). 
-  
-  If you have a more complex fixture list where tests rely on children being rendered or more complex behaviour you can follow the example of the [Accordion component tests](/tests-unit/src/component-tests/accordion/).
+## Modifying a component
 
-If the component has variant classes:
+### Adding a variant class
 
-- Matches i.AI variant classes
+If you are modifying a GOV.UK component, you should restrict your modification to just adding a variant class and the i.AI variant tests below.
 
-  This should only be for variants which do not exist in normal GOV.UK as GOV.UK variants such as `govuk-checkboxes--small` will have been covered in the above matching gov.uk fixture tests.
-  
-  For new components which are not in GOV.UK Frontend you will need to add all the variant classes for these tests.
+Similarly, if you are only adding a variant to an i.AI component you will need the relevant i.AI variant test to be added first.
 
-  You can follow the example of the [Link component variant tests](/tests-unit/src/component-tests/link) to see how to format your tests. You will have to write a `iai-variants.ts` file which maps the props to the expected classes
+### Changing behaviour
 
-New components which are not in GOV.UK
+If you are changing the behaviour of any component you should write the relevant behaviour playwright test first.
 
-- Matches i.AI expected HTML
+## Tests reference
 
-  These are to check that the html rendered in each framework match the expected html structure
+Pick the tests that apply to your component. Each one points at a template to copy.
 
-  You will need to write an expected.html file and then assert that each component matches that output. You can see the example of the [Toggle test folder](/tests-unit/src/component-tests/toggle/) to see how to structure your tests
+### Unit tests
 
-If the component is interactive (its behaviour is not covered by GOV.UK's own tested JS):
+Live in `tests-unit/src/component-tests/<component>/`.
 
-- Behavioural and accessibility tests
+#### i.AI variant
 
-  Add your component's example files, which generate the per-framework test pages at `/test/<component>/<variant>/<framework>`. Write Playwright behaviour tests (and axe accessibility tests) that drive those pages across all frameworks and browsers. See the [modal tests](/tests-e2e/tests/modal/) for the pattern.
+This tests that each variant prop renders the expected variant class, in every framework.
 
-### Documentation
+- For: a component with variant classes that GOV.UK does not have.
+- Checks the rendered output includes the expected class for each variant prop.
+- Steps:
+    - write an `iai-variants.ts` file that maps each variant to its props and expected class (for example `{ name: "warning", props: { variant: "warning" }, expectClass: "govuk-link--warning" }`).
+    - write the `iai-variants` test for each framework.
+- Example: `tests-unit/src/component-tests/link/`.
 
-Write a documentation page for your component as an `index.mdx` in the [components content folder](/frontend/src/content/components/). It needs `name` and `status` frontmatter, and should cover the component text, when to use it, when not to use it, and any other guidance. Render each example with the `<Example />` component (available automatically, no import needed).
+#### i.AI expected HTML
 
-Coding examples go in the component's `examples/` folder, one file per framework.
+This tests that all frameworks produce the same expected HTML.
 
-The plain HTML and Astro test pages are generated from your examples automatically. For interactive components, the React, Svelte and Solid test pages are added manually under `frontend/src/pages/test/`.
+- For: a new component that is not in GOV.UK.
+- Checks the rendered HTML against your `default.html` example (see [Adding a component](#adding-a-component)).
+- Steps: 
+    - write the example HTML in the design kit under `frontend/src/content/components/<component>/examples/default.html`.
+    - write the `match-iai-expected-html` test for each framework
+- Example: `tests-unit/src/component-tests/toggle/`.
 
-Follow the [modal component](/frontend/src/content/components/modal/) as a complete worked example — its `index.mdx`, `examples/` and the test pages under `frontend/src/pages/test/modal/`.
+#### match-govuk
 
-### Technical requirements
+**It is not expected that these will need to be written or updated**
 
-- Progressive enhancements
-  Your component should follow the progressive enhancement priniple of GOV.UK
-- SCSS mixins - should use the govuk mixins where possible
-- Variant classes should follow BEM structure e.g.`iai-card--secondary` or `govuk-button--tertiary` where extending a GOV.UK component
-- Output - Components should all be broken down to behave in a way that children can be passed in a intuitive way. E.g. the table component should be consumed like the following:
+These tests were written once to ensure that the base GOV.UK components matched the expected output from govuk-frontend package itself.
+
+- For: any component that wraps a GOV.UK component.
+- Checks your wrapper against GOV.UK's own fixtures. The expected output comes from the `govuk-frontend` package. It is already there and you do not write or update it. If this test fails, fix the component.
+- Example: `tests-unit/src/component-tests/details/`.
+
+### E2E tests
+
+Live in `tests-e2e/tests/<component>/` and drive the component's test pages. Both the accessibility and behaviour tests share the same test pages and `*-pages.ts` helper, so set those up first.
+
+#### Test pages
+
+Each test runs against one page per framework: plain HTML, Astro, React, Solid and Svelte. They live at `/test/<component>/<variant>/<framework>`.
+
+- The HTML and Astro pages are generated from your examples (see [Adding a component](#adding-a-component)).
+- The React, Solid and Svelte pages are written by hand as `.astro` files under `frontend/src/pages/test/<component>/[variant]/`.
+
+Then write a `*-pages.ts` helper in `tests-e2e/tests/<component>/`. It lists the pages to test and holds any shared actions the specs reuse:
+
+- `<COMPONENT>_PAGES`: an array of `{ name, path }` for each framework, for example `{ name: "react", path: "/test/modal/default/react" }`.
+- shared actions, for example an `openModal(page)` that both specs call. Framework islands hydrate after the page renders, so retry the action until it takes effect (see `openModal` in `tests-e2e/tests/modal/modal-pages.ts`).
+
+#### accessibility
+
+This runs axe against the component on each framework's test page and checks for no violations.
+
+- For: any interactive component.
+- Checks the rendered page has no accessibility violations, driving it into the state that needs testing first (for example, opening a modal).
+- Steps:
+    - set up the test pages and `*-pages.ts` helper (see [Test pages](#test-pages)).
+    - write the `*.a11y.spec.ts` test: for each page, go to it, drive it into the state, run `AxeBuilder`, and assert `results.violations` is empty.
+- Example: `tests-e2e/tests/modal/`.
+
+#### behaviour
+
+This drives the component on each framework's test page and checks it behaves the same everywhere.
+
+- For: any component whose behaviour is not covered by GOV.UK's own tested JS.
+- Checks the component responds correctly to user actions, across every framework (for example: opens from the trigger, closes on Escape, backdrop click and close button, traps and restores focus, locks background scroll).
+- Steps:
+    - set up the test pages and `*-pages.ts` helper (see [Test pages](#test-pages)).
+    - write the `*.behaviour.spec.ts` test: loop the pages, go to each, perform the action and assert the result. Use `getByTestId` to target elements, and `expect.poll` for state that settles after an event.
+- Example: `tests-e2e/tests/modal/`.
+
+## Conventions
+
+- Follow the GOV.UK progressive enhancement principle.
+- Use the GOV.UK SCSS mixins where possible.
+- Name variant classes with BEM, for example `iai-card--secondary` or `govuk-button--tertiary`.
+- Break components down so children can be passed in an intuitive way. For example:
 
   ```
-      <Table>
-          <TableCaption size="medium">Monthly energy costs</TableCaption>
-          <TableHead>
-              <TableRow>
-                  <TableHeader>Month</TableHeader>
-                  <TableHeader numeric>Gas</TableHeader>
-                  <TableHeader numeric>Electricity</TableHeader>
-              </TableRow>
-          </TableHead>
-          <TableBody>
-              <TableRow>
-                  <TableCell>January</TableCell>
-                  <TableCell numeric>£85</TableCell>
-                  <TableCell numeric>£95</TableCell>
-              </TableRow>
-              <TableRow>
-                  <TableCell>February</TableCell>
-                  <TableCell numeric>£75</TableCell>
-                  <TableCell numeric>£55</TableCell>
-              </TableRow>
-              <TableRow>
-                  <TableCell>March</TableCell>
-                  <TableCell numeric>£165</TableCell>
-                  <TableCell numeric>£125</TableCell>
-              </TableRow>
-          </TableBody>
-      </Table>
+  <Table>
+      <TableCaption size="medium">Monthly energy costs</TableCaption>
+      <TableHead>
+          <TableRow>
+              <TableHeader>Month</TableHeader>
+              <TableHeader numeric>Gas</TableHeader>
+              <TableHeader numeric>Electricity</TableHeader>
+          </TableRow>
+      </TableHead>
+      <TableBody>
+          <TableRow>
+              <TableCell>January</TableCell>
+              <TableCell numeric>£85</TableCell>
+              <TableCell numeric>£95</TableCell>
+          </TableRow>
+      </TableBody>
+  </Table>
   ```
 
 ## Releases
 
-If you up the version number in the package.json of any package it will be released on a merge to main
+Bump the version in a package's `package.json` and it is released on merge to `main`. Each package is versioned independently.
+
+## Before you open a PR
+
+- [ ] You wrote the applicable tests first and they now pass
+- [ ] `make run_all_tests` passes across all frameworks and browsers
+- [ ] Examples exist for every framework
+- [ ] The docs `index.mdx` has `name` and `status` frontmatter
+- [ ] Variant classes use BEM and the component works without JavaScript
+- [ ] You fixed any conformance failure in the component, not the test
+- [ ] You bumped the version if you want a release

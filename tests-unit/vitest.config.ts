@@ -1,7 +1,12 @@
 import { defineConfig } from "vitest/config";
 import solid from "vite-plugin-solid";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
+import { fileURLToPath } from "node:url";
 import { SuiteReporter } from "./suite-reporter.js";
+
+const contentAlias = {
+    "@content": fileURLToPath(new URL("../frontend/src/content", import.meta.url)),
+};
 
 /**
  * One project per framework, matched by filename convention:
@@ -22,6 +27,7 @@ export default defineConfig({
         projects: [
             {
                 esbuild: { jsx: "automatic", jsxImportSource: "react" },
+                resolve: { alias: contentAlias },
                 test: {
                     name: "react",
                     include: ["src/**/*.react.test.tsx"],
@@ -34,7 +40,7 @@ export default defineConfig({
                 // solid-js` pragma so it doesn't warn; vite-plugin-solid's babel
                 // pass still does the real transform.
                 esbuild: { jsx: "automatic", jsxImportSource: "solid-js" },
-                resolve: { conditions: ["solid", "node"] },
+                resolve: { conditions: ["solid", "node"], alias: contentAlias },
                 ssr: { noExternal: [/solid-js/, /@i-dot-ai-npm/] },
                 test: {
                     name: "solid",
@@ -45,6 +51,7 @@ export default defineConfig({
             },
             {
                 plugins: [svelte()],
+                resolve: { alias: contentAlias },
                 test: {
                     name: "svelte",
                     include: ["src/**/*.svelte.test.ts"],
