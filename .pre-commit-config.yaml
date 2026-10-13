@@ -13,7 +13,7 @@ repos:
     rev: v1.4.0
     hooks:
     -   id: detect-secrets
-        exclude: (poetry.lock|.env.example|.env.test|^.github/workflows/|.cruft.json|aws_architecture)
+        exclude: (poetry.lock|pnpm-lock.yaml|.env.example|.env.test|^.github/workflows/|.cruft.json|aws_architecture)
 
   - repo: local
     hooks:

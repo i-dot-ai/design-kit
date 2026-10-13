@@ -1,0 +1,108 @@
+@use "pkg:govuk-frontend/base" as *;
+
+$iai-toggle-track-width: 46px;
+$iai-toggle-track-height: 24px;
+$iai-toggle-handle-size: 22px;
+$iai-toggle-handle-inset: 1px;
+$iai-toggle-track-gap: 8px;
+
+$iai-toggle-checkmark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='14' viewBox='0 0 18 14' fill='none'%3E%3Cpath d='M6.08471 10.6237L2.29164 6.83059L1 8.11313L6.08471 13.1978L17 2.28255L15.7175 1L6.08471 10.6237Z' fill='white' stroke='white'/%3E%3C/svg%3E");
+$iai-toggle-cross: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 13 13' fill='none'%3E%3Cpath d='M11.167 0L6.5 4.667L1.833 0L0 1.833L4.667 6.5L0 11.167L1.833 13L6.5 8.333L11.167 13L13 11.167L8.333 6.5L13 1.833L11.167 0Z' fill='white'/%3E%3C/svg%3E");
+
+.iai-toggle__item {
+    display: flex;
+    align-items: center;
+    gap: $iai-toggle-track-gap;
+    margin-bottom: 10px;
+}
+
+.iai-toggle__item:last-child {
+    margin-bottom: 0;
+}
+
+.iai-toggle__input {
+    box-sizing: content-box;
+    position: relative;
+    flex: 0 0 auto;
+    width: $iai-toggle-track-width;
+    height: $iai-toggle-track-height;
+    margin: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    background: none;
+    cursor: pointer;
+}
+
+.iai-toggle__input::before {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: $iai-toggle-track-width;
+    height: $iai-toggle-track-height;
+    border-radius: 100px;
+    background-color: govuk-colour("black", $variant: "tint-25");
+    background-image: $iai-toggle-checkmark, $iai-toggle-cross;
+    background-repeat: no-repeat, no-repeat;
+    background-position: 8px center, 30px center;
+    background-size: 12px 12px, 10px 10px;
+    transition: 150ms;
+}
+
+.iai-toggle__input::after {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: $iai-toggle-handle-inset;
+    width: $iai-toggle-handle-size;
+    height: $iai-toggle-handle-size;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 50%;
+    background-color: govuk-colour("white");
+    transform: translateY(-50%);
+    transition: 150ms;
+}
+
+.iai-toggle__input:checked::before {
+    background-color: govuk-functional-colour("success");
+}
+
+.iai-toggle__input:checked::after {
+    left: $iai-toggle-track-width - $iai-toggle-handle-size - $iai-toggle-handle-inset;
+}
+
+.iai-toggle__input:focus-visible::before {
+    outline: 3px solid transparent;
+    outline-offset: 0;
+    box-shadow: 0 0 0 4px $govuk-focus-colour;
+}
+
+.iai-toggle__label {
+    align-self: center;
+    margin-bottom: 0;
+    padding: 7px 0;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+.iai-toggle__input:disabled {
+    cursor: not-allowed;
+}
+
+.iai-toggle__input:disabled::before {
+    background-color: govuk-colour("black", $variant: "tint-80");
+}
+
+.iai-toggle__item:has(.iai-toggle__input:disabled) .iai-toggle__label {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .iai-toggle__input::before,
+    .iai-toggle__input::after {
+        transition-duration: 0ms;
+    }
+}

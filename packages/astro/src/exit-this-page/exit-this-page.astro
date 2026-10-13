@@ -1,0 +1,40 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+    redirectUrl?: string;
+    id?: string;
+}
+
+const {
+    redirectUrl = "https://www.bbc.co.uk/weather",
+    id,
+    class: className,
+    ...rest
+} = Astro.props;
+
+const classes = ["govuk-exit-this-page", className ?? ""]
+    .filter(Boolean)
+    .join(" ");
+
+const hasContent = Astro.slots.has("default");
+---
+
+<div {id} class={classes} data-module="govuk-exit-this-page" {...rest}>
+    <a
+        href={redirectUrl}
+        role="button"
+        draggable="false"
+        class="govuk-button govuk-button--warning govuk-exit-this-page__button govuk-js-exit-this-page-button"
+        data-module="govuk-button"
+        rel="nofollow noreferrer"
+    >
+        {hasContent ? (
+            <slot />
+        ) : (
+            <Fragment>
+                <span class="govuk-visually-hidden">Emergency</span> Exit this page
+            </Fragment>
+        )}
+    </a>
+</div>

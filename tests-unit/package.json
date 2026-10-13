@@ -1,0 +1,30 @@
+{
+  "name": "@i-dot-ai-npm/component-library-tests-unit",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Cross-framework shape/equivalence tests for the i.AI component library.",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "scaffold": "node scripts/scaffold.mjs"
+  },
+  "dependencies": {
+    "@i-dot-ai-npm/component-library-astro": "workspace:*",
+    "@i-dot-ai-npm/component-library-react": "workspace:*",
+    "@i-dot-ai-npm/component-library-solid": "workspace:*",
+    "@i-dot-ai-npm/component-library-svelte": "workspace:*"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.3.0",
+    "astro": "^7.3.2",
+    "govuk-frontend": "^6.5.0",
+    "node-html-parser": "^7.1.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "solid-js": "^1.9.15",
+    "svelte": "^5.57.0",
+    "vite-plugin-solid": "^2.11.14",
+    "vitest": "^3.0.0"
+  }
+}

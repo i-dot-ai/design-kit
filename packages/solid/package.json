@@ -1,0 +1,37 @@
+{
+  "name": "@i-dot-ai-npm/component-library-solid",
+  "version": "0.0.9",
+  "description": "Solid.js components for i.AI GOV.UK.",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*"
+  },
+  "files": [
+    "src"
+  ],
+  "peerDependencies": {
+    "@i-dot-ai-npm/component-library-frontend": ">=0.0.9",
+    "govuk-frontend": ">=6",
+    "solid-js": ">=1.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/i-dot-ai/design-kit.git",
+    "directory": "packages/solid"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@i-dot-ai-npm/component-library-frontend": "workspace:*",
+    "govuk-frontend": "^6.5.0",
+    "solid-js": "^1.9.15",
+    "typescript": "^5.9.3"
+  }
+}

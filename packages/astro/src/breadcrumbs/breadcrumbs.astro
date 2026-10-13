@@ -1,0 +1,30 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"nav"> {
+    inverse?: boolean;
+    collapseOnMobile?: boolean;
+}
+
+const {
+    inverse = false,
+    collapseOnMobile = false,
+    class: className,
+    ...rest
+} = Astro.props;
+
+const classes = [
+    "govuk-breadcrumbs",
+    inverse ? "govuk-breadcrumbs--inverse" : "",
+    collapseOnMobile ? "govuk-breadcrumbs--collapse-on-mobile" : "",
+    className ?? "",
+]
+    .filter(Boolean)
+    .join(" ");
+---
+
+<nav class={classes} aria-label="Breadcrumb" {...rest}>
+    <ol class="govuk-breadcrumbs__list">
+        <slot />
+    </ol>
+</nav>

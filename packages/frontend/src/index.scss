@@ -1,0 +1,21 @@
+// i.AI Design System — override layer for govuk-frontend.
+//
+// Load AFTER govuk-frontend's base styles. This layer only adjusts and adds
+// to GOV.UK components; it has no base layout or typography of its own.
+//
+// Each component (GOV.UK override or i.AI-new) lives in its own module.
+@forward "components/app-masthead";
+@forward "components/button";
+@forward "components/link";
+@forward "components/select";
+@forward "components/input";
+@forward "components/textarea";
+@forward "components/checkboxes";
+@forward "components/table";
+@forward "components/form-group";
+@forward "components/header";
+@forward "components/toggle";
+@forward "components/modal";
+@forward "components/card";
+@forward "components/contents-panel";
+@forward "components/service-navigation";

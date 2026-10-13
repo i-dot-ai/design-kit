@@ -1,0 +1,34 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"td"> {
+    numeric?: boolean;
+    stretch?: boolean;
+    noWrap?: boolean;
+    small?: boolean;
+}
+
+const {
+    numeric = false,
+    stretch = false,
+    noWrap = false,
+    small = false,
+    class: className,
+    ...rest
+} = Astro.props;
+
+const classes = [
+    "govuk-table__cell",
+    numeric ? "govuk-table__cell--numeric" : "",
+    stretch ? "govuk-table__cell--stretch" : "",
+    noWrap ? "govuk-table__cell--no-wrap" : "",
+    small ? "govuk-table__cell--small" : "",
+    className ?? "",
+]
+    .filter(Boolean)
+    .join(" ");
+---
+
+<td class={classes} {...rest}>
+    <slot />
+</td>

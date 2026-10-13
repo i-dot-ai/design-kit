@@ -1,0 +1,13 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"fieldset">;
+
+const { class: className, ...rest } = Astro.props;
+
+const classes = ["govuk-fieldset", className ?? ""].filter(Boolean).join(" ");
+---
+
+<fieldset class={classes} {...rest}>
+    <slot />
+</fieldset>

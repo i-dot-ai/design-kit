@@ -1,0 +1,15 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"div">;
+
+const { class: className } = Astro.props;
+
+const classes = ["govuk-radios__divider", className ?? ""]
+    .filter(Boolean)
+    .join(" ");
+---
+
+<div class={classes}>
+    <slot>or</slot>
+</div>

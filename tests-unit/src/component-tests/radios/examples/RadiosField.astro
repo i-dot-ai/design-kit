@@ -1,0 +1,85 @@
+---
+import {
+    FormGroup,
+    Fieldset,
+    FieldsetLegend,
+    Hint,
+    ErrorMessage,
+    Radios,
+    RadioItem,
+    RadioInput,
+    RadioLabel,
+    RadioDivider,
+    RadioConditional,
+} from "@i-dot-ai-npm/component-library-astro";
+
+const { data } = Astro.props;
+---
+
+<FormGroup
+    class={[data.error ? "govuk-form-group--error" : "", data.formGroupClasses ?? ""].filter(Boolean).join(" ") || undefined}
+>
+    {data.hasFieldset ? (
+        <Fieldset aria-describedby={data.fieldsetDescribedBy}>
+            {data.legend !== undefined && (
+                <FieldsetLegend class={data.legendClasses}>
+                    {data.legendPageHeading ? (
+                        <h1 class="govuk-fieldset__heading">{data.legend}</h1>
+                    ) : (
+                        data.legend
+                    )}
+                </FieldsetLegend>
+            )}
+            {data.hintId && <Hint id={data.hintId}>{data.hint}</Hint>}
+            {data.errorId && <ErrorMessage id={data.errorId}>{data.error}</ErrorMessage>}
+            <Radios class={data.radiosClasses}>
+                {data.items.map((item: any) =>
+                    item.divider !== undefined ? (
+                        <RadioDivider>{item.divider}</RadioDivider>
+                    ) : (
+                        <>
+                            <RadioItem>
+                                <RadioInput
+                                    id={item.id}
+                                    name={data.fieldName}
+                                    value={item.value}
+                                    checked={item.checked}
+                                    data-aria-controls={item.conditionalId}
+                                    aria-describedby={item.describedBy}
+                                />
+                                <RadioLabel for={item.id}>
+                                    {item.html ? <Fragment set:html={item.html} /> : item.text}
+                                </RadioLabel>
+                                {item.hintId && (
+                                    <Hint id={item.hintId} class="govuk-radios__hint">{item.hintText}</Hint>
+                                )}
+                            </RadioItem>
+                            {item.conditionalId && (
+                                <RadioConditional id={item.conditionalId} hidden={item.conditionalHidden}>
+                                    <Fragment set:html={item.conditionalHtml} />
+                                </RadioConditional>
+                            )}
+                        </>
+                    )
+                )}
+            </Radios>
+        </Fieldset>
+    ) : (
+        <>
+            {data.hintId && <Hint id={data.hintId}>{data.hint}</Hint>}
+            {data.errorId && <ErrorMessage id={data.errorId}>{data.error}</ErrorMessage>}
+            <Radios class={data.radiosClasses} aria-describedby={data.fieldsetDescribedBy}>
+                {data.items.map((item: any) =>
+                    item.divider !== undefined ? (
+                        <RadioDivider>{item.divider}</RadioDivider>
+                    ) : (
+                        <RadioItem>
+                            <RadioInput id={item.id} name={data.fieldName} value={item.value} checked={item.checked} />
+                            <RadioLabel for={item.id}>{item.text}</RadioLabel>
+                        </RadioItem>
+                    )
+                )}
+            </Radios>
+        </>
+    )}
+</FormGroup>

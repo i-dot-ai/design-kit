@@ -1,0 +1,8 @@
+@use "pkg:govuk-frontend/base" as *;
+
+// Select overrides.
+
+.govuk-select--subtle {
+    border: 1px solid govuk-colour("black", $variant: "tint-50");
+    min-width: 0;
+}

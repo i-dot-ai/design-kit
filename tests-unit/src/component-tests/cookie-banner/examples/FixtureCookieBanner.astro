@@ -1,0 +1,60 @@
+---
+import {
+    CookieBanner,
+    CookieBannerMessage,
+    CookieBannerHeading,
+    CookieBannerContent,
+    CookieBannerActions,
+    Button,
+} from "@i-dot-ai-npm/component-library-astro";
+
+const { messages } = Astro.props;
+
+type Action = { text: string; type?: string; name?: string; value?: string; href?: string };
+type Message = {
+    headingText?: string;
+    headingHtml?: string;
+    text?: string;
+    html?: string;
+    role?: string;
+    actions: Action[];
+};
+---
+
+<CookieBanner>
+    {
+        (messages as Message[]).map((message) => (
+            <CookieBannerMessage role={message.role}>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+                        {message.headingHtml !== undefined ? (
+                            <CookieBannerHeading><Fragment set:html={message.headingHtml} /></CookieBannerHeading>
+                        ) : message.headingText !== undefined ? (
+                            <CookieBannerHeading>{message.headingText}</CookieBannerHeading>
+                        ) : null}
+                        <CookieBannerContent>
+                            {message.html !== undefined ? (
+                                <Fragment set:html={message.html} />
+                            ) : (
+                                <p class="govuk-body">{message.text}</p>
+                            )}
+                        </CookieBannerContent>
+                    </div>
+                </div>
+                {message.actions.length > 0 && (
+                    <CookieBannerActions>
+                        {message.actions.map((action) =>
+                            action.href !== undefined ? (
+                                <a class="govuk-link" href={action.href}>{action.text}</a>
+                            ) : (
+                                <Button type={action.type} name={action.name} value={action.value}>
+                                    {action.text}
+                                </Button>
+                            ),
+                        )}
+                    </CookieBannerActions>
+                )}
+            </CookieBannerMessage>
+        ))
+    }
+</CookieBanner>

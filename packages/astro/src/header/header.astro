@@ -1,0 +1,25 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+    href?: string;
+    containerClasses?: string;
+}
+
+const { href, class: className, containerClasses, ...rest } = Astro.props;
+
+const classes = ["govuk-generic-header", className ?? ""]
+    .filter(Boolean)
+    .join(" ");
+const container = ["govuk-generic-header__container", containerClasses || "govuk-width-container"].join(" ");
+---
+
+<div class={classes} {...rest}>
+    <div class={container}>
+        <div class="govuk-generic-header__logo">
+            <a class="govuk-generic-header__homepage-link" href={href}>
+                <slot />
+            </a>
+        </div>
+    </div>
+</div>

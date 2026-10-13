@@ -1,0 +1,34 @@
+@use "pkg:govuk-frontend/base" as *;
+
+// Link overrides.
+
+.govuk-link--warning {
+    color: govuk-functional-colour("error") !important;
+}
+
+.govuk-link:focus {
+    color: govuk-functional-colour("link");
+    outline: 3px solid transparent;
+    background-color: transparent;
+    box-shadow: none;
+    text-decoration: none;
+}
+
+.govuk-link:focus-visible {
+    outline: 3px solid transparent;
+    background-color: $govuk-focus-colour;
+    box-shadow:
+        0 -2px $govuk-focus-colour,
+        0 4px $govuk-focus-text-colour;
+    text-decoration: none;
+}
+
+// table summary pattern
+.govuk-table--summary {
+    .govuk-table__cell--stretch {
+        .govuk-link {
+            display: inline-block;
+            width: 100%;
+        }
+    }
+}

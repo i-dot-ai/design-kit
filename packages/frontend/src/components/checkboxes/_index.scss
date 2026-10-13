@@ -1,0 +1,13 @@
+@use "pkg:govuk-frontend/base" as *;
+
+.govuk-checkboxes--subtle .govuk-checkboxes__label::before {
+    border: 1px solid govuk-colour("black", $variant: "tint-50");
+    background-color: govuk-colour("white");
+}
+
+// table summary pattern
+.govuk-table--summary {
+    .govuk-checkboxes__label {
+        padding: 0;
+    }
+}

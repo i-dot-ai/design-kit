@@ -1,0 +1,86 @@
+---
+import {
+    FormGroup,
+    Fieldset,
+    FieldsetLegend,
+    Hint,
+    ErrorMessage,
+    Checkboxes,
+    CheckboxItem,
+    CheckboxInput,
+    CheckboxLabel,
+    CheckboxDivider,
+    CheckboxConditional,
+} from "@i-dot-ai-npm/component-library-astro";
+
+const { data } = Astro.props;
+---
+
+<FormGroup
+    class={[data.error ? "govuk-form-group--error" : "", data.formGroupClasses ?? ""].filter(Boolean).join(" ") || undefined}
+>
+    {data.hasFieldset ? (
+        <Fieldset aria-describedby={data.fieldsetDescribedBy}>
+            {data.legend !== undefined && (
+                <FieldsetLegend class={data.legendClasses}>
+                    {data.legendPageHeading ? (
+                        <h1 class="govuk-fieldset__heading">{data.legend}</h1>
+                    ) : (
+                        data.legend
+                    )}
+                </FieldsetLegend>
+            )}
+            {data.hintId && <Hint id={data.hintId}>{data.hint}</Hint>}
+            {data.errorId && <ErrorMessage id={data.errorId}>{data.error}</ErrorMessage>}
+            <Checkboxes class={data.checkboxesClasses}>
+                {data.items.map((item: any) =>
+                    item.divider !== undefined ? (
+                        <CheckboxDivider>{item.divider}</CheckboxDivider>
+                    ) : (
+                        <>
+                            <CheckboxItem>
+                                <CheckboxInput
+                                    id={item.id}
+                                    name={item.itemName}
+                                    value={item.value}
+                                    checked={item.checked}
+                                    data-aria-controls={item.conditionalId}
+                                    data-behaviour={item.behaviour}
+                                    aria-describedby={item.describedBy}
+                                />
+                                <CheckboxLabel for={item.id}>
+                                    {item.html ? <Fragment set:html={item.html} /> : item.text}
+                                </CheckboxLabel>
+                                {item.hintId && (
+                                    <Hint id={item.hintId} class="govuk-checkboxes__hint">{item.hintText}</Hint>
+                                )}
+                            </CheckboxItem>
+                            {item.conditionalId && (
+                                <CheckboxConditional id={item.conditionalId} hidden={item.conditionalHidden}>
+                                    <Fragment set:html={item.conditionalHtml} />
+                                </CheckboxConditional>
+                            )}
+                        </>
+                    )
+                )}
+            </Checkboxes>
+        </Fieldset>
+    ) : (
+        <>
+            {data.hintId && <Hint id={data.hintId}>{data.hint}</Hint>}
+            {data.errorId && <ErrorMessage id={data.errorId}>{data.error}</ErrorMessage>}
+            <Checkboxes class={data.checkboxesClasses} aria-describedby={data.fieldsetDescribedBy}>
+                {data.items.map((item: any) =>
+                    item.divider !== undefined ? (
+                        <CheckboxDivider>{item.divider}</CheckboxDivider>
+                    ) : (
+                        <CheckboxItem>
+                            <CheckboxInput id={item.id} name={item.itemName} value={item.value} checked={item.checked} />
+                            <CheckboxLabel for={item.id}>{item.text}</CheckboxLabel>
+                        </CheckboxItem>
+                    )
+                )}
+            </Checkboxes>
+        </>
+    )}
+</FormGroup>

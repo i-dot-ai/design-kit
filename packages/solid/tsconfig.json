@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "jsx": "preserve",
+        "jsxImportSource": "solid-js",
+        "moduleResolution": "bundler",
+        "module": "esnext",
+        "target": "esnext",
+        "lib": ["esnext", "dom", "dom.iterable"],
+        "skipLibCheck": true,
+        "noEmit": true,
+        "verbatimModuleSyntax": true,
+        "isolatedModules": true,
+        "types": []
+    },
+    "include": ["src/**/*.ts", "src/**/*.tsx"]
+}

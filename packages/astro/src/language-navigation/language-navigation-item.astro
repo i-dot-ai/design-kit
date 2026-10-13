@@ -1,0 +1,44 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"li"> {
+    href?: string;
+    current?: boolean;
+    lang?: string;
+    dir?: string;
+    hreflang?: string;
+    languageDescriptionText?: string;
+}
+
+const {
+    href,
+    current = false,
+    lang,
+    dir,
+    hreflang,
+    languageDescriptionText,
+    ...rest
+} = Astro.props;
+---
+
+<li class="govuk-language-navigation__list-item">
+    {current ? (
+        <span class="govuk-language-navigation__text" aria-current="true" {lang} {dir} {...rest}>
+            <slot />
+        </span>
+    ) : (
+        <a
+            class="govuk-language-navigation__link"
+            {href}
+            rel="alternate"
+            {lang}
+            hreflang={hreflang ?? lang}
+            {dir}
+            {...rest}
+        >
+            <slot />{languageDescriptionText && (
+                <span class="govuk-visually-hidden"> {languageDescriptionText}</span>
+            )}
+        </a>
+    )}
+</li>

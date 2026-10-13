@@ -1,0 +1,52 @@
+---
+import {
+    Pagination,
+    PaginationPrev,
+    PaginationNext,
+    PaginationList,
+    PaginationItem,
+} from "@i-dot-ai-npm/component-library-astro";
+
+const { block, previous, next, items } = Astro.props;
+
+type Arrow = { href: string; text?: string; labelText?: string };
+type Item = { number?: string | number; href?: string; current: boolean; ellipsis: boolean };
+---
+
+<Pagination block={block}>
+    {
+        previous &&
+            (previous.text ? (
+                <PaginationPrev href={previous.href} block={block} labelText={previous.labelText}>
+                    {previous.text}
+                </PaginationPrev>
+            ) : (
+                <PaginationPrev href={previous.href} block={block} labelText={previous.labelText} />
+            ))
+    }
+    {
+        items.length > 0 && (
+            <PaginationList>
+                {(items as Item[]).map((item) =>
+                    item.ellipsis ? (
+                        <PaginationItem ellipsis />
+                    ) : (
+                        <PaginationItem href={item.href} current={item.current} ariaLabel={`Page ${item.number}`}>
+                            {item.number}
+                        </PaginationItem>
+                    ),
+                )}
+            </PaginationList>
+        )
+    }
+    {
+        next &&
+            (next.text ? (
+                <PaginationNext href={next.href} block={block} labelText={next.labelText}>
+                    {next.text}
+                </PaginationNext>
+            ) : (
+                <PaginationNext href={next.href} block={block} labelText={next.labelText} />
+            ))
+    }
+</Pagination>

@@ -1,0 +1,13 @@
+---
+import { Breadcrumbs, BreadcrumbItem } from "@i-dot-ai-npm/component-library-astro";
+
+const { inverse, collapseOnMobile, items } = Astro.props;
+---
+
+<Breadcrumbs {inverse} {collapseOnMobile}>
+    {
+        items.map((item: { text?: string; href?: string }) => (
+            <BreadcrumbItem href={item.href}>{item.text}</BreadcrumbItem>
+        ))
+    }
+</Breadcrumbs>

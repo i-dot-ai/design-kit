@@ -1,0 +1,14 @@
+---
+import { PhaseBanner, PhaseBannerText, Tag } from "@i-dot-ai-npm/component-library-astro";
+
+const { tagText, tagHtml, bodyText, bodyHtml } = Astro.props;
+---
+
+<PhaseBanner>
+    <Tag class="govuk-phase-banner__content__tag">
+        {tagHtml ? <Fragment set:html={tagHtml} /> : tagText}
+    </Tag>
+    <PhaseBannerText>
+        {bodyHtml ? <Fragment set:html={bodyHtml} /> : bodyText}
+    </PhaseBannerText>
+</PhaseBanner>

@@ -1,0 +1,13 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"tr">;
+
+const { class: className, ...rest } = Astro.props;
+
+const classes = ["govuk-table__row", className ?? ""].filter(Boolean).join(" ");
+---
+
+<tr class={classes} {...rest}>
+    <slot />
+</tr>

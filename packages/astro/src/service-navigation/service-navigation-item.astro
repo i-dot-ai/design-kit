@@ -1,0 +1,43 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"li"> {
+    href?: string;
+    current?: boolean;
+    active?: boolean;
+}
+
+const { href, current = false, active = false, class: className, ...rest } = Astro.props;
+
+const isActive = current || active;
+const classes = [
+    "govuk-service-navigation__item",
+    isActive ? "govuk-service-navigation__item--active" : "",
+    className ?? "",
+]
+    .filter(Boolean)
+    .join(" ");
+const ariaCurrent = current ? "page" : active ? "true" : undefined;
+---
+
+<li class={classes}>
+    {
+        href !== undefined ? (
+            <a class="govuk-service-navigation__link" href={href} aria-current={ariaCurrent} {...rest}>
+                {isActive ? (
+                    <strong class="govuk-service-navigation__active-fallback"><slot /></strong>
+                ) : (
+                    <slot />
+                )}
+            </a>
+        ) : (
+            <span class="govuk-service-navigation__text" aria-current={ariaCurrent} {...rest}>
+                {isActive ? (
+                    <strong class="govuk-service-navigation__active-fallback"><slot /></strong>
+                ) : (
+                    <slot />
+                )}
+            </span>
+        )
+    }
+</li>

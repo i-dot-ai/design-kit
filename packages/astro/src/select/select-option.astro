@@ -1,0 +1,13 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"option">;
+
+const { class: className, ...rest } = Astro.props;
+
+const classes = ["", className ?? ""].filter(Boolean).join(" ");
+---
+
+<option class={classes} {...rest}>
+    <slot />
+</option>

@@ -1,0 +1,23 @@
+---
+import {
+    LanguageNavigation,
+    LanguageNavigationItem,
+} from "@i-dot-ai-npm/component-library-astro";
+
+const { ariaLabel, classes, attributes, items } = Astro.props;
+---
+
+<LanguageNavigation ariaLabel={ariaLabel} class={classes} {...attributes ?? {}}>
+    {items.map((item: any) => (
+        <LanguageNavigationItem
+            href={item.href}
+            current={item.current}
+            lang={item.lang}
+            dir={item.dir}
+            hreflang={item.hreflang}
+            languageDescriptionText={item.languageDescriptionText}
+        >
+            {item.text}
+        </LanguageNavigationItem>
+    ))}
+</LanguageNavigation>

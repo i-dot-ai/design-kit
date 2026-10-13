@@ -3,17 +3,16 @@ export
 
 
 install:
-	cd frontend && npm install
+	pnpm install
 
 pre-commit-install:
 	pre-commit install
 
-
-
 run_frontend:
-	cd frontend && npm run dev
+	pnpm --filter ./frontend dev 
 
-
+run_unit_tests:
+	pnpm --filter @i-dot-ai-npm/component-library-tests-unit test
 
 run:
 	docker compose up -d --wait

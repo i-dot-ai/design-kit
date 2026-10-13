@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "moduleResolution": "bundler",
+        "module": "esnext",
+        "target": "esnext",
+        "skipLibCheck": true,
+        "verbatimModuleSyntax": true,
+        "isolatedModules": true,
+        "types": []
+    },
+    "include": ["src/**/*.svelte", "src/**/*.ts", "src/**/*.js"]
+}

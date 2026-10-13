@@ -1,0 +1,35 @@
+---
+import {
+    FormGroup,
+    InputLabel,
+    Hint,
+    ErrorMessage,
+    Select,
+    SelectOption,
+} from "@i-dot-ai-npm/component-library-astro";
+
+const { field } = Astro.props;
+---
+
+<FormGroup class={field.error ? "govuk-form-group--error" : undefined}>
+    <InputLabel for={field.id}>{field.label}</InputLabel>
+    {field.hint && <Hint id={`${field.id}-hint`}>{field.hint}</Hint>}
+    {field.error && (
+        <ErrorMessage id={`${field.id}-error`}>{field.error}</ErrorMessage>
+    )}
+    <Select
+        id={field.id}
+        name={field.inputName}
+        error={Boolean(field.error)}
+        class={field.selectClasses}
+        aria-describedby={field.describedBy}
+    >
+        {field.items.map((item: any) => (
+            <SelectOption
+                value={item.value}
+                selected={item.selected}
+                disabled={item.disabled}
+            >{item.text}</SelectOption>
+        ))}
+    </Select>
+</FormGroup>

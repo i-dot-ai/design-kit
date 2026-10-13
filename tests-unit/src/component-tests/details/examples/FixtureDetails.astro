@@ -1,0 +1,16 @@
+---
+import { Details, DetailsSummary, DetailsText } from "@i-dot-ai-npm/component-library-astro";
+
+const { id, open, summaryText, summaryHtml, text, html } = Astro.props;
+
+const rest = { ...(id ? { id } : {}), ...(open ? { open: true } : {}) };
+---
+
+<Details {...rest}>
+    <DetailsSummary>
+        {summaryHtml ? <Fragment set:html={summaryHtml} /> : summaryText}
+    </DetailsSummary>
+    <DetailsText>
+        {html ? <Fragment set:html={html} /> : text}
+    </DetailsText>
+</Details>
