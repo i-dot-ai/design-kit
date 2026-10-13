@@ -14,9 +14,9 @@ This is a pnpm monorepo containing both the i.AI Design Kit site and the compone
 
 ## Repo structure and where to work
 
-This repo has been set up to have a central frontend package which holds all the CSS and JS needed for the components to work. Each framework then has it's own package which holds light wrappers to make authoring components in each framework as straight forward as possible.
+The design kit site (`frontend/`) is both the documentation site and where you build and test components: you author example files per component, and per-framew
 
-The design kit site (`frontend/`) is both the documentation site and where you build and test components: you author example files per component, and per-framework test pages are generated from them at `/test/<component>/<variant>/<framework>`.
+The component library packages have been set up to have a central frontend package which holds all the CSS and JS needed for the components to work. Each framework then has it's own package which holds light wrappers to make authoring components in each framework as straight forward as possible.ork test pages are generated from them at `/test/<component>/<variant>/<framework>`.
 
 You should split your work across the following:
 
