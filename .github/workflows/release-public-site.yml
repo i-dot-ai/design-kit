@@ -1,4 +1,4 @@
-name: release-infrastructure
+name: Release public site
 run-name: Release - ${{ inputs.env || 'prod (auto)' }}
 
 on:
