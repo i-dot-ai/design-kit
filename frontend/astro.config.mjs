@@ -5,6 +5,12 @@ import sentry from '@sentry/astro';
 import mdx from '@astrojs/mdx';
 import rehypeAddClasses from 'rehype-add-classes';
 import tailwindcss from '@tailwindcss/vite';
+import { NodePackageImporter } from 'sass';
+import { fileURLToPath } from 'node:url';
+import react from '@astrojs/react';
+import solid from '@astrojs/solid-js';
+import svelte from '@astrojs/svelte';
+
 
 const port = 4321;
 
@@ -44,6 +50,9 @@ export default defineConfig({
   },
   integrations: [
     mdx(),
+    react({ include: ['**/*.react.tsx'] }),
+    solid({ include: ['**/*.solid.tsx'] }),
+    svelte(),
     // Uncomment if using Sentry
     /*
     sentry({
@@ -61,5 +70,18 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
-  },
+    css: {
+      lightningcss: {
+        errorRecovery: true,
+      },
+      preprocessorOptions: {
+        scss: {
+          // @ts-expect-error valid Vite/Sass option, missing from Astro's types
+          api: 'modern-compiler',
+          loadPaths: [fileURLToPath(new URL('./node_modules', import.meta.url))],
+          importers: [new NodePackageImporter()],
+        },
+      },
+    },
+  }
 });
