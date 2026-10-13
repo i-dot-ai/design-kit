@@ -2,6 +2,7 @@
 
 import { createEffect, onCleanup, splitProps } from "solid-js";
 import type { JSX } from "solid-js";
+import { initModal, openModal, closeModal } from "@i-dot-ai-npm/component-library-frontend";
 
 type ModalProps = Omit<JSX.IntrinsicElements["dialog"], "onClose"> & {
     class?: string;
@@ -25,15 +26,9 @@ export default function Modal(props: ModalProps) {
     createEffect(() => {
         const el = dialog;
         if (!el) return;
-        const isOpen = local.open;
-        void import("@i-dot-ai-npm/component-library-frontend").then(
-            ({ initModal, openModal, closeModal }) => {
-                if (dialog !== el) return;
-                initModal(el);
-                if (isOpen) openModal(el);
-                else closeModal(el);
-            },
-        );
+        initModal(el);
+        if (local.open) openModal(el);
+        else closeModal(el);
     });
 
     const bind = (el: HTMLDialogElement) => {

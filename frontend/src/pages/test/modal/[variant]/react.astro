@@ -1,0 +1,13 @@
+---
+// test/modal/[variant]/react.astro
+import Layout from "@layouts/TestLayout.astro";
+import Example from "../../../../content/components/modal/examples/default.react.tsx";
+
+export function getStaticPaths() {
+    return [{ params: { variant: "default" } }];
+}
+---
+
+<Layout>
+    <Example client:load />
+</Layout>

@@ -6,6 +6,7 @@ $iai-modal-border-width: 4px;
 .iai-modal {
     width: 100%;
     max-width: $iai-modal-max-width;
+    margin: auto;
     padding: 0;
     border: $iai-modal-border-width solid $govuk-text-colour;
     background-color: govuk-colour("white");

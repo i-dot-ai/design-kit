@@ -1,6 +1,6 @@
 {
   "name": "@i-dot-ai-npm/component-library-frontend",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "i.AI GOV.UK design-system override layer (SCSS + JS). Layered on top of govuk-frontend.",
   "type": "module",
   "exports": {
