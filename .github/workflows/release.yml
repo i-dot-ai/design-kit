@@ -35,7 +35,7 @@ jobs:
       COMMIT_HASH: ${{ github.sha }}
       SITE_URL: https://design-kit.dev.ai.gov.uk
       BUILD_DIRECTORY: frontend/dist/client
-      INSTALL_COMMAND: corepack enable && pnpm install --frozen-lockfile
+      INSTALL_COMMAND: npm i -g pnpm@11.21.0 && pnpm install --frozen-lockfile
       BUILD_COMMAND: pnpm --filter ./packages/frontend build && pnpm --filter ./frontend build
     secrets: inherit
 
@@ -47,7 +47,7 @@ jobs:
       COMMIT_HASH: ${{ github.sha }}
       SITE_URL: https://design-kit.preprod.ai.gov.uk
       BUILD_DIRECTORY: frontend/dist/client
-      INSTALL_COMMAND: corepack enable && pnpm install --frozen-lockfile
+      INSTALL_COMMAND: npm i -g pnpm@11.21.0 && pnpm install --frozen-lockfile
       BUILD_COMMAND: pnpm --filter ./packages/frontend build && pnpm --filter ./frontend build
     secrets: inherit
 
@@ -60,7 +60,7 @@ jobs:
       COMMIT_HASH: ${{ github.sha }}
       SITE_URL: https://design-kit.ai.gov.uk
       BUILD_DIRECTORY: frontend/dist/client
-      INSTALL_COMMAND: corepack enable && pnpm install --frozen-lockfile
+      INSTALL_COMMAND: npm i -g pnpm@11.21.0 && pnpm install --frozen-lockfile
       BUILD_COMMAND: pnpm --filter ./packages/frontend build && pnpm --filter ./frontend build
     secrets: inherit
 
@@ -73,6 +73,6 @@ jobs:
       COMMIT_HASH: ${{ github.sha }}
       SITE_URL: https://design-kit.ai.gov.uk
       BUILD_DIRECTORY: frontend/dist/client
-      INSTALL_COMMAND: corepack enable && pnpm install --frozen-lockfile
+      INSTALL_COMMAND: npm i -g pnpm@11.21.0 && pnpm install --frozen-lockfile
       BUILD_COMMAND: pnpm --filter ./packages/frontend build && pnpm --filter ./frontend build
     secrets: inherit
