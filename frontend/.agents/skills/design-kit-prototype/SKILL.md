@@ -22,16 +22,23 @@ Pull the content from here before any job.
  
 Output a single self-contained HTML file: inline the CSS and JS, don't link to them.
  
-1. Read the versions of `govuk-frontend` and `@i-dot-ai-npm/component-library-frontend`
-   from `frontend/package.json` in the i-ai-design-system repo you've just downloaded.
-   Use the highest version that the version range in that file allows (check with `npm view`).
-2. Download both packages with `npm pack <name>@<version>` and unpack them.
-3. Inline, in this order:
-   - govuk-frontend: `dist/govuk/govuk-frontend.min.css` and `.min.js`
-   - i.AI: `dist/i-ai-design-system.min.css` and `.min.js`
-   The i.AI styles must come after govuk-frontend.
-4. Remove the `export { … }` statements from the JS and call `initAll()` and
-   `initAllIAIDesignSystem()` directly.
-5. For the branding follow the guidance in `/content/styles/branding`
-6. Only if npm can't be reached, fall back to jsDelivr using the same versions:
-   `https://cdn.jsdelivr.net/npm/<name>@<version>/…`
+1. Read the dependency versions from frontend/package.json in the design-kit repo
+   you downloaded. For each design-kit package, use the highest version its range
+   allows (check with `npm view`).
+2. Download each package with `npm pack <name>@<version>` and unpack it.
+3. Inline each package's prebuilt CSS and JS (see dist/ in the unpacked package).
+   Inline the base framework (govuk-frontend) first, then each layer that builds
+   on top of it, in dependency order.
+4. The JS is published as ES modules. Strip the `export { … }` statements and call
+   each package's init function directly (see each package's entry/README for the
+   name).
+5. Apply the brand chosen in /content/styles/branding. That guidance is written
+   for a Sass build; for an inlined prototype, translate it instead:
+     - Read the brand's values from its example files under
+       /content/styles/branding/examples.
+     - Set each functional-colour as a CSS custom property in a :root block
+       inlined after the stylesheets, and apply the brand font.
+     - Add any body/theme class the guidance specifies.
+   Let the packages style components (header, footer, etc.) from those variables;
+   don't hardcode component colours.
+6. If npm can't be reached, fall back to jsDelivr using the same versions.
