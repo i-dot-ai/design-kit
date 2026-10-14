@@ -28,7 +28,7 @@ export default function RootLayout({
     };
     return (
         <html lang="en">
-            <body className="govuk-template__body govuk-template__body--iai-theme">
+            <body className="govuk-template__body">
                 <script dangerouslySetInnerHTML={bodyClassScript} />
                 <SkipLink href="#main-content">Skip to main content</SkipLink>
                 <header>

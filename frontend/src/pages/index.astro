@@ -12,8 +12,10 @@ const { Content } = await render(entry);
 <Layout>
     <div class="govuk-main-wrapper app-masthead">
         <div class="govuk-width-container">
-            <div class="govuk-grid-row app-masthead__row">
-                <div class="govuk-grid-column-two-thirds govuk-grid-column-one-half-from-desktop">
+            <div class="govuk-grid-row">
+                <div
+                    class="govuk-grid-column-two-thirds govuk-grid-column-one-half-from-desktop"
+                >
                     <h1 class="govuk-heading-xl app-masthead__title">
                         {entry.data.title}
                     </h1>
@@ -41,7 +43,9 @@ const { Content } = await render(entry);
                         </svg>
                     </Button>
                 </div>
-                <div class="govuk-grid-column-one-third govuk-grid-column-one-half-from-desktop app-masthead__graphic">
+                <div
+                    class="govuk-grid-column-one-third govuk-grid-column-one-half-from-desktop"
+                >
                     <video
                         class="app-masthead__animation"
                         src="/images/wireframe_graphic.webm"
