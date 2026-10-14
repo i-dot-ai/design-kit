@@ -5,16 +5,49 @@ status: new
 
 ## Default
 
-Use the modal to 
+Use a modal to interrupt the user with content they need to see or act on before they continue, without taking them away from the page they are on.
 
 <Example component="modal" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" />
 
-## When to use this component
+## When to use
 
-Always include the Back link component on GOV.UK [Question pages in your service](https://design-system.service.gov.uk/patterns/question-pages/).
+The [GOV.UK Design System has no modal](https://design-system.service.gov.uk/),
+and the GDS default is to avoid them: give each task its own page rather than
+layering content over the current one. We agree — most of the time a new page is
+the right answer.
 
-You can include a back link on other pages within a multi-page transaction, if it makes sense to do so.
+We include a modal because i.AI also builds non-linear tools — dashboards and
+internal products where the user works *with* a page rather than stepping through
+a form. There, moving to a new page can lose the context the user is in.
 
-## When not to use this component
+Use a modal only when all of these are true:
 
-Never use the back link component together with the [Breadcrumbs component](/components/breadcrumbs/). If necessary, you should do research with your users to learn which they find more helpful in your service.
+-   the content belongs **in the context of the current page**
+-   it is **short and self-contained** — a confirmation, a focused action, or a
+    small piece of supporting detail
+-   the user can deal with it and **return to where they were**
+
+For example: confirming a destructive action, showing a definition or data source
+on demand, or editing one item without leaving a dashboard.
+
+## When not to use
+
+-   **On a linear service.** In a question journey, give each step its own page.
+    Pages are linkable, work without JavaScript and are easier to make accessible.
+-   **For long or complex content.** A modal has no page heading and no scroll
+    affordance. If it needs sections or scrolling, it needs a page.
+-   **For essential content.** Anything inside a modal is behind an interaction and
+    gone when it closes. Keep must-have content on the page — use inset text,
+    warning text, a notification banner or a panel.
+-   **Stacked or chained.** A modal that opens another, or steps the user through a
+    flow, is a journey pretending to be a dialog. Use pages.
+
+## Accessibility
+
+Built on the native `<dialog>` element, so the browser traps focus while the modal
+is open and returns it to the trigger on close. The component then:
+
+-   **moves focus to the dialog itself**, not the first interactive element, so a
+    screen reader announces where the user has been taken before they act
+-   closes on the close button, the Escape key, or a backdrop click
+-   locks background scroll while open
