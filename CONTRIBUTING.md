@@ -4,7 +4,7 @@ This is a pnpm monorepo. It holds the i.AI Design Kit site (`frontend/`) and the
 
 ## Table of contents
 
-- [How we work: test-led](#how-we-work-test-led)
+- [How we work: spec-led](#how-we-work-spec-led)
 - [Setup](#setup)
 - [Repo map](#repo-map)
 - [Adding a component](#adding-a-component)
