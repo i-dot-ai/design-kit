@@ -1,0 +1,58 @@
+name: E2E behavioural and accessibility tests
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# Cancel superseded runs on a PR (only keep the latest push). Runs on main
+# always complete so a required check is never left without a result.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions: {}
+
+jobs:
+  e2e:
+    name: E2E behavioural and accessibility tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: pnpm --filter @i-dot-ai-npm/component-library-tests-e2e exec playwright install --with-deps
+
+      - name: Run E2E tests
+        # The Playwright config builds the frontend and starts the node server
+        # itself (see tests-e2e/playwright.config.ts webServer).
+        run: pnpm --filter @i-dot-ai-npm/component-library-tests-e2e test
+        env:
+          CI: "true"
+
+      - name: Upload Playwright report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: tests-e2e/playwright-report/
+          retention-days: 14
