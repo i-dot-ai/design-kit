@@ -1,51 +1,55 @@
 ---
 title: Contribute to the Design Kit
-description: How the kit forum decides what goes into the i.AI kit.
+description: How to contribute to the i.AI Design Kit.
 ---
 
-Anyone in i.AI can add a component, pattern or improvement to the Design Kit. You do not need permission to start.
+Anyone in i.AI can add a component, pattern or improvement to the Design Kit. Make 
+sure to search the kit first and use anything that already fits.
 
-> You do not have to wait for a decision. Keep using your version in your product while it's reviewed. When the kit version is published, swap yours for it.
+>You do not have to wait for a decision. Keep using your version in your
+>product while it's reviewed. When the kit version is published, swap yours
+>for it.
 
-Keeping this lightweight matters. Use this agent skill to help draft your contribution.
+## Slack channel
 
-## Contribute a component
+[#iai-design-kit](https://i-dot-ai.slack.com/archives/C0C476E1D4H) is the hub for
+everything to do with the design kit.
 
-### 1. Check the kit first
+Ideally, we would like people to progress as far as possible with a PR and post in 
+slack to where you have got to. It is also good to post initial questions and queries 
+about whether to start work or present problems you have found.
 
-Search the kit site. If the component already exists, use it.
+## Pull request
 
-If something nearly works but does not quite fit, tell us in Slack. A near miss shows us where the kit falls short, so it counts as a contribution.
+Open a pull request against the [design kit repository](https://github.com/i-dot-ai/design-kit)
+for a component or updated documentation.
 
-### 2. Post in Slack before you build
+You can stop anywhere. Take it as far as you reasonably can and hand the rest over. 
+An incomplete pull request is better than no pull request. All of these are real contributions:
 
-Post in #iai-design-kit with:
+- the docs and examples for a component
+- a full component with all its tests
+- a variant class on an existing component
+- a fix to a component already in the kit
+- a decision record
 
-- what you need
-- what you've tried
-- anything that nearly works
-- a screenshot or link
+The [contribution guide](https://github.com/i-dot-ai/design-kit/blob/main/CONTRIBUTING.md)
+has the technical detail for how to add components, or documentation and what is 
+expected for an addition to be accepted. If you are working with AI, point your assistant 
+to this contribution guide in order to ensure you are adding to the design kit in 
+the expected way.
 
-> This is not an approval step. You can keep building while you wait for a reply. Posting early helps us spot duplication and point you to existing work.
+## Contribute a skill
 
-## 3. Open a pull request
+If your interaction with the design kit is skill led, there may be issues or 
+improvements that come from the way a skill interacts with the design kit.
 
-Open a pull request against the [design kit repository](https://github.com/i-dot-ai/design-kit). The template asks for everything a kit page needs:
+We are trying to improve how skills are shared across the incubator, so if you have 
+an improvement suggestion for the prototype and build ones used in this site 
+or a personal skill that you believe other people will benefit from, contribute 
+it directly to the [skills and projects repo](https://github.com/i-dot-ai/skills-and-projects).
 
-- what the component is, in one sentence
-- when to use it
-- when not to use it
-- the HTML for each variant, ready to copy
-- options and modifiers
-- accessibility notes, including anything the component does not enforce
-- a provenance tag and status
-- links to any decision records and deviation records
-
-> Get your AI agent to draft this from your component's code and your Slack thread — it can pull out the variants, options and a first pass at "when to use" guidance for you to check and edit.
-
-If you cannot complete a section, say so in the pull request. An incomplete pull request is better than no pull request.
-
-### 4. Respond to review
+## Review
 
 Three people review your pull request:
 
@@ -53,26 +57,17 @@ Three people review your pull request:
 - the accessibility reviewer checks accessibility
 - a design reviewer checks design quality
 
-They may ask for changes. You can make these yourself, or ask the core team to take over. If the core team takes over, it may take longer to publish.
+They may ask for changes. You can make these yourself, or ask the core team to
+take over (which may take longer to publish). When all three approve, the core
+team merges, publishes and announces it in Slack. The kit site updates
+automatically.
 
-## What happens next
+If your contribution isn't accepted, we'll explain why in the pull request. We
+keep a record either way.
 
-When all three reviewers approve, the core team merges and publishes your component, and announces it in Slack. The kit site updates automatically.
+## Expect it to change
 
-If your component is not accepted, we'll explain why in the pull request. We keep a record of components that were not added, because they still show us where the kit falls short.
-
-## Expect your component to change
-
-A component built for one product nearly always needs some work before it can go in the kit. This is normal — it is not a judgement on your work.
-
-Common changes include:
-
-- removing anything specific to your product
-- replacing fixed colours, spacing and fonts with design tokens
-- adding variants other products need
-- fixing accessibility issues found in review
-- writing guidance so other teams know when to use it
-
-Not every submission will be complete and ready to publish as it is — that's expected, and it's fine. The reviewers are there to help close the gap, not to catch you out.
-
-If you maintain the Design Kit, read the guidance on [reviewing, merging and publishing contributions](/get-started/maintain-the-design-kit).
+A component built for one product nearly always needs work before it goes in the
+kit — removing product-specific bits, adding variants other teams need and
+writing guidance. This is normal, not a judgement. Reviewers are there to close
+the gap, not catch you out.

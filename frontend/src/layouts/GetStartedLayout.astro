@@ -30,12 +30,6 @@ const guides = [
         href: "/get-started/contribute-to-the-design-kit",
     },
 ];
-const maintainersGuides = [
-    {
-        text: "Maintain the Design Kit",
-        href: "/get-started/maintain-the-design-kit",
-    },
-];
 ---
 
 <Layout>
@@ -43,27 +37,9 @@ const maintainersGuides = [
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
                 <ContentsPanel>
-                    <ContentsPanelListHeading>Guides</ContentsPanelListHeading>
                     <ContentsPanelList>
                         {
                             guides.map((category) => (
-                                <ContentsPanelItem
-                                    href={category.href}
-                                    current={currentPath.includes(
-                                        category.href,
-                                    )}
-                                >
-                                    {category.text}
-                                </ContentsPanelItem>
-                            ))
-                        }
-                    </ContentsPanelList>
-                    <ContentsPanelListHeading
-                        >For maintainers</ContentsPanelListHeading
-                    >
-                    <ContentsPanelList>
-                        {
-                            maintainersGuides.map((category) => (
                                 <ContentsPanelItem
                                     href={category.href}
                                     current={currentPath.includes(
