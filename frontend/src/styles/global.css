@@ -81,7 +81,39 @@
   vertical-align: middle;
 }
 
+/* Match the line under the site nav to the masthead (brand) colour. */
+.govuk-service-navigation {
+  border-bottom-color: var(--govuk-brand-colour);
+}
+
 .app-masthead h1,
 .app-masthead p {
   color: #fff;
+}
+
+.app-masthead__animation,
+.app-masthead__still {
+  display: none;
+}
+
+@media (min-width: 40.0625em) {
+  .app-masthead__animation {
+    display: block;
+  }
+
+  .app-masthead__animation,
+  .app-masthead__still {
+    max-width: 100%;
+    height: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .app-masthead__animation {
+      display: none;
+    }
+
+    .app-masthead__still {
+      display: inline;
+    }
+  }
 }
