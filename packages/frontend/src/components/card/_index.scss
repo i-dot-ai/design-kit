@@ -42,7 +42,15 @@
     color: govuk-colour("white");
 }
 
-.iai-card:hover {
+.iai-card:hover,
+.iai-card:hover .govuk-body,
+.iai-card:hover .govuk-body-l,
+.iai-card:hover .govuk-body-s,
+.iai-card:hover .govuk-heading-s,
+.iai-card:hover .govuk-heading-m,
+.iai-card:hover .govuk-heading-l,
+.iai-card:hover .govuk-heading-xl,
+.iai-card:hover .govuk-link {
     background-color: govuk-colour("black");
 }
 
