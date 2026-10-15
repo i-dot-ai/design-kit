@@ -5,6 +5,7 @@
 }
 
 .govuk-service-navigation__link,
+.govuk-service-navigation__link:link,
 .govuk-service-navigation__link:visited,
 .govuk-service-navigation__link:hover {
     color: govuk-functional-colour("brand");
