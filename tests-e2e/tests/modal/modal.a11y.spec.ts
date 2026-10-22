@@ -7,7 +7,7 @@ for (const pageToTest of MODAL_PAGES) {
     test(`a11y: ${pageToTest.name} modal has no violations when open`, async ({ page }) => {
         await page.goto(pageToTest.path);
 
-        openModal(page)
+        await openModal(page)
 
         const results = await new AxeBuilder({ page })
             // color-contrast gives false positives through the ::backdrop top layer

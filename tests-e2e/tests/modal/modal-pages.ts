@@ -12,8 +12,6 @@ export const MODAL_PAGES = [
 // Retry the click until the modal opens: the trigger renders before the
 // framework island finishes hydrating, so an early click is a no-op.
 export async function openModal(page: Page) {
-    await expect(async () => {
-        await page.getByTestId("open").click();
-        await expect(page.getByTestId("modal")).toBeVisible({ timeout: 1000 });
-    }).toPass({ timeout: 10000 });
+    await page.getByTestId("open").click();
+    await expect(page.getByTestId("modal")).toBeVisible({ timeout: 1000 });
 }
