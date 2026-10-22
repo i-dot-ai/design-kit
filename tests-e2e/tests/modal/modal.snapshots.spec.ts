@@ -6,7 +6,7 @@ for (const pageToTest of MODAL_PAGES) {
         await page.goto(pageToTest.path);
 
         await openModal(page)
-
-        await expect(page).toHaveScreenshot('modal.png', { animations: "disabled" });
+        // ratio difference between linux in CI and darwin in mac
+        await expect(page).toHaveScreenshot('modal.png', { animations: "disabled", maxDiffPixelRatio: 0.01 });
     });
 }
