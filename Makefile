@@ -21,10 +21,13 @@ run_e2e_tests:
 	pnpm --filter @i-dot-ai-npm/component-library-tests-e2e test
 
 run_e2e_a11y_tests:
-	pnpm --filter @i-dot-ai-npm/component-library-tests-e2e exec playwright test modal.a11y
+	pnpm --filter @i-dot-ai-npm/component-library-tests-e2e exec playwright test '\.a11y\.'
 
 run_e2e_behaviour_tests:
-	pnpm --filter @i-dot-ai-npm/component-library-tests-e2e exec playwright test modal.behaviour
+	pnpm --filter @i-dot-ai-npm/component-library-tests-e2e exec playwright test '\.behaviour\.'
+
+run_e2e_snapshot_tests:
+	pnpm --filter @i-dot-ai-npm/component-library-tests-e2e exec playwright test '\.snapshot\.'
 
 run_all_tests: run_unit_tests run_e2e_tests
 

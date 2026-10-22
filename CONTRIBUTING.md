@@ -156,6 +156,15 @@ This drives the component on each framework's test page and checks it behaves th
     - write the `*.behaviour.spec.ts` test: loop the pages, go to each, perform the action and assert the result. Use `getByTestId` to target elements, and `expect.poll` for state that settles after an event.
 - Example: `tests-e2e/tests/modal/`.
 
+#### visual regression
+
+- For: any new component (assumed that GOV.UK components are fine)
+- Checks for any visual regression from previous snapshots and between frameworks on each browser
+- Steps:
+    - set up the test pages and `*-pages.ts` helper (see [Test pages](#test-pages)).
+    - write the `*.snapshot.spec.ts` test: loop the pages, go to each component and assert it matches the previous snapshots for that browser
+- Example: `tests-e2e/tests/modal/`.
+
 ## Conventions
 
 - Follow the GOV.UK progressive enhancement principle.
