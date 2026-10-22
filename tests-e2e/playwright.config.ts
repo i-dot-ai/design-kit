@@ -32,4 +32,5 @@ export default defineConfig({
             PORT: String(PORT),
         },
     },
+    snapshotPathTemplate: "{testDir}/{testFilePath}-snapshots/{arg}-{projectName}{ext}",
 });

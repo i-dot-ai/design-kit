@@ -38,6 +38,9 @@ Brewfile.lock.json
 *.ppt
 *.docx
 
+# Allow snapshots
+!tests-e2e/tests/**/*.png
+
 node_modules
 
 # Rendered presentations

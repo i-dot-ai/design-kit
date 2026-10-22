@@ -7,6 +7,6 @@ for (const pageToTest of MODAL_PAGES) {
 
         await openModal(page)
 
-        expect(await page.screenshot({ animations: "disabled"})).toMatchSnapshot('modal.png')
+        await expect(page).toHaveScreenshot('modal.png', { animations: "disabled" });
     });
 }
