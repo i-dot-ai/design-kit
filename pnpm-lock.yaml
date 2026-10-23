@@ -56,9 +56,12 @@ importers:
       '@i-dot-ai-npm/component-library-svelte':
         specifier: workspace:*
         version: link:../packages/svelte
+      '@i-dot-ai-npm/component-library-web-components':
+        specifier: workspace:*
+        version: link:../packages/web-components
       '@i-dot-ai-npm/utilities':
         specifier: ^1.0.0
-        version: 1.0.1(debug@4.4.3(supports-color@8.1.1))(openai@4.104.0(zod@3.25.76))(supports-color@7.2.0)
+        version: 1.0.1(debug@4.4.3(supports-color@8.1.1))(openai@4.104.0(ws@8.22.0)(zod@3.25.76))(supports-color@7.2.0)(ws@8.22.0)
       '@sentry/astro':
         specifier: ^11.6.0
         version: 11.6.0(@babel/core@7.29.7(supports-color@8.1.1))(astro@7.3.8(@astrojs/markdown-remark@7.3.2(supports-color@8.1.1))(@types/node@22.20.5)(jiti@2.7.0)(sass@1.105.1)(yaml@2.9.1))(rollup@4.64.5)
@@ -205,6 +208,18 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  packages/web-components:
+    devDependencies:
+      '@i-dot-ai-npm/component-library-frontend':
+        specifier: workspace:*
+        version: link:../frontend
+      govuk-frontend:
+        specifier: ^6.5.0
+        version: 6.5.1
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   tests-e2e:
     devDependencies:
       '@axe-core/playwright':
@@ -228,6 +243,9 @@ importers:
       '@i-dot-ai-npm/component-library-svelte':
         specifier: workspace:*
         version: link:../packages/svelte
+      '@i-dot-ai-npm/component-library-web-components':
+        specifier: workspace:*
+        version: link:../packages/web-components
     devDependencies:
       '@sveltejs/vite-plugin-svelte':
         specifier: ^7.3.0
@@ -244,6 +262,9 @@ importers:
       govuk-frontend:
         specifier: ^6.5.0
         version: 6.5.1
+      happy-dom:
+        specifier: ^21.0.0
+        version: 21.0.4
       node-html-parser:
         specifier: ^7.1.0
         version: 7.1.0
@@ -264,7 +285,7 @@ importers:
         version: 2.11.14(solid-js@1.9.17)(supports-color@8.1.1)(vite@8.3.4(@types/node@22.20.5)(jiti@2.7.0)(sass@1.105.1)(yaml@2.9.1))
       vitest:
         specifier: ^3.0.0
-        version: 3.2.7(@types/debug@4.1.13)(@types/node@22.20.5)(jiti@2.7.0)(lightningcss@1.33.0)(sass@1.105.1)(supports-color@7.2.0)(yaml@2.9.1)
+        version: 3.2.7(@types/debug@4.1.13)(@types/node@22.20.5)(happy-dom@21.0.4)(jiti@2.7.0)(lightningcss@1.33.0)(sass@1.105.1)(supports-color@7.2.0)(yaml@2.9.1)
 
 packages:
 
@@ -1782,6 +1803,12 @@ packages:
   '@types/uuid@10.0.0':
     resolution: {integrity: sha512-7gqG38EyHgyP1S+7+xomFtL+ZNHcKv6DwNaCZmJmo1vgMugyF3TCnXVg4t1uk89mLNwnLtnY3TpOpCOyp1/xHQ==}
 
+  '@types/whatwg-mimetype@3.0.2':
+    resolution: {integrity: sha512-c2AKvDT8ToxLIOUlN51gTiHXflsfIFisS4pO7pDPoKouJCESkhZnEy623gwP9laCy5lnLDAw1vAzu2vM2YLOrA==}
+
+  '@types/ws@8.18.2':
+    resolution: {integrity: sha512-67MQl+fpWKVTT1NYdnmo3U4sc/xPo/zQBncVnI74qmQa0z/b+1g6iYqNmGCPbxO+zz2aklb08a0oHfegiVd0/w==}
+
   '@typescript-eslint/eslint-plugin@8.71.1':
     resolution: {integrity: sha512-nNlBf6HuotqMgZvSkWD5hNdemiBIxQ2NmrlgfcUIeZRs+BbakjscCQRq/Hb74EFVnFiSWWdL12JruqwBy3ERDw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -2079,6 +2106,10 @@ packages:
     resolution: {integrity: sha512-Db1SbgBS/fg/392AblrMJk97KggmvYhr4pB5ZIMTWtaivCPMWLkmb7m21cJvpvgK+J3nsU2CmmixNBZx4vFj/w==}
     engines: {node: '>=8.0.0'}
 
+  buffer-image-size@0.6.4:
+    resolution: {integrity: sha512-nEh+kZOPY1w+gcCMobZ6ETUp9WfibndnosbpwB1iJk/8Gt5ZF2bhS6+B6bPYz424KtwsR6Rflc3tCz1/ghX2dQ==}
+    engines: {node: '>=4.0'}
+
   buffer@6.0.3:
     resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
 
@@ -2359,6 +2390,10 @@ packages:
 
   entities@6.0.1:
     resolution: {integrity: sha512-aN97NXWF6AWBTahfVOIrB/NShkzi5H7F9r1s9mD3cDj4Ko5f2qhhVoYMibXF7GlLveb/D2ioWay8lxI97Ven3g==}
+    engines: {node: '>=0.12'}
+
+  entities@7.0.1:
+    resolution: {integrity: sha512-TWrgLOFUQTH994YUyl1yT4uyavY5nNB5muff+RtWaqNVCAK408b5ZnnbNAUEWLTCpum9w6arT70i1XdQ4UeOPA==}
     engines: {node: '>=0.12'}
 
   es-define-property@1.0.1:
@@ -2663,6 +2698,10 @@ packages:
 
   h3@1.15.11:
     resolution: {integrity: sha512-L3THSe2MPeBwgIZVSH5zLdBBU90TOxarvhK9d04IDY2AmVS8j2Jz2LIWtwsGOU3lu2I5jCN7FNvVfY2+XyF+mg==}
+
+  happy-dom@21.0.4:
+    resolution: {integrity: sha512-tFm+GaLBgo6o0awHnvHaNoraVo27qJ+2tZEtZ+cIa08hXbeitrxAJajLI05hsUy/2/YTKcUjQYzHe5mCcraLBw==}
+    engines: {node: '>=20.0.0'}
 
   has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
@@ -4245,6 +4284,10 @@ packages:
   webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
 
+  whatwg-mimetype@3.0.0:
+    resolution: {integrity: sha512-nt+N2dzIutVRxARx1nghPKGv1xHikU7HKdfafKkLNLindmPU/ch3U31NOCGGA/dmPcmb1VlofO0vnKAcsm0o/Q==}
+    engines: {node: '>=12'}
+
   whatwg-url@5.0.0:
     resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}
 
@@ -4261,6 +4304,18 @@ packages:
   word-wrap@1.2.5:
     resolution: {integrity: sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==}
     engines: {node: '>=0.10.0'}
+
+  ws@8.22.0:
+    resolution: {integrity: sha512-Ydggc987+RO0AnWtZ/7Wq9FtNvcrL1b/RO0ud9mWjUPgDrsAAwQSF51sm2hm1XofbU/4jkpGEsLFsZZxU+1DOg==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
 
   xxhash-wasm@1.1.0:
     resolution: {integrity: sha512-147y/6YNh+tlp6nd/2pWq38i9h6mz/EuQ6njIrmW8D1BS5nCqs0P6DG+m6zTGnNz5I+uhZ0SHxBs9BsPrwcKDA==}
@@ -4919,10 +4974,10 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@i-dot-ai-npm/utilities@1.0.1(debug@4.4.3(supports-color@8.1.1))(openai@4.104.0(zod@3.25.76))(supports-color@7.2.0)':
+  '@i-dot-ai-npm/utilities@1.0.1(debug@4.4.3(supports-color@8.1.1))(openai@4.104.0(ws@8.22.0)(zod@3.25.76))(supports-color@7.2.0)(ws@8.22.0)':
     dependencies:
-      '@langchain/core': 0.2.36(openai@4.104.0(zod@3.25.76))
-      '@langchain/openai': 0.2.11
+      '@langchain/core': 0.2.36(openai@4.104.0(ws@8.22.0)(zod@3.25.76))
+      '@langchain/openai': 0.2.11(ws@8.22.0)
       axios: 1.20.0(debug@4.4.3(supports-color@8.1.1))(supports-color@7.2.0)
       langfuse-langchain: 3.39.2
       uuid: 9.0.1
@@ -5059,13 +5114,13 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
 
-  '@langchain/core@0.2.36(openai@4.104.0(zod@3.25.76))':
+  '@langchain/core@0.2.36(openai@4.104.0(ws@8.22.0)(zod@3.25.76))':
     dependencies:
       ansi-styles: 5.2.0
       camelcase: 6.3.0
       decamelize: 1.2.0
       js-tiktoken: 1.0.21
-      langsmith: 0.1.68(openai@4.104.0(zod@3.25.76))
+      langsmith: 0.1.68(openai@4.104.0(ws@8.22.0)(zod@3.25.76))
       mustache: 4.2.0
       p-queue: 6.6.2
       p-retry: 4.6.2
@@ -5075,11 +5130,11 @@ snapshots:
     transitivePeerDependencies:
       - openai
 
-  '@langchain/openai@0.2.11':
+  '@langchain/openai@0.2.11(ws@8.22.0)':
     dependencies:
-      '@langchain/core': 0.2.36(openai@4.104.0(zod@3.25.76))
+      '@langchain/core': 0.2.36(openai@4.104.0(ws@8.22.0)(zod@3.25.76))
       js-tiktoken: 1.0.21
-      openai: 4.104.0(zod@3.25.76)
+      openai: 4.104.0(ws@8.22.0)(zod@3.25.76)
       zod: 3.25.76
       zod-to-json-schema: 3.25.2(zod@3.25.76)
     transitivePeerDependencies:
@@ -5733,6 +5788,12 @@ snapshots:
 
   '@types/uuid@10.0.0': {}
 
+  '@types/whatwg-mimetype@3.0.2': {}
+
+  '@types/ws@8.18.2':
+    dependencies:
+      '@types/node': 22.20.5
+
   '@typescript-eslint/eslint-plugin@8.71.1(@typescript-eslint/parser@8.71.1(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@8.1.1)(typescript@5.9.3))(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@8.1.1)(typescript@5.9.3)':
     dependencies:
       '@eslint-community/regexpp': 4.12.2
@@ -6219,6 +6280,10 @@ snapshots:
 
   buffer-crc32@1.0.0: {}
 
+  buffer-image-size@0.6.4:
+    dependencies:
+      '@types/node': 22.20.5
+
   buffer@6.0.3:
     dependencies:
       base64-js: 1.5.1
@@ -6466,6 +6531,8 @@ snapshots:
   entities@4.5.0: {}
 
   entities@6.0.1: {}
+
+  entities@7.0.1: {}
 
   es-define-property@1.0.1: {}
 
@@ -6808,6 +6875,19 @@ snapshots:
       ufo: 1.6.4
       uncrypto: 0.1.3
 
+  happy-dom@21.0.4:
+    dependencies:
+      '@types/node': 22.20.5
+      '@types/whatwg-mimetype': 3.0.2
+      '@types/ws': 8.18.2
+      buffer-image-size: 0.6.4
+      entities: 7.0.1
+      whatwg-mimetype: 3.0.0
+      ws: 8.22.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
   has-flag@4.0.0: {}
 
   has-symbols@1.1.0: {}
@@ -7139,7 +7219,7 @@ snapshots:
     dependencies:
       langfuse-core: 3.39.2
 
-  langsmith@0.1.68(openai@4.104.0(zod@3.25.76)):
+  langsmith@0.1.68(openai@4.104.0(ws@8.22.0)(zod@3.25.76)):
     dependencies:
       '@types/uuid': 10.0.0
       commander: 10.0.1
@@ -7148,7 +7228,7 @@ snapshots:
       semver: 7.8.5
       uuid: 10.0.0
     optionalDependencies:
-      openai: 4.104.0(zod@3.25.76)
+      openai: 4.104.0(ws@8.22.0)(zod@3.25.76)
 
   lazystream@1.0.1:
     dependencies:
@@ -8007,7 +8087,7 @@ snapshots:
       regex: 6.1.0
       regex-recursion: 6.0.2
 
-  openai@4.104.0(zod@3.25.76):
+  openai@4.104.0(ws@8.22.0)(zod@3.25.76):
     dependencies:
       '@types/node': 18.19.130
       '@types/node-fetch': 2.6.13
@@ -8017,6 +8097,7 @@ snapshots:
       formdata-node: 4.4.1
       node-fetch: 2.7.0
     optionalDependencies:
+      ws: 8.22.0
       zod: 3.25.76
     transitivePeerDependencies:
       - encoding
@@ -8964,7 +9045,7 @@ snapshots:
     optionalDependencies:
       vite: 8.3.4(@types/node@22.20.5)(jiti@2.7.0)(sass@1.105.1)(yaml@2.9.1)
 
-  vitest@3.2.7(@types/debug@4.1.13)(@types/node@22.20.5)(jiti@2.7.0)(lightningcss@1.33.0)(sass@1.105.1)(supports-color@7.2.0)(yaml@2.9.1):
+  vitest@3.2.7(@types/debug@4.1.13)(@types/node@22.20.5)(happy-dom@21.0.4)(jiti@2.7.0)(lightningcss@1.33.0)(sass@1.105.1)(supports-color@7.2.0)(yaml@2.9.1):
     dependencies:
       '@types/chai': 5.2.3
       '@vitest/expect': 3.2.7
@@ -8992,6 +9073,7 @@ snapshots:
     optionalDependencies:
       '@types/debug': 4.1.13
       '@types/node': 22.20.5
+      happy-dom: 21.0.4
     transitivePeerDependencies:
       - jiti
       - less
@@ -9014,6 +9096,8 @@ snapshots:
 
   webidl-conversions@3.0.1: {}
 
+  whatwg-mimetype@3.0.0: {}
+
   whatwg-url@5.0.0:
     dependencies:
       tr46: 0.0.3
@@ -9029,6 +9113,8 @@ snapshots:
       stackback: 0.0.2
 
   word-wrap@1.2.5: {}
+
+  ws@8.22.0: {}
 
   xxhash-wasm@1.1.0: {}
 
