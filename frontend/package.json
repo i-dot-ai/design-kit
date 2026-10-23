@@ -23,6 +23,7 @@
     "@i-dot-ai-npm/component-library-react": "workspace:*",
     "@i-dot-ai-npm/component-library-solid": "workspace:*",
     "@i-dot-ai-npm/component-library-svelte": "workspace:*",
+    "@i-dot-ai-npm/component-library-web-components": "workspace:*",
     "@i-dot-ai-npm/utilities": "^1.0.0",
     "@sentry/astro": "^11.6.0",
     "@tailwindcss/vite": "^4.1.11",

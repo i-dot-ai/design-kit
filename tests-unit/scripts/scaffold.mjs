@@ -43,10 +43,11 @@ function hasGovukFixture(component) {
 }
 
 const FRAMEWORKS = [
-    { key: "react", label: "React", pkg: "react", render: "renderReact", ext: "tsx", async: false },
-    { key: "solid", label: "Solid", pkg: "solid", render: "renderSolid", ext: "tsx", async: false },
-    { key: "svelte", label: "Svelte", pkg: "svelte", render: "renderSvelte", ext: "ts", async: false },
-    { key: "astro", label: "Astro", pkg: "astro", render: "renderAstro", ext: "ts", async: true },
+    { key: "react", label: "React", pkg: "react", render: "renderReact", ext: "tsx", async: false, importsExport: true },
+    { key: "solid", label: "Solid", pkg: "solid", render: "renderSolid", ext: "tsx", async: false, importsExport: true },
+    { key: "svelte", label: "Svelte", pkg: "svelte", render: "renderSvelte", ext: "ts", async: false, importsExport: true },
+    { key: "astro", label: "Astro", pkg: "astro", render: "renderAstro", ext: "ts", async: true, importsExport: true },
+    { key: "web-components", label: "Web Components", pkg: "web-components", render: "renderWebComponent", ext: "ts", async: false, importsExport: false },
 ];
 
 function parseArgs(argv) {
@@ -99,16 +100,20 @@ function testFile(component, exportName, fw) {
     const mappingConst = `${toCamelCase(component)}Mapping`;
     const asyncKw = fw.async ? "async " : "";
     const awaitKw = fw.async ? "await " : "";
+    const target = fw.importsExport ? exportName : `"iai-${component}"`;
+    const pkgImport = fw.importsExport
+        ? `import { ${exportName} } from "@i-dot-ai-npm/component-library-${fw.pkg}";`
+        : `import "@i-dot-ai-npm/component-library-${fw.pkg}";`;
     return `import { describe, it, expect } from "vitest";
-import { ${exportName} } from "@i-dot-ai-npm/component-library-${fw.pkg}";
+${pkgImport}
 import { ${fw.render} } from "../../../render/${fw.key}.js";
 import { casesFor, toShape } from "../../../matches-govuk-helpers/cases.js";
 import { ${mappingConst} } from "../match-govuk-mappings.js";
 
-describe("${exportName} — ${fw.label} matches govuk fixture shape", () => {
+describe("Matches govuk fixture shape - ${exportName}", () => {
     for (const testCase of casesFor("${component}", ${mappingConst})) {
         it(testCase.name, ${asyncKw}() => {
-            const html = ${awaitKw}${fw.render}(${exportName}, testCase.input.props, testCase.input.text);
+            const html = ${awaitKw}${fw.render}(${target}, testCase.input.props, testCase.input.text);
             expect(toShape(html)).toEqual(testCase.expected);
         });
     }

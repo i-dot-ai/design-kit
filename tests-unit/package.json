@@ -13,7 +13,8 @@
     "@i-dot-ai-npm/component-library-astro": "workspace:*",
     "@i-dot-ai-npm/component-library-react": "workspace:*",
     "@i-dot-ai-npm/component-library-solid": "workspace:*",
-    "@i-dot-ai-npm/component-library-svelte": "workspace:*"
+    "@i-dot-ai-npm/component-library-svelte": "workspace:*",
+    "@i-dot-ai-npm/component-library-web-components": "workspace:*"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^7.3.0",
@@ -21,6 +22,7 @@
     "@types/react-dom": "^19.3.0",
     "astro": "^7.3.2",
     "govuk-frontend": "^6.5.0",
+    "happy-dom": "^21.0.0",
     "node-html-parser": "^7.1.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",

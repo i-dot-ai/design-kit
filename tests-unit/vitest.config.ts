@@ -58,6 +58,14 @@ export default defineConfig({
                     environment: "node",
                 },
             },
+            {
+                resolve: { alias: contentAlias },
+                test: {
+                    name: "web-components",
+                    include: ["src/**/*.web-components.test.ts"],
+                    environment: "happy-dom",
+                },
+            },
             "./vitest.astro.config.ts",
         ],
     },

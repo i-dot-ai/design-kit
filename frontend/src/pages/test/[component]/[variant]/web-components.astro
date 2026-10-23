@@ -1,0 +1,25 @@
+---
+import Layout from "@layouts/TestLayout.astro";
+
+export function getStaticPaths() {
+    const files = import.meta.glob(
+        "/src/content/components/*/examples/*.web-components.html",
+        { query: "?raw", import: "default", eager: true },
+    ) as Record<string, string>;
+
+    return Object.entries(files).map(([path, html]) => {
+        // ".../content/components/<component>/examples/<variant>.web-components.html"
+        const [, rest] = path.split("/content/components/");
+        const component = rest.split("/")[0];
+        const file = rest.split("/").pop()!; // "<variant>.web-components.html"
+        const variantName = file.replace(/\.web-components\.html$/, "");
+        return { params: { component, variant: variantName }, props: { html } };
+    });
+}
+
+const { html } = Astro.props;
+---
+
+<Layout>
+    <div set:html={html} />
+</Layout>
