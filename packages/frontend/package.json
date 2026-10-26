@@ -1,6 +1,6 @@
 {
   "name": "@i-dot-ai-npm/component-library-frontend",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "i.AI GOV.UK design-system override layer (SCSS + JS). Layered on top of govuk-frontend.",
   "type": "module",
   "exports": {
@@ -9,6 +9,7 @@
       "default": "./src/index.js"
     },
     "./scss": "./src/index.scss",
+    "./settings": "./src/_settings.scss",
     "./css": "./dist/i-ai-design-system.min.css",
     "./min.js": "./dist/i-ai-design-system.min.js"
   },

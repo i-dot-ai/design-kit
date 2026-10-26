@@ -1,0 +1,34 @@
+// i.AI brand settings.
+//
+// The single source for the values a product passes to govuk-frontend's
+// `with ()` when it applies the i.AI brand: font stack, brand colour and the
+// surface colours. Products `@use` this module and hand its variables to
+// govuk-frontend, so a brand change here reaches every product on its next
+// bump rather than drifting across copied idotai.scss files.
+//
+// Every value is `!default`, so a department-branded product can override
+// one of them when it loads the module:
+//
+//   @use "@i-dot-ai-npm/component-library-frontend/settings" as iai with (
+//     $iai-brand-colour: #00703c
+//   );
+//
+// Check any override passes contrast on the surface background before you
+// set it; the brand colour is used for service navigation link text.
+//
+// The bare package path above resolves under Vite and Astro. If you compile
+// with the Sass CLI, prefix it with `pkg:` and pass `--pkg-importer=node`.
+
+$iai-font-family: ("Inter", Helvetica, Arial, sans-serif) !default;
+
+$iai-brand-colour: #2b2b2b !default;
+$iai-surface-background: #f3f3f3 !default;
+$iai-template-background: #f3f3f3 !default;
+
+// The map govuk-frontend expects for `$govuk-functional-colours`.
+$iai-functional-colours: (
+    brand: $iai-brand-colour,
+    surface-background: $iai-surface-background,
+    surface-border: $iai-brand-colour,
+    template-background: $iai-template-background,
+) !default;
