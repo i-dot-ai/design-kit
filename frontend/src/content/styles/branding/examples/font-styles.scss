@@ -1,6 +1,5 @@
-$govuk-font-family: "Inter", Helvetica, Arial, sans-serif;
-$govuk-functional-colours: (
-    brand: #2b2b2b,
-    surface-background: #f3f3f3,
-    surface-border: #2b2b2b,
-    template-background: #f3f3f3)
+@use "@i-dot-ai-npm/component-library-frontend/settings" as iai;
+@use "govuk-frontend" as * with (
+  $govuk-font-family: iai.$iai-font-family,
+  $govuk-functional-colours: iai.$iai-functional-colours
+);
