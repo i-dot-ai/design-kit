@@ -1,0 +1,18 @@
+<iai-button type="button" data-iai-modal-open="html-modal" data-testid="open">
+    Open modal
+</iai-button>
+
+<iai-modal id="html-modal" aria-labelledby="html-modal-title" data-testid="modal">
+    <iai-modal-title id="html-modal-title">Delete item</iai-modal-title>
+    <iai-modal-body>
+        <p class="govuk-body">Are you sure you want to delete this item?</p>
+    </iai-modal-body>
+    <iai-modal-footer>
+        <iai-button type="button" warning data-iai-modal-close data-testid="confirm">
+            Delete
+        </iai-button>
+        <iai-button type="button" secondary data-iai-modal-close data-testid="cancel">
+            Cancel
+        </iai-button>
+    </iai-modal-footer>
+</iai-modal>

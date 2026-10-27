@@ -34,3 +34,29 @@ export function wrapWith(el: HTMLElement, tag: string, className: string): HTMLE
     outer.append(el);
     return outer;
 }
+
+export function create(tag: string, className = "", attrs: Record<string, string> = {}, ...children: (Node | string)[]): HTMLElement {
+    const el = document.createElement(tag);
+    if (className) el.className = className;
+    for (const [name, value] of Object.entries(attrs)) el.setAttribute(name, value);
+    el.append(...children);
+    return el;
+}
+
+export function takeChildren(host: HTMLElement): ChildNode[] {
+    const nodes = Array.from(host.childNodes);
+    host.replaceChildren();
+    return nodes;
+}
+
+export function hasContent(nodes: ChildNode[]): boolean {
+    return nodes.some((n) => n.nodeType === Node.ELEMENT_NODE || n.textContent?.trim());
+}
+
+export function isTag(tag: string) {
+    return (n: Node): n is HTMLElement => n.nodeType === Node.ELEMENT_NODE && (n as Element).localName === tag;
+}
+
+export function slotted(nodes: ChildNode[], name: string): HTMLElement | undefined {
+    return nodes.find((n): n is HTMLElement => n.nodeType === Node.ELEMENT_NODE && (n as Element).getAttribute("slot") === name);
+}
