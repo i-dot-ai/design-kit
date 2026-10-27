@@ -28,7 +28,7 @@ export function renderWebComponent(
 ): string {
     const el = document.createElement(tag);
     for (const [key, value] of Object.entries(props)) {
-        if (value === undefined || value === false) continue;
+        if (value === undefined || value === null || value === false) continue;
         el.setAttribute(key, value === true ? "" : String(value));
     }
     if (text !== undefined) el.innerHTML = text;
