@@ -147,9 +147,9 @@ const principles = defineCollection({
 
 // In practice — stories of how a product team applied the kit. Each story is
 // a folder with an index.mdx: a short, visual account that links out to the
-// product's own design history for detail. The [slug] page renders the "At a
-// glance" summary and the "Read the full story" link from this frontmatter,
-// so every story has the same shape. The /in-practice landing page
+// product's own design history for detail. The [slug] page renders the "Kit
+// used" list and the "Read the full story" link from this frontmatter, so
+// every story ends the same way. The /in-practice landing page
 // (in-practice/index.mdx) shares this shape and is told apart by its `index`
 // id.
 const inPractice = defineCollection({
@@ -159,8 +159,6 @@ const inPractice = defineCollection({
         description: z.string().optional(),
         // The product's name, shown above the title and on the landing card.
         product: z.string().optional(),
-        team: z.string().optional(),
-        when: z.string().optional(),
         // The kit components, styles and patterns the product used.
         kitUsed: z
             .array(z.object({ text: z.string(), href: z.string() }))

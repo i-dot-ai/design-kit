@@ -26,7 +26,7 @@ const stories = (await getCollection("in-practice", ({ id }) => id !== "index"))
     <div class="app-in-practice-body">
         <Content />
     </div>
-    <h2 class="govuk-heading-l">Stories</h2>
+    <h2 class="govuk-heading-l">Examples</h2>
     <CardGroup>
         {
             stories.map((story) => (

@@ -18,14 +18,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { title, description, product, team, when, kitUsed, fullStory } = entry.data;
-
-// Every story opens with the same summary, built from its frontmatter.
-const glance = [
-    { key: "Product", value: product },
-    { key: "Team", value: team },
-    { key: "When", value: when },
-].filter((row) => row.value);
+const { title, description, product, kitUsed, fullStory } = entry.data;
 ---
 
 <Layout>
@@ -33,39 +26,26 @@ const glance = [
     <h1 class="govuk-heading-xl">{title}</h1>
     {description && <p class="govuk-body-l app-in-practice-glance">{description}</p>}
 
-    <h2 class="govuk-heading-m">At a glance</h2>
-    <dl class="govuk-summary-list app-in-practice-glance">
-        {
-            glance.map((row) => (
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">{row.key}</dt>
-                    <dd class="govuk-summary-list__value">{row.value}</dd>
-                </div>
-            ))
-        }
-        {
-            kitUsed.length > 0 && (
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">Kit used</dt>
-                    <dd class="govuk-summary-list__value">
-                        <ul class="govuk-list govuk-!-margin-bottom-0">
-                            {kitUsed.map((item) => (
-                                <li>
-                                    <a class="govuk-link" href={item.href}>
-                                        {item.text}
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </dd>
-                </div>
-            )
-        }
-    </dl>
-
     <div class="app-in-practice-body">
         <Content components={{ StoryTimeline, StoryStep, BeforeAfter, LivePrototype }} />
     </div>
+
+    {
+        kitUsed.length > 0 && (
+            <div class="app-in-practice-body">
+                <h2 class="govuk-heading-l">Kit used</h2>
+                <ul class="govuk-list govuk-list--bullet">
+                    {kitUsed.map((item) => (
+                        <li>
+                            <a class="govuk-link" href={item.href}>
+                                {item.text}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        )
+    }
 
     {
         fullStory && (
