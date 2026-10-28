@@ -1,0 +1,172 @@
+---
+/*
+ * Compares two screenshots of the same screen. With JavaScript, the after
+ * screenshot sits over the before one and a slider (or dragging the image)
+ * moves the divide. Without JavaScript, the two screenshots show one after
+ * the other.
+ */
+interface Props {
+    before: string;
+    beforeAlt: string;
+    beforeLabel: string;
+    after: string;
+    afterAlt: string;
+    afterLabel: string;
+    caption?: string;
+}
+
+const { before, beforeAlt, beforeLabel, after, afterAlt, afterLabel, caption } = Astro.props;
+const id = `compare-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<figure class="app-compare" data-app-compare data-before={beforeLabel} data-after={afterLabel}>
+    <div class="app-compare__stage">
+        <div class="app-compare__layer app-compare__layer--before">
+            <strong class="govuk-tag govuk-tag--grey app-compare__tag">Before: {beforeLabel}</strong>
+            <img src={before} alt={beforeAlt} />
+        </div>
+        <div class="app-compare__layer app-compare__layer--after">
+            <strong class="govuk-tag app-compare__tag">After: {afterLabel}</strong>
+            <img src={after} alt={afterAlt} />
+        </div>
+        <div class="app-compare__handle" aria-hidden="true"></div>
+    </div>
+    <div class="app-compare__control">
+        <label class="govuk-label govuk-label--s" for={id}>
+            Slide to compare {beforeLabel} with {afterLabel}
+        </label>
+        <input class="app-compare__range" type="range" id={id} min="0" max="100" value="50" />
+    </div>
+    {caption && <figcaption class="govuk-body-s">{caption}</figcaption>}
+</figure>
+
+<script>
+    for (const compare of document.querySelectorAll<HTMLElement>("[data-app-compare]")) {
+        const stage = compare.querySelector<HTMLElement>(".app-compare__stage");
+        const range = compare.querySelector<HTMLInputElement>(".app-compare__range");
+        if (!stage || !range) continue;
+
+        const update = () => {
+            const value = Number(range.value);
+            stage.style.setProperty("--app-compare-split", `${value}%`);
+            range.setAttribute(
+                "aria-valuetext",
+                `${value}% ${compare.dataset.before}, ${100 - value}% ${compare.dataset.after}`,
+            );
+        };
+
+        // Dragging on the screenshots moves the slider too.
+        const moveTo = (event: PointerEvent) => {
+            const box = stage.getBoundingClientRect();
+            range.value = String(Math.round(((event.clientX - box.left) / box.width) * 100));
+            update();
+        };
+        stage.addEventListener("pointerdown", (event) => {
+            stage.setPointerCapture(event.pointerId);
+            moveTo(event);
+        });
+        stage.addEventListener("pointermove", (event) => {
+            if (stage.hasPointerCapture(event.pointerId)) moveTo(event);
+        });
+
+        range.addEventListener("input", update);
+        update();
+        compare.classList.add("app-compare--enhanced");
+    }
+</script>
+
+<style is:global>
+    .app-compare {
+        margin: 0 0 40px;
+    }
+
+    .app-compare__layer {
+        margin-bottom: 20px;
+    }
+
+    .app-compare__layer img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border: 1px solid var(--govuk-border-colour);
+    }
+
+    .app-compare__tag {
+        max-width: none;
+        margin-bottom: 10px;
+        white-space: nowrap;
+    }
+
+    .app-compare figcaption {
+        margin-top: 10px;
+    }
+
+    .app-compare__handle,
+    .app-compare__control {
+        display: none;
+    }
+
+    .app-compare--enhanced .app-compare__stage {
+        --app-compare-split: 50%;
+        display: grid;
+        position: relative;
+        cursor: ew-resize;
+        touch-action: pan-y;
+        user-select: none;
+    }
+
+    .app-compare--enhanced .app-compare__layer {
+        grid-area: 1 / 1;
+        margin: 0;
+    }
+
+    .app-compare--enhanced .app-compare__layer img {
+        pointer-events: none;
+    }
+
+    .app-compare--enhanced .app-compare__tag {
+        position: absolute;
+        top: 10px;
+        z-index: 1;
+        margin: 0;
+    }
+
+    .app-compare--enhanced .app-compare__layer--before .app-compare__tag {
+        left: 10px;
+    }
+
+    .app-compare--enhanced .app-compare__layer--after .app-compare__tag {
+        right: 10px;
+    }
+
+    .app-compare--enhanced .app-compare__layer--after {
+        clip-path: inset(0 0 0 var(--app-compare-split));
+    }
+
+    .app-compare--enhanced .app-compare__handle {
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: var(--app-compare-split);
+        width: 4px;
+        margin-left: -2px;
+        background: var(--govuk-brand-colour);
+    }
+
+    .app-compare--enhanced .app-compare__control {
+        display: block;
+        margin-top: 15px;
+    }
+
+    .app-compare__range {
+        width: 100%;
+        margin: 0;
+        accent-color: var(--govuk-brand-colour);
+    }
+
+    .app-compare__range:focus-visible {
+        outline: 3px solid var(--govuk-focus-colour);
+        outline-offset: 2px;
+    }
+</style>

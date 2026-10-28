@@ -9,6 +9,7 @@ This is a pnpm monorepo. It holds the i.AI Design Kit site (`frontend/`) and the
 - [Repo map](#repo-map)
 - [Adding a component](#adding-a-component)
 - [Modifying a component](#modifying-a-component)
+- [Adding an In practice story](#adding-an-in-practice-story)
 - [Tests reference](#tests-reference)
   - [Unit tests](#unit-tests)
     - [i.AI variant](#iai-variant)
@@ -77,6 +78,25 @@ Similarly, if you are only adding a variant to an i.AI component you will need t
 ### Changing behaviour
 
 If you are changing the behaviour of any component you should write the relevant behaviour playwright test first.
+
+## Adding an In practice story
+
+In practice tells the story of how a product team used the kit. Each story is short and visual, and links to the team's own design history for the detail. Use `frontend/src/content/in-practice/parlex/index.mdx` as the template.
+
+1. Add a folder to `frontend/src/content/in-practice/` with an `index.mdx`.
+2. Fill in the frontmatter: `title`, `description`, `product`, `team`, `when`, `kitUsed` and `fullStory`. The page builds the "At a glance" summary and the "Read the full story" panel from it.
+3. Write the body under these headings, leaving out any that don't apply: The problem, What we did, Before and after, Try it yourself, The kit in practice, What we learned, What's next.
+4. Put screenshots in `frontend/public/images/in-practice/<product>/` as `.webp`. If you embed a working prototype, save it as one HTML file in `frontend/public/prototypes/`.
+
+Three components bring a story to life. They're for this section only, not part of the component library:
+
+| Component | Use it for |
+|---|---|
+| `<StoryTimeline>` with a `<StoryStep>` for each stage | What we did. A sticky screenshot follows the step being read |
+| `<BeforeAfter>` | Before and after. A slider over two screenshots of the same screen |
+| `<LivePrototype>` | Try it yourself. A working prototype, with computer and phone sizes |
+
+Each one works without JavaScript and on small screens, where screenshots show inline.
 
 ## Tests reference
 

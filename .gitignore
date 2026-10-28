@@ -51,6 +51,8 @@ node_modules
 !frontend/src/content/**/*.html
 !packages/**/*.html
 !tests-unit/**/*.html
+# ...and working prototypes embedded in In practice stories
+!frontend/public/prototypes/*.html
 
 # Docker cache
 .build-cache

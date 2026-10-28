@@ -145,6 +145,40 @@ const principles = defineCollection({
     }),
 });
 
+// In practice — stories of how a product team applied the kit. Each story is
+// a folder with an index.mdx: a short, visual account that links out to the
+// product's own design history for detail. The [slug] page renders the "At a
+// glance" summary and the "Read the full story" link from this frontmatter,
+// so every story has the same shape. The /in-practice landing page
+// (in-practice/index.mdx) shares this shape and is told apart by its `index`
+// id.
+const inPractice = defineCollection({
+    loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/in-practice" }),
+    schema: z.object({
+        title: z.string(),
+        description: z.string().optional(),
+        // The product's name, shown above the title and on the landing card.
+        product: z.string().optional(),
+        team: z.string().optional(),
+        when: z.string().optional(),
+        // The kit components, styles and patterns the product used.
+        kitUsed: z
+            .array(z.object({ text: z.string(), href: z.string() }))
+            .default([]),
+        // Where to read the detail, such as the product's design history.
+        fullStory: z
+            .object({
+                title: z.string(),
+                description: z.string(),
+                href: z.string(),
+                access: z.string().optional(),
+            })
+            .optional(),
+        // Order on the landing page (lower first).
+        order: z.number().optional(),
+    }),
+});
+
 // Home — the site landing page (/). Authored in-folder as home/index.mdx, its
 // own collection since `/` belongs to no section.
 const home = defineCollection({
@@ -164,5 +198,6 @@ export const collections = {
     guides,
     "get-started": getStarted,
     principles,
+    "in-practice": inPractice,
     home,
 };
