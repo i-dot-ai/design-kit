@@ -1,4 +1,4 @@
-import { create, takeChildren, upgrade, wrapWith } from "../shared/upgrade.js";
+import { create, takeChildren, upgrade, wrapWith } from "../shared/upgrade";
 
 export class IaiServiceNavigationItem extends HTMLElement {
     connectedCallback() {

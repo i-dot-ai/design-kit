@@ -1,5 +1,5 @@
-import { create, hasContent, isTag, slotted, takeChildren, upgrade } from "../shared/upgrade.js";
-import { FOOTER_CROWN, FOOTER_LICENCE_LOGO } from "../shared/icons.js";
+import { create, hasContent, isTag, slotted, takeChildren, upgrade } from "../shared/upgrade";
+import { FOOTER_CROWN, FOOTER_LICENCE_LOGO } from "../shared/icons";
 
 export class IaiGovukFooter extends HTMLElement {
     connectedCallback() {

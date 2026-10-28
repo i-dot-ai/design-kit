@@ -1,4 +1,4 @@
-import { upgrade } from "../shared/upgrade.js";
+import { upgrade } from "../shared/upgrade";
 
 const SIZES: Record<string, string> = { small: "govuk-table__caption--s", medium: "govuk-table__caption--m", large: "govuk-table__caption--l", xl: "govuk-table__caption--xl" };
 

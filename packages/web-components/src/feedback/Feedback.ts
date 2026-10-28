@@ -1,4 +1,4 @@
-import { create, hasContent, takeChildren, upgrade } from "../shared/upgrade.js";
+import { create, hasContent, takeChildren, upgrade } from "../shared/upgrade";
 
 export class IaiFeedback extends HTMLElement {
     connectedCallback() {

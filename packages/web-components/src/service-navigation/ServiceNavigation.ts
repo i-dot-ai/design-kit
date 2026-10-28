@@ -1,4 +1,4 @@
-import { create, isTag, slotted, takeChildren, upgrade } from "../shared/upgrade.js";
+import { create, isTag, slotted, takeChildren, upgrade } from "../shared/upgrade";
 
 export class IaiServiceNavigation extends HTMLElement {
     connectedCallback() {

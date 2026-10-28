@@ -1,4 +1,4 @@
-import { upgrade } from "../shared/upgrade.js";
+import { upgrade } from "../shared/upgrade";
 
 const WIDTHS = new Set(["2", "3", "4", "5", "10", "20", "30"]);
 

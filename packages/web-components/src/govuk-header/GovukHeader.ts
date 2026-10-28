@@ -1,5 +1,5 @@
-import { create, upgrade } from "../shared/upgrade.js";
-import { GOVUK_LOGOTYPE } from "../shared/icons.js";
+import { create, upgrade } from "../shared/upgrade";
+import { GOVUK_LOGOTYPE } from "../shared/icons";
 
 export class IaiGovukHeader extends HTMLElement {
     connectedCallback() {
