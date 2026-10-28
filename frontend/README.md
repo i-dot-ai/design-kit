@@ -29,10 +29,11 @@ pnpm lint      # run ESLint
 
 ## Structure
 
-- `src/content/` — docs content (components, styles, patterns, principles, get-started).
+- `src/content/` — docs content (components, styles, patterns, principles, get-started, in-practice).
 - `src/pages/` — routes, including `test/` which hosts the generated component test pages.
 - `src/layouts/` — page layouts for each section of the site.
 - `src/components/docs/` — components used to render the documentation.
+- `src/components/in-practice/` — the timeline, before and after, and live prototype components used in In practice stories.
 - `scripts/` — build tooling (component page and example generation, skill packaging).
 - `.agents/skills/` — AI-agent skills published with the site.
 

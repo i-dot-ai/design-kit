@@ -1,0 +1,159 @@
+---
+title: Rebuilding an AI research tool with the Design Kit
+description: The Parlex team rebuilt their prototype with the Design Kit, then used it to make answers easier to trust over 6 versions in 15 days.
+product: Parlex
+team: Parlex, i.AI
+when: 13 to 28 October 2026
+order: 1
+kitUsed:
+  - text: Main application structure
+    href: /styles/main-application-structure
+  - text: Card
+    href: /components/card
+  - text: Textarea
+    href: /components/textarea
+  - text: Details
+    href: /components/details
+  - text: Task list
+    href: /components/task-list
+  - text: Tag
+    href: /components/tag
+  - text: Table
+    href: /components/table
+  - text: Inset text
+    href: /components/inset-text
+  - text: Modal
+    href: /components/modal
+  - text: Contents panel
+    href: /components/contents-panel
+  - text: GOV.UK header
+    href: /components/govuk-header
+fullStory:
+  title: Parlex design decisions
+  description: Every change has its own post, with the reasons, what we kept, what we'll test and a working copy of the prototype as it was at the time.
+  href: https://i-dot-ai.github.io/parlex-design-history/
+  access: You need to sign in with a GitHub account in the i.AI organisation.
+---
+
+## The problem
+
+Parlex helps civil servants and parliamentary staff research UK Parliament: debates, written questions, committees and members.
+
+People paste Parlex answers into briefings. So the worst thing Parlex can do isn't to look dated. It's to give an answer that's out of date or impossible to check, which people trust anyway.
+
+We wanted to know 2 things:
+
+- what Parlex looks and feels like when the Design Kit decides the visual language
+- how quickly we can then improve it, one change at a time
+
+## What we did
+
+We rebuilt Parlex as a clickable prototype using the kit's prototype skill: one HTML file that anyone can open. Then we made one change at a time, and saved each version.
+
+<StoryTimeline>
+
+<StoryStep label="Prototype 1.0" short="1.0" title="Rebuilt with the kit" image="/images/in-practice/parlex/v1-0-home.webp" alt="Parlex Home with the i.AI header, 4 starter prompts in cards, and the message box at the bottom." href="https://i-dot-ai.github.io/parlex-design-history/posts/rebuilding-parlex-with-the-ai-design-kit.html">
+
+Almost every part of the screen is a kit component. Cards hold the starter prompts. A details component with a task list shows the research steps. Answers use tables and inset text.
+
+We kept today's structure, content and behaviour, so current users would recognise it straight away.
+
+</StoryStep>
+
+<StoryStep label="Prototype 1.1" short="1.1" title="Answers you can check" image="/images/in-practice/parlex/v1-1-answer-sources.webp" alt="A Parlex answer where every count links to its record, ending with the data cut-off and what was searched." href="https://i-dot-ai.github.io/parlex-design-history/posts/making-answers-easier-to-check.html">
+
+A UX audit ranked fixes by trust and accuracy. Every answer now links to its sources, and ends with how current the data is and what was searched.
+
+Copied answers keep their links, and a stopped answer is labelled incomplete.
+
+</StoryStep>
+
+<StoryStep label="Prototype 1.2" short="1.2" title="Managing chats" image="/images/in-practice/parlex/v1-2-chat-options.webp" alt="The Parlex sidebar with chats grouped under Pinned, a named group and dates, and an options menu open on one chat." href="https://i-dot-ai.github.io/parlex-design-history/posts/managing-chats.html">
+
+Chats get AI titles, and people can rename, pin, group, archive and delete them.
+
+The kit had no actions menu, so we built one from kit tokens and spacing, with full keyboard support.
+
+</StoryStep>
+
+<StoryStep label="Prototype 1.3" short="1.3" title="The GOV.UK brand" image="/images/in-practice/parlex/v1-3-govuk-brand.webp" alt="Parlex Home with the blue GOV.UK header reading GOV.UK Parlex, in the GDS Transport typeface." href="https://i-dot-ai.github.io/parlex-design-history/posts/moving-parlex-to-the-govuk-brand.html">
+
+The kit's [branding guidance](/styles/branding) says products used across many organisations should use the GOV.UK brand. Parlex is open to all civil servants, so we switched.
+
+Because the kit builds on GOV.UK Frontend, switching meant removing the i.AI overrides, not rebuilding screens.
+
+</StoryStep>
+
+<StoryStep label="Prototype 1.4" short="1.4" title="A daily briefing by email" image="/images/in-practice/parlex/v1-4-daily-briefing.webp" alt="The daily briefing set-up page, with 2 topics added, each with a Remove link, and checkboxes for the Houses." href="https://i-dot-ai.github.io/parlex-design-history/posts/a-daily-briefing-by-email.html">
+
+We replaced a page of switches and cards with one GOV.UK question page. It has an "add another" list of topics, checkboxes for the Houses, and Subscribe as the only action.
+
+</StoryStep>
+
+<StoryStep label="Prototype 1.5" short="1.5" title="A lighter composer" image="/images/in-practice/parlex/v1-5-composer.webp" alt="The Parlex message box grown to fit a 4-line prompt, with Model and classification folded into a link next to Send." href="https://i-dot-ai.github.io/parlex-design-history/posts/a-lighter-composer.html">
+
+The model and classification fold into a details component. On a 320px phone, the message box area went from 46% of the screen to 33%.
+
+Stop got its own button, so Send always means send, and each chat keeps its own draft.
+
+</StoryStep>
+
+</StoryTimeline>
+
+## Before and after
+
+<BeforeAfter
+  before="/images/in-practice/parlex/v1-0-home.webp"
+  beforeAlt="Prototype 1.0: the i.AI header, a phase banner, an empty chats list, and the model selector and classification below the message box."
+  beforeLabel="prototype 1.0"
+  after="/images/in-practice/parlex/v1-5-home.webp"
+  afterAlt="Prototype 1.5: the GOV.UK header, chats grouped in the sidebar, a daily briefing link, clearer starter prompts and a lighter message box."
+  afterLabel="prototype 1.5"
+  caption="Parlex Home in the first and latest versions. All responses and chats are sample data."
+/>
+
+## Try it yourself
+
+<LivePrototype
+  src="/prototypes/parlex-v1.5.html?state=home"
+  title="Parlex prototype 1.5"
+  caption="This is prototype 1.5, working. Try a starter prompt, open the chat options or set up a daily briefing. All responses are sample data."
+/>
+
+## The kit in practice
+
+### What the kit gave us
+
+Kit components covered almost every part of the screen, so we spent our time on the product, not on buttons and spacing.
+
+Where the kit's guidance and the brief disagreed, the kit won. In 5 places it changed what the brief asked for. For example, Send is never disabled: sending an empty message shows an error instead. And New chat is a secondary button, because Send is the primary action.
+
+### Where we built our own
+
+Parlex is chat-shaped, and the kit had nothing for some parts of a chat product. We built these with kit tokens and spacing:
+
+- an app shell, with a sidebar and a message box pinned to the bottom
+- research steps that show an AI working through a task
+- an actions menu for each chat
+- drag and drop, always with a non-drag alternative
+
+Each one is a candidate to add to the kit, so the next chat product doesn't have to build it again.
+
+### Where we departed
+
+We left out the GOV.UK footer. The message box is pinned to the bottom of the screen, so a footer would sit under it, and people would only find it by scrolling past the conversation. We recorded this as a deliberate departure, with what it means for the links the footer normally holds.
+
+## What we learned
+
+- **Reskin first, then change one thing at a time.** Keeping the visual rebuild apart from UX changes made each decision easy to review.
+- **Use the kit to settle disagreements with the brief.** Write down each one, so the product team can confirm it.
+- **Choose the brand by audience, not by phase.** A prototype should look like the product it's testing, or research tells you about the wrong product.
+- **Chat products find the same gaps.** Feed them back to the kit.
+
+## What's next
+
+We haven't tested these changes with users yet. Next, we want to find out:
+
+- whether people check the sources and search terms when an answer looks wrong
+- whether pasted answers keep enough source information for a briefing
+- whether hiding the classification behind a link is safe, which needs product sign-off

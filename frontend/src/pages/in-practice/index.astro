@@ -1,0 +1,47 @@
+---
+import Layout from "@layouts/InPracticeLayout.astro";
+import { getCollection, getEntry, render } from "astro:content";
+import {
+    CardGroup,
+    Card,
+    CardHeading,
+    CardLink,
+    CardContent,
+} from "@i-dot-ai-npm/component-library-astro";
+
+const entry = await getEntry("in-practice", "index");
+if (!entry) throw new Error("Missing in-practice/index.mdx");
+const { Content } = await render(entry);
+
+// Lower `order` first. Stories without an order sort after, by title.
+const stories = (await getCollection("in-practice", ({ id }) => id !== "index")).sort(
+    (a, b) =>
+        (a.data.order ?? Infinity) - (b.data.order ?? Infinity) ||
+        a.data.title.localeCompare(b.data.title),
+);
+---
+
+<Layout>
+    <h1 class="govuk-heading-xl">{entry.data.title}</h1>
+    <div class="app-in-practice-body">
+        <Content />
+    </div>
+    <h2 class="govuk-heading-l">Stories</h2>
+    <CardGroup>
+        {
+            stories.map((story) => (
+                <Card>
+                    <CardHeading>
+                        <span class="govuk-caption-m">{story.data.product}</span>
+                        <h3 class="govuk-heading-m">
+                            <CardLink href={`/in-practice/${story.id}`}>
+                                {story.data.title}
+                            </CardLink>
+                        </h3>
+                    </CardHeading>
+                    <CardContent>{story.data.description}</CardContent>
+                </Card>
+            ))
+        }
+    </CardGroup>
+</Layout>

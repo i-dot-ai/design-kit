@@ -1,0 +1,181 @@
+---
+/*
+ * A scrolling timeline for In practice stories. Each <StoryStep> is one stage
+ * of the story, with its own screenshot.
+ *
+ * On wide screens with JavaScript, a sticky stage beside the steps shows the
+ * screenshot for the step being read. Without JavaScript, on small screens and
+ * for screen readers, each step shows its own screenshot inline.
+ */
+---
+
+<div class="app-story" data-app-story>
+    <ol class="app-story__steps">
+        <slot />
+    </ol>
+    <div class="app-story__stage" aria-hidden="true">
+        <div class="app-story__frame"></div>
+        <ol class="app-story__progress"></ol>
+    </div>
+</div>
+
+<script>
+    for (const story of document.querySelectorAll<HTMLElement>("[data-app-story]")) {
+        const steps = [...story.querySelectorAll<HTMLElement>(".app-story__step")];
+        const frame = story.querySelector(".app-story__frame");
+        const progress = story.querySelector(".app-story__progress");
+        if (!frame || !progress || !steps.length) continue;
+
+        // Copy each step's screenshot and label into the sticky stage.
+        const shots = steps.map((step) => {
+            const img = step.querySelector("img");
+            const shot = img ? (img.cloneNode() as HTMLImageElement) : document.createElement("img");
+            shot.removeAttribute("loading");
+            shot.alt = "";
+            shot.className = "app-story__shot";
+            frame.append(shot);
+            return shot;
+        });
+        const dots = steps.map((step) => {
+            const dot = document.createElement("li");
+            dot.className = "app-story__dot";
+            dot.textContent = step.dataset.short ?? "";
+            progress.append(dot);
+            return dot;
+        });
+
+        const show = (index: number) => {
+            steps.forEach((step, i) => step.classList.toggle("app-story__step--active", i === index));
+            shots.forEach((shot, i) => shot.classList.toggle("app-story__shot--active", i === index));
+            dots.forEach((dot, i) => dot.classList.toggle("app-story__dot--active", i <= index));
+        };
+        show(0);
+
+        // The active step is the one crossing the middle of the viewport.
+        const observer = new IntersectionObserver(
+            (entries) => {
+                for (const entry of entries) {
+                    if (entry.isIntersecting) show(steps.indexOf(entry.target as HTMLElement));
+                }
+            },
+            { rootMargin: "-50% 0px -50% 0px" },
+        );
+        steps.forEach((step) => observer.observe(step));
+        story.classList.add("app-story--enhanced");
+    }
+</script>
+
+<style is:global>
+    .app-story {
+        margin: 0 0 40px;
+    }
+
+    .app-story__steps {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .app-story__step {
+        margin: 0 0 40px;
+        padding-left: 20px;
+        border-left: 5px solid var(--govuk-border-colour);
+    }
+
+    .app-story__figure {
+        margin: 15px 0 0;
+    }
+
+    .app-story__figure img,
+    .app-story__shot {
+        display: block;
+        width: 100%;
+        height: auto;
+        border: 1px solid var(--govuk-border-colour);
+    }
+
+    .app-story__stage {
+        display: none;
+    }
+
+    @media (min-width: 64em) {
+        .app-story--enhanced {
+            display: grid;
+            grid-template-columns: 5fr 7fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .app-story--enhanced .app-story__step {
+            min-height: 60vh;
+            margin: 0;
+            padding-top: 10px;
+            padding-bottom: 40px;
+            transition: border-color 0.2s;
+        }
+
+        .app-story--enhanced .app-story__step--active {
+            border-left-color: var(--govuk-brand-colour);
+        }
+
+        /* The stage shows the screenshot. Keep it in the reading order for screen readers. */
+        .app-story--enhanced .app-story__figure {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip-path: inset(50%);
+            white-space: nowrap;
+        }
+
+        .app-story--enhanced .app-story__stage {
+            display: block;
+            position: sticky;
+            top: max(20px, calc(50vh - 300px));
+        }
+
+        .app-story__frame {
+            display: grid;
+        }
+
+        .app-story__shot {
+            grid-area: 1 / 1;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .app-story__shot--active {
+            opacity: 1;
+        }
+
+        .app-story__progress {
+            display: flex;
+            gap: 5px;
+            list-style: none;
+            margin: 15px 0 0;
+            padding: 0;
+        }
+
+        .app-story__dot {
+            flex: 1;
+            padding-top: 8px;
+            border-top: 5px solid var(--govuk-border-colour);
+            font-size: 1rem;
+            color: var(--govuk-secondary-text-colour);
+            transition: border-color 0.2s;
+        }
+
+        .app-story__dot--active {
+            border-top-color: var(--govuk-brand-colour);
+            color: var(--govuk-text-colour);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .app-story__step,
+        .app-story__shot,
+        .app-story__dot {
+            transition: none;
+        }
+    }
+</style>

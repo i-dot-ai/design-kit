@@ -63,6 +63,12 @@ const pathName = Astro.url.pathname;
         >
             Principles
         </ServiceNavigationItem>
+        <ServiceNavigationItem
+            href="/in-practice"
+            active={pathName.includes("/in-practice")}
+        >
+            In practice
+        </ServiceNavigationItem>
     </ServiceNavigation>
     <main id="main-content" role="main">
         <slot />
