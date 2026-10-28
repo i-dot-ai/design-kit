@@ -47,7 +47,7 @@ jobs:
           # rewrite `workspace:*`. Safe only because inter-package links live in
           # devDependencies while SHIPPED links are semver peerDependencies.
           # NEVER move a `workspace:*` into dependencies/peerDependencies.
-          for fw in react solid svelte astro frontend; do
+          for fw in react solid svelte astro frontend web-components; do
             dir="packages/$fw"
             name=$(node -p "require('./$dir/package.json').name")
             version=$(node -p "require('./$dir/package.json').version")
