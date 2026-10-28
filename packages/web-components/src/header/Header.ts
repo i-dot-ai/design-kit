@@ -1,4 +1,4 @@
-import { create, takeChildren, upgrade } from "../shared/upgrade.js";
+import { create, takeChildren, upgrade } from "../shared/upgrade";
 
 export class IaiHeader extends HTMLElement {
     connectedCallback() {

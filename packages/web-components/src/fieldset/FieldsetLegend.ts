@@ -1,4 +1,4 @@
-import { upgrade, wrapContents } from "../shared/upgrade.js";
+import { upgrade, wrapContents } from "../shared/upgrade";
 
 const SIZES: Record<string, string> = { small: "govuk-fieldset__legend--s", medium: "govuk-fieldset__legend--m", large: "govuk-fieldset__legend--l", xl: "govuk-fieldset__legend--xl" };
 

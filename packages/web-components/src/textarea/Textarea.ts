@@ -1,4 +1,4 @@
-import { upgrade } from "../shared/upgrade.js";
+import { upgrade } from "../shared/upgrade";
 
 export class IaiTextarea extends HTMLElement {
     connectedCallback() {

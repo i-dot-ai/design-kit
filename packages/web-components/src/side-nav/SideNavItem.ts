@@ -1,4 +1,4 @@
-import { upgrade, wrapContents } from "../shared/upgrade.js";
+import { upgrade, wrapContents } from "../shared/upgrade";
 
 export class IaiSideNavItem extends HTMLElement {
     connectedCallback() {

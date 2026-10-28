@@ -1,4 +1,4 @@
-import { create, isTag, takeChildren, upgrade } from "../shared/upgrade.js";
+import { create, isTag, takeChildren, upgrade } from "../shared/upgrade";
 
 export class IaiFooter extends HTMLElement {
     connectedCallback() {

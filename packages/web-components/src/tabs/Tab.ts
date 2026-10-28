@@ -1,4 +1,4 @@
-import { upgrade, wrapWith } from "../shared/upgrade.js";
+import { upgrade, wrapWith } from "../shared/upgrade";
 
 export class IaiTab extends HTMLElement {
     connectedCallback() {

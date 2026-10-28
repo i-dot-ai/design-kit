@@ -1,4 +1,4 @@
-import { upgrade, wrapWith } from "../shared/upgrade.js";
+import { upgrade, wrapWith } from "../shared/upgrade";
 
 const SIZES: Record<string, string> = { small: "govuk-label--s", medium: "govuk-label--m", large: "govuk-label--l", xl: "govuk-label--xl" };
 

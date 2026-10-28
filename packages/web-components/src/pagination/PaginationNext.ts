@@ -1,5 +1,5 @@
-import { create, hasContent, takeChildren, upgrade, wrapWith } from "../shared/upgrade.js";
-import { PAGINATION_NEXT_ICON } from "../shared/icons.js";
+import { create, hasContent, takeChildren, upgrade, wrapWith } from "../shared/upgrade";
+import { PAGINATION_NEXT_ICON } from "../shared/icons";
 
 export class IaiPaginationNext extends HTMLElement {
     connectedCallback() {

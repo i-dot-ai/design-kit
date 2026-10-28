@@ -1,4 +1,4 @@
-import { upgrade } from "../shared/upgrade.js";
+import { upgrade } from "../shared/upgrade";
 
 const COLOURS = new Set(["grey", "green", "teal", "turquoise", "blue", "light-blue", "purple", "magenta", "pink", "red", "orange", "yellow"]);
 

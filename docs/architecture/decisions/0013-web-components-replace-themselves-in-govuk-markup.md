@@ -7,7 +7,7 @@ Accepted
 
 ## Context
 
-We need web component versions of our components ([decision 0003](/docs/architecture/decisions/0003-light-framework-packages.md)). They're useful if working with other governmnent departments which do not allow frameworks such as MHCLG.
+We need web component versions of our components ([decision 0003](/docs/architecture/decisions/0003-light-framework-packages.md)). They're useful if working with other government departments which do not allow frameworks such as MHCLG.
 
 There are two challenges.
 
