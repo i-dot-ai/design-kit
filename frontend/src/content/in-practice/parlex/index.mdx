@@ -1,9 +1,7 @@
 ---
 title: Rebuilding an AI research tool with the Design Kit
-description: The Parlex team rebuilt their prototype with the Design Kit, then used it to make answers easier to trust over 6 versions in 15 days.
+description: The Parlex team rebuilt their prototype with the Design Kit, then used it to make answers easier to trust.
 product: Parlex
-team: Parlex, i.AI
-when: 13 to 28 October 2026
 order: 1
 kitUsed:
   - text: Main application structure
@@ -46,11 +44,31 @@ We wanted to know 2 things:
 - what Parlex looks and feels like when the Design Kit decides the visual language
 - how quickly we can then improve it, one change at a time
 
+## Before and after
+
+<BeforeAfter
+  before="/images/in-practice/parlex/v0-live-home.webp"
+  beforeAlt="The live service: a Parlex header, recent chats in a grey sidebar, 4 starter prompts in cards with pink icons, and a message box with a model selector, an Official sensitive label and an icon-only send button."
+  beforeLabel="the live service"
+  after="/images/in-practice/parlex/v1-5-home.webp"
+  afterAlt="Prototype 1.5: the GOV.UK header, chats grouped in the sidebar, a daily briefing link, clearer starter prompts and a lighter message box."
+  afterLabel="prototype 1.5"
+  caption="Parlex Home in the live service and in prototype 1.5. The prototype's chats are sample data."
+/>
+
 ## What we did
 
 We rebuilt Parlex as a clickable prototype using the kit's prototype skill: one HTML file that anyone can open. Then we made one change at a time, and saved each version.
 
 <StoryTimeline>
+
+<StoryStep label="Live service" short="0" title="Where we started" image="/images/in-practice/parlex/v0-live-home.webp" alt="Live Parlex Home: a grey sidebar with recent chats, 4 starter prompts in cards with pink icons, and a message box with a model selector, an Official sensitive label and an icon-only send button.">
+
+Parlex today has its own look, built without the kit.
+
+Some of what people see makes answers harder to trust. The intro promises "recent political events", but the data runs up to yesterday. The starter prompts ask about what happened "recently". Send is an icon with no label.
+
+</StoryStep>
 
 <StoryStep label="Prototype 1.0" short="1.0" title="Rebuilt with the kit" image="/images/in-practice/parlex/v1-0-home.webp" alt="Parlex Home with the i.AI header, 4 starter prompts in cards, and the message box at the bottom." href="https://i-dot-ai.github.io/parlex-design-history/posts/rebuilding-parlex-with-the-ai-design-kit.html">
 
@@ -99,18 +117,6 @@ Stop got its own button, so Send always means send, and each chat keeps its own 
 </StoryStep>
 
 </StoryTimeline>
-
-## Before and after
-
-<BeforeAfter
-  before="/images/in-practice/parlex/v1-0-home.webp"
-  beforeAlt="Prototype 1.0: the i.AI header, a phase banner, an empty chats list, and the model selector and classification below the message box."
-  beforeLabel="prototype 1.0"
-  after="/images/in-practice/parlex/v1-5-home.webp"
-  afterAlt="Prototype 1.5: the GOV.UK header, chats grouped in the sidebar, a daily briefing link, clearer starter prompts and a lighter message box."
-  afterLabel="prototype 1.5"
-  caption="Parlex Home in the first and latest versions. All responses and chats are sample data."
-/>
 
 ## Try it yourself
 

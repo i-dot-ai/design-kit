@@ -4,20 +4,34 @@
  * of the story, with its own screenshot.
  *
  * On wide screens with JavaScript, a sticky stage beside the steps shows the
- * screenshot for the step being read. Without JavaScript, on small screens and
- * for screen readers, each step shows its own screenshot inline.
+ * screenshot for the step being read, with links to jump to each step. On
+ * small screens the jump links sit above the steps. Without JavaScript, and
+ * for screen readers, each step shows its own screenshot inline. A link to
+ * skip to the end of the timeline always shows.
  */
+const id = `story-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
-<div class="app-story" data-app-story>
+<div class="app-story" id={id} data-app-story>
+    <p class="govuk-body app-story__skip">
+        <a class="govuk-link" href={`#${id}-end`}>Skip to the end of the timeline</a>
+    </p>
+    <div class="app-story__stage">
+        <div class="app-story__frame" aria-hidden="true"></div>
+        <nav class="app-story__nav" aria-label="Timeline">
+            <ol class="app-story__progress"></ol>
+        </nav>
+        <a class="app-story__next" href="#" hidden>
+            <svg viewBox="0 0 48 64" width="48" height="64" aria-hidden="true" focusable="false">
+                <path d="M24 4v52M6 38l18 20 18-20" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="square" />
+            </svg>
+        </a>
+    </div>
     <ol class="app-story__steps">
         <slot />
     </ol>
-    <div class="app-story__stage" aria-hidden="true">
-        <div class="app-story__frame"></div>
-        <ol class="app-story__progress"></ol>
-    </div>
 </div>
+<div class="app-story__end" id={`${id}-end`} tabindex="-1"></div>
 
 <script>
     for (const story of document.querySelectorAll<HTMLElement>("[data-app-story]")) {
@@ -26,7 +40,7 @@
         const progress = story.querySelector(".app-story__progress");
         if (!frame || !progress || !steps.length) continue;
 
-        // Copy each step's screenshot and label into the sticky stage.
+        // Copy each step's screenshot into the sticky stage.
         const shots = steps.map((step) => {
             const img = step.querySelector("img");
             const shot = img ? (img.cloneNode() as HTMLImageElement) : document.createElement("img");
@@ -36,18 +50,57 @@
             frame.append(shot);
             return shot;
         });
-        const dots = steps.map((step) => {
-            const dot = document.createElement("li");
-            dot.className = "app-story__dot";
-            dot.textContent = step.dataset.short ?? "";
-            progress.append(dot);
-            return dot;
+
+        // One link for each step, to jump straight to it.
+        const links = steps.map((step, i) => {
+            step.id = `${story.id}-step-${i}`;
+            step.tabIndex = -1;
+            const item = document.createElement("li");
+            item.className = "app-story__dot";
+            const link = document.createElement("a");
+            link.className = "govuk-link app-story__dot-link";
+            link.href = `#${step.id}`;
+            link.textContent = step.dataset.short ?? "";
+            // The name starts with the visible text, then adds the step's title.
+            link.setAttribute("aria-label", `${link.textContent}: ${step.querySelector("h3")?.textContent ?? ""}`);
+            item.append(link);
+            progress.append(item);
+            return { item, link };
         });
 
+        // A large arrow under the stage links to the next step, to encourage
+        // people to keep scrolling. It's hidden on the last step.
+        const next = story.querySelector<HTMLAnchorElement>(".app-story__next");
+        const pointNext = (index: number) => {
+            if (!next) return;
+            const target = steps[index + 1];
+            next.hidden = !target;
+            if (!target) return;
+            next.href = `#${target.id}`;
+            next.setAttribute("aria-label", `Next: ${links[index + 1].link.getAttribute("aria-label")}`);
+        };
+
+        // The arrow fades while the page scrolls, and comes back when it stops.
+        let scrollTimer: number | undefined;
+        window.addEventListener(
+            "scroll",
+            () => {
+                story.classList.add("app-story--scrolling");
+                window.clearTimeout(scrollTimer);
+                scrollTimer = window.setTimeout(() => story.classList.remove("app-story--scrolling"), 200);
+            },
+            { passive: true },
+        );
+
         const show = (index: number) => {
+            pointNext(index);
             steps.forEach((step, i) => step.classList.toggle("app-story__step--active", i === index));
             shots.forEach((shot, i) => shot.classList.toggle("app-story__shot--active", i === index));
-            dots.forEach((dot, i) => dot.classList.toggle("app-story__dot--active", i <= index));
+            links.forEach(({ item, link }, i) => {
+                item.classList.toggle("app-story__dot--active", i <= index);
+                if (i === index) link.setAttribute("aria-current", "step");
+                else link.removeAttribute("aria-current");
+            });
         };
         show(0);
 
@@ -80,6 +133,12 @@
         margin: 0 0 40px;
         padding-left: 20px;
         border-left: 5px solid var(--govuk-border-colour);
+        scroll-margin-top: 20px;
+    }
+
+    .app-story__step:focus,
+    .app-story__end:focus {
+        outline: none;
     }
 
     .app-story__figure {
@@ -94,16 +153,68 @@
         border: 1px solid var(--govuk-border-colour);
     }
 
+    /* Without JavaScript there's nothing in the stage, so hide it. */
     .app-story__stage {
         display: none;
+    }
+
+    .app-story--enhanced .app-story__stage {
+        display: block;
+        margin-bottom: 30px;
+    }
+
+    /* On small screens the stage holds only the jump links. */
+    .app-story__frame {
+        display: none;
+    }
+
+    .app-story__progress {
+        display: flex;
+        gap: 5px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .app-story__dot {
+        flex: 1;
+        padding-top: 8px;
+        border-top: 5px solid var(--govuk-border-colour);
+        font-size: 1rem;
+        transition: border-color 0.2s;
+    }
+
+    .app-story__dot--active {
+        border-top-color: var(--govuk-brand-colour);
+    }
+
+    .app-story__dot-link[aria-current] {
+        font-weight: 700;
     }
 
     @media (min-width: 64em) {
         .app-story--enhanced {
             display: grid;
             grid-template-columns: 5fr 7fr;
-            gap: 40px;
+            column-gap: 40px;
             align-items: start;
+        }
+
+        .app-story--enhanced .app-story__skip {
+            grid-column: 1 / -1;
+        }
+
+        .app-story--enhanced .app-story__steps {
+            grid-column: 1;
+            grid-row: 2;
+        }
+
+        .app-story--enhanced .app-story__stage {
+            grid-column: 2;
+            grid-row: 2;
+            position: sticky;
+            top: max(20px, calc(50vh - 300px));
+            margin-bottom: 0;
         }
 
         .app-story--enhanced .app-story__step {
@@ -128,14 +239,9 @@
             white-space: nowrap;
         }
 
-        .app-story--enhanced .app-story__stage {
-            display: block;
-            position: sticky;
-            top: max(20px, calc(50vh - 300px));
-        }
-
-        .app-story__frame {
+        .app-story--enhanced .app-story__frame {
             display: grid;
+            margin-bottom: 15px;
         }
 
         .app-story__shot {
@@ -148,34 +254,54 @@
             opacity: 1;
         }
 
-        .app-story__progress {
-            display: flex;
-            gap: 5px;
-            list-style: none;
-            margin: 15px 0 0;
-            padding: 0;
-        }
-
-        .app-story__dot {
-            flex: 1;
-            padding-top: 8px;
-            border-top: 5px solid var(--govuk-border-colour);
-            font-size: 1rem;
-            color: var(--govuk-secondary-text-colour);
-            transition: border-color 0.2s;
-        }
-
-        .app-story__dot--active {
-            border-top-color: var(--govuk-brand-colour);
+        .app-story--enhanced .app-story__next:not([hidden]) {
+            display: block;
+            width: max-content;
+            margin: 15px 0 0 auto;
+            padding: 4px 6px;
             color: var(--govuk-text-colour);
+            transition: opacity 0.3s;
+            animation: app-story-nudge 1.6s ease-in-out infinite;
+        }
+
+        .app-story--scrolling .app-story__next:not([hidden]) {
+            opacity: 0.25;
+            animation: none;
+        }
+
+        .app-story__next svg {
+            display: block;
+        }
+
+        .app-story__next:focus-visible {
+            outline: 3px solid transparent;
+            background-color: var(--govuk-focus-colour);
+            box-shadow: 0 4px var(--govuk-focus-text-colour);
+        }
+    }
+
+    /* On small screens the steps show inline, so the arrow isn't needed. */
+    .app-story__next {
+        display: none;
+    }
+
+    @keyframes app-story-nudge {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(8px);
         }
     }
 
     @media (prefers-reduced-motion: reduce) {
         .app-story__step,
         .app-story__shot,
-        .app-story__dot {
+        .app-story__dot,
+        .app-story--enhanced .app-story__next:not([hidden]) {
             transition: none;
+            animation: none;
         }
     }
 </style>
