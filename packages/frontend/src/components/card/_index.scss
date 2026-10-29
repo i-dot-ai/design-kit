@@ -81,6 +81,16 @@
     color: govuk-colour("white") !important;
 }
 
+// Secondary text (black tint-25) is 2.17:1 on the black hover surface, which
+// fails WCAG 1.4.3. Tint-80 is 12.45:1 and stays quieter than the white text.
+.iai-card:hover .govuk-caption-s,
+.iai-card:hover .govuk-caption-m,
+.iai-card:hover .govuk-caption-l,
+.iai-card:hover .govuk-caption-xl,
+.iai-card:hover .govuk-hint {
+    color: govuk-colour("black", $variant: "tint-80");
+}
+
 .iai-card--secondary {
     padding: 15px 20px;
     background-color: govuk-colour("black", $variant: "tint-95");
