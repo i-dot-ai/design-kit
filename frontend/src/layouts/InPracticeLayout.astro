@@ -3,9 +3,7 @@ import Layout from "@layouts/AppLayout.astro";
 
 import { Breadcrumbs, BreadcrumbItem } from "@i-dot-ai-npm/component-library-astro";
 
-// Stories use the full page width so the timeline, comparisons and live
-// prototypes have room. There's no side nav: each story is read from top to
-// bottom, and the landing page lists them all.
+// No side nav, so the story components get the full width.
 const currentPath = Astro.url.pathname.replace(/\/$/, "");
 ---
 
@@ -22,26 +20,3 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
         <slot />
     </div>
 </Layout>
-
-<style is:global>
-    /* Keep running text to a readable line length, and let the story components use the full width. */
-    .app-in-practice-body > :is(p, ul, ol, h2, h3, h4, blockquote, .govuk-inset-text) {
-        max-width: 42rem;
-    }
-
-    .app-in-practice-body > h2 {
-        margin-top: 50px;
-    }
-
-    .app-in-practice-glance {
-        max-width: 42rem;
-    }
-
-    .app-in-practice-full-story {
-        max-width: 42rem;
-        margin-top: 50px;
-        padding: 25px;
-        border-left: 10px solid var(--govuk-brand-colour);
-        background: var(--govuk-surface-background-colour, #f3f2f1);
-    }
-</style>

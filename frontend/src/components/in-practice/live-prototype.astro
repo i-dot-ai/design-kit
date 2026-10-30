@@ -1,9 +1,6 @@
 ---
-/*
- * Embeds a working prototype, saved as one HTML file in /public/prototypes.
- * Readers can switch between computer and phone sizes, start again, or open
- * it in a new tab. Without JavaScript, only the frame and the link show.
- */
+import { Button } from "@i-dot-ai-npm/component-library-astro";
+
 interface Props {
     src: string;
     title: string;
@@ -13,23 +10,23 @@ interface Props {
 const { src, title, caption } = Astro.props;
 ---
 
-<figure class="app-live-prototype" data-app-live-prototype>
-    <div class="app-live-prototype__toolbar">
+<figure class="app-live-prototype govuk-!-margin-bottom-7" data-app-live-prototype>
+    <div class="app-live-prototype__toolbar govuk-!-margin-bottom-3">
         <div class="app-live-prototype__views" role="group" aria-label="Prototype size">
-            <button type="button" class="govuk-button govuk-button--secondary" data-view="computer" aria-pressed="true">Computer</button>
-            <button type="button" class="govuk-button govuk-button--secondary" data-view="phone" aria-pressed="false">Phone</button>
+            <Button type="button" secondary class="govuk-!-margin-0" data-view="computer" aria-pressed="true"><span class="app-live-prototype__tick" aria-hidden="true">✓ </span>Computer</Button>
+            <Button type="button" secondary class="govuk-!-margin-0" data-view="phone" aria-pressed="false"><span class="app-live-prototype__tick" aria-hidden="true">✓ </span>Phone</Button>
         </div>
-        <button type="button" class="govuk-button govuk-button--secondary" data-restart>
+        <Button type="button" secondary class="govuk-!-margin-0" data-restart>
             Start again<span class="govuk-visually-hidden"> in the prototype</span>
-        </button>
+        </Button>
         <a class="govuk-link app-live-prototype__open" href={src} target="_blank" rel="noopener">
             Open in a new tab<span class="govuk-visually-hidden">: {title}</span>
         </a>
     </div>
-    <div class="app-live-prototype__stage">
+    <div class="app-live-prototype__stage govuk-!-padding-4">
         <iframe class="app-live-prototype__frame" src={src} title={title} loading="lazy"></iframe>
     </div>
-    {caption && <figcaption class="govuk-body-s">{caption}</figcaption>}
+    {caption && <figcaption class="govuk-body-s govuk-!-margin-top-2">{caption}</figcaption>}
 </figure>
 
 <script>
@@ -52,73 +49,3 @@ const { src, title, caption } = Astro.props;
         embed.classList.add("app-live-prototype--enhanced");
     }
 </script>
-
-<style is:global>
-    .app-live-prototype {
-        margin: 0 0 40px;
-    }
-
-    .app-live-prototype__toolbar {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 10px 15px;
-        margin-bottom: 15px;
-    }
-
-    .app-live-prototype__toolbar .govuk-button {
-        margin: 0;
-    }
-
-    .app-live-prototype__views {
-        display: flex;
-        gap: 5px;
-    }
-
-    .app-live-prototype__views [aria-pressed="true"] {
-        background-color: var(--govuk-brand-colour);
-        color: #fff;
-    }
-
-    .app-live-prototype__views,
-    .app-live-prototype [data-restart] {
-        display: none;
-    }
-
-    .app-live-prototype--enhanced .app-live-prototype__views {
-        display: flex;
-    }
-
-    .app-live-prototype--enhanced [data-restart] {
-        display: inline-block;
-    }
-
-    .app-live-prototype__open {
-        margin-left: auto;
-    }
-
-    .app-live-prototype__stage {
-        padding: 20px;
-        background: var(--govuk-surface-background-colour, #f3f2f1);
-        border: 1px solid var(--govuk-border-colour);
-    }
-
-    .app-live-prototype figcaption {
-        margin-top: 10px;
-    }
-
-    .app-live-prototype__frame {
-        display: block;
-        width: 100%;
-        height: min(800px, 80vh);
-        margin: 0 auto;
-        border: 1px solid var(--govuk-border-colour);
-        background: #fff;
-    }
-
-    .app-live-prototype--phone .app-live-prototype__frame {
-        width: 390px;
-        max-width: 100%;
-        height: min(760px, 80vh);
-    }
-</style>

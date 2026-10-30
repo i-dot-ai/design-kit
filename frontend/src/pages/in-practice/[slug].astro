@@ -7,8 +7,7 @@ import LivePrototype from "@components/in-practice/live-prototype.astro";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
-    // The in-folder landing page (in-practice/index.mdx) is rendered by
-    // in-practice/index.astro, not as a story slug.
+    // index.mdx is the landing page, rendered by index.astro.
     const entries = await getCollection("in-practice", ({ id }) => id !== "index");
     return entries.map((entry) => ({
         params: { slug: entry.id },
@@ -22,9 +21,17 @@ const { title, description, product, kitUsed, fullStory } = entry.data;
 ---
 
 <Layout>
-    {product && <span class="govuk-caption-xl">{product}</span>}
-    <h1 class="govuk-heading-xl">{title}</h1>
-    {description && <p class="govuk-body-l app-in-practice-glance">{description}</p>}
+    <h1 class="govuk-heading-xl">
+        {product && <span class="govuk-caption-xl">{product}</span>}
+        {title}
+    </h1>
+    {
+        description && (
+            <div class="govuk-grid-row">
+                <p class="govuk-body-l govuk-grid-column-two-thirds">{description}</p>
+            </div>
+        )
+    }
 
     <div class="app-in-practice-body">
         <Content components={{ StoryTimeline, StoryStep, BeforeAfter, LivePrototype }} />
@@ -32,35 +39,41 @@ const { title, description, product, kitUsed, fullStory } = entry.data;
 
     {
         kitUsed.length > 0 && (
-            <div class="app-in-practice-body">
-                <h2 class="govuk-heading-l">Kit used</h2>
-                <ul class="govuk-list govuk-list--bullet">
-                    {kitUsed.map((item) => (
-                        <li>
-                            <a class="govuk-link" href={item.href}>
-                                {item.text}
-                            </a>
-                        </li>
-                    ))}
-                </ul>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <h2 class="govuk-heading-l govuk-!-margin-top-8">Kit used</h2>
+                    <ul class="govuk-list govuk-list--bullet">
+                        {kitUsed.map((item) => (
+                            <li>
+                                <a class="govuk-link" href={item.href}>
+                                    {item.text}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
         )
     }
 
     {
         fullStory && (
-            <aside class="app-in-practice-full-story" aria-labelledby="full-story-heading">
-                <h2 class="govuk-heading-m" id="full-story-heading">
-                    Read the full story
-                </h2>
-                <p class="govuk-body">{fullStory.description}</p>
-                <a class="govuk-button govuk-!-margin-bottom-2" href={fullStory.href}>
-                    {fullStory.title}
-                </a>
-                {fullStory.access && (
-                    <p class="govuk-body-s govuk-!-margin-bottom-0">{fullStory.access}</p>
-                )}
-            </aside>
+            <div class="govuk-grid-row">
+                <aside class="govuk-grid-column-two-thirds govuk-!-margin-top-8" aria-labelledby="full-story-heading">
+                    <div class="app-in-practice-full-story govuk-!-padding-5">
+                        <h2 class="govuk-heading-m" id="full-story-heading">
+                            Read the full story
+                        </h2>
+                        <p class="govuk-body">{fullStory.description}</p>
+                        <a class="govuk-button govuk-!-margin-bottom-2" href={fullStory.href}>
+                            {fullStory.title}
+                        </a>
+                        {fullStory.access && (
+                            <p class="govuk-body-s govuk-!-margin-bottom-0">{fullStory.access}</p>
+                        )}
+                    </div>
+                </aside>
+            </div>
         )
     }
 </Layout>

@@ -13,7 +13,6 @@ const entry = await getEntry("in-practice", "index");
 if (!entry) throw new Error("Missing in-practice/index.mdx");
 const { Content } = await render(entry);
 
-// Lower `order` first. Stories without an order sort after, by title.
 const stories = (await getCollection("in-practice", ({ id }) => id !== "index")).sort(
     (a, b) =>
         (a.data.order ?? Infinity) - (b.data.order ?? Infinity) ||
@@ -23,8 +22,10 @@ const stories = (await getCollection("in-practice", ({ id }) => id !== "index"))
 
 <Layout>
     <h1 class="govuk-heading-xl">{entry.data.title}</h1>
-    <div class="app-in-practice-body">
-        <Content />
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <Content />
+        </div>
     </div>
     <h2 class="govuk-heading-l">Examples</h2>
     <CardGroup>
@@ -32,8 +33,8 @@ const stories = (await getCollection("in-practice", ({ id }) => id !== "index"))
             stories.map((story) => (
                 <Card>
                     <CardHeading>
-                        <span class="govuk-caption-m">{story.data.product}</span>
                         <h3 class="govuk-heading-m">
+                            <span class="govuk-caption-m">{story.data.product}</span>
                             <CardLink href={`/in-practice/${story.id}`}>
                                 {story.data.title}
                             </CardLink>

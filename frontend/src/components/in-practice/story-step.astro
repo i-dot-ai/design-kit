@@ -1,13 +1,5 @@
 ---
-/*
- * One step in a <StoryTimeline>. The body is Markdown.
- *
- * label:  shown above the title, for example "Prototype 1.2"
- * short:  shown in the timeline's progress bar, for example "1.2"
- * image:  a screenshot of this step, from /public
- * alt:    describes what the screenshot shows
- * href:   optional link to the full decision for this step
- */
+// short: optional shorter name for the timeline, if label is too long.
 interface Props {
     label: string;
     short?: string;
@@ -21,9 +13,11 @@ interface Props {
 const { label, short, title, image, alt, href, linkText = "Read the full decision" } = Astro.props;
 ---
 
-<li class="app-story__step" data-short={short ?? label}>
-    <span class="govuk-caption-m">{label}</span>
-    <h3 class="govuk-heading-m">{title}</h3>
+<li class="app-story__step govuk-!-padding-left-4" data-short={short ?? label} data-title={title}>
+    <h3 class="govuk-heading-m">
+        <span class="govuk-caption-m">{label}</span>
+        {title}
+    </h3>
     <slot />
     {
         href && (
