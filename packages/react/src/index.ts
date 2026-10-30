@@ -119,6 +119,7 @@ export { default as TableCell } from "./table/TableCell";
 export { default as TableHead } from "./table/TableHead";
 export { default as TableHeader } from "./table/TableHeader";
 export { default as TableRow } from "./table/TableRow";
+export { default as TableSearchAndFilter } from "./table/TableSearchAndFilter";
 export { default as Table } from "./table/Table";
 export { default as TabPanel } from "./tabs/TabPanel";
 export { default as Tab } from "./tabs/Tab";

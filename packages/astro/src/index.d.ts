@@ -121,6 +121,7 @@ export { default as TableCell } from "./table/table-cell.astro";
 export { default as TableHead } from "./table/table-head.astro";
 export { default as TableHeader } from "./table/table-header.astro";
 export { default as TableRow } from "./table/table-row.astro";
+export { default as TableSearchAndFilter } from "./table/table-search-and-filter.astro";
 export { default as Table } from "./table/table.astro";
 export { default as TabPanel } from "./tabs/tab-panel.astro";
 export { default as Tab } from "./tabs/tab.astro";

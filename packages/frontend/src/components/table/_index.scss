@@ -23,4 +23,40 @@
     .govuk-table__cell {
         vertical-align: middle;
     }
+
+    .govuk-table__row .govuk-table__cell:first-child,
+    .govuk-table__row .govuk-table__header:first-child {
+        padding-left: govuk-spacing(1)
+    }
+
+    .govuk-table__row .govuk-table__cell:last-child,
+    .govuk-table__row .govuk-table__header:last-child {
+        padding-right: govuk-spacing(1)
+    }
+}
+
+.govuk-table__search-and-filter-wrapper {
+    align-items: flex-end;
+    background-color: govuk-colour("blue", $variant: "tint-80");
+    border: 1px solid govuk-functional-colour("border");
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 15px;
+    padding-bottom: 0;
+}
+
+.govuk-table__search-and-filter-wrapper+.govuk-table {
+    border: 1px solid govuk-functional-colour("border");
+    border-top: 0;
+
+    .govuk-table__row .govuk-table__cell:first-child,
+    .govuk-table__row .govuk-table__header:first-child {
+        padding-left: govuk-spacing(3)
+    }
+
+    .govuk-table__row .govuk-table__cell:last-child,
+    .govuk-table__row .govuk-table__header:last-child {
+        padding-right: govuk-spacing(3)
+    }
 }

@@ -120,6 +120,7 @@ export { default as TableCell } from "./table/TableCell.svelte";
 export { default as TableHead } from "./table/TableHead.svelte";
 export { default as TableHeader } from "./table/TableHeader.svelte";
 export { default as TableRow } from "./table/TableRow.svelte";
+export { default as TableSearchAndFilter } from "./table/TableSearchAndFilter.svelte";
 export { default as Table } from "./table/Table.svelte";
 export { default as TabPanel } from "./tabs/TabPanel.svelte";
 export { default as Tab } from "./tabs/Tab.svelte";

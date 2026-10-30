@@ -120,6 +120,7 @@ import "./table/TableCell";
 import "./table/TableHead";
 import "./table/TableHeader";
 import "./table/TableRow";
+import "./table/TableSearchAndFilter";
 import "./tabs/Tab";
 import "./tabs/TabPanel";
 import "./tabs/Tabs";

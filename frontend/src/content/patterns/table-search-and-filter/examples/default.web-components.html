@@ -1,0 +1,71 @@
+<iai-table-search-and-filter>
+  <iai-form-group class="govuk-!-width-three-quarters">
+    <iai-input-label for="search">Search</iai-input-label>
+    <iai-input id="search" name="search" subtle></iai-input>
+  </iai-form-group>
+  <iai-form-group>
+    <iai-input-label for="filter">Filter</iai-input-label>
+    <iai-select id="filter" name="filter" subtle>
+      <option value="1">Option 1</option>
+      <option value="2" selected>Option 2</option>
+      <option value="3" disabled>Option 3</option>
+    </iai-select>
+  </iai-form-group>
+</iai-table-search-and-filter>
+
+<iai-table summary subtle>
+  <iai-table-head>
+    <iai-table-row>
+      <iai-table-header>Select</iai-table-header>
+      <iai-table-header>Title</iai-table-header>
+      <iai-table-header>Date</iai-table-header>
+      <iai-table-header>Actions</iai-table-header>
+    </iai-table-row>
+  </iai-table-head>
+  <iai-table-body>
+    <iai-table-row>
+      <iai-table-cell>
+        <iai-checkboxes small subtle>
+          <iai-checkbox-item>
+            <iai-checkbox-input id="item-1" name="item-1" value="item-1"></iai-checkbox-input>
+            <iai-checkbox-label>
+              <span class="govuk-visually-hidden">Select item 1</span>
+            </iai-checkbox-label>
+          </iai-checkbox-item>
+        </iai-checkboxes>
+      </iai-table-cell>
+      <iai-table-cell stretch>
+        <iai-link href="#" novisitedstate>Item 1</iai-link>
+      </iai-table-cell>
+      <iai-table-cell nowrap small>12 Aug, 11:45</iai-table-cell>
+      <iai-table-cell nowrap>
+        <iai-button-group>
+          <iai-button small tertiary href="#">Rename</iai-button>
+          <iai-button small tertiary href="#">Export</iai-button>
+        </iai-button-group>
+      </iai-table-cell>
+    </iai-table-row>
+    <iai-table-row>
+      <iai-table-cell>
+        <iai-checkboxes small subtle>
+          <iai-checkbox-item>
+            <iai-checkbox-input id="item-2" name="item-2" value="item-2"></iai-checkbox-input>
+            <iai-checkbox-label>
+              <span class="govuk-visually-hidden">Select item 2</span>
+            </iai-checkbox-label>
+          </iai-checkbox-item>
+        </iai-checkboxes>
+      </iai-table-cell>
+      <iai-table-cell stretch>
+        <iai-link href="#" novisitedstate>Item 2</iai-link>
+      </iai-table-cell>
+      <iai-table-cell nowrap small>11 Aug, 11:45</iai-table-cell>
+      <iai-table-cell nowrap>
+        <iai-button-group>
+          <iai-button small tertiary href="#">Rename</iai-button>
+          <iai-button small tertiary href="#">Export</iai-button>
+        </iai-button-group>
+      </iai-table-cell>
+    </iai-table-row>
+  </iai-table-body>
+</iai-table>
