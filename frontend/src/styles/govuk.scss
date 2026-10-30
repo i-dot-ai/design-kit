@@ -6,7 +6,7 @@
 // The site keeps its own font stack: it documents the kit rather than being a product on it.
 @use "@i-dot-ai-npm/component-library-frontend/settings" as iai;
 @use "govuk-frontend/dist/govuk/index.scss" as * with (
-  $govuk-font-family: ("Helvetica Neue", Helvetica, Arial, sans-serif),
+  $govuk-font-family: (Inter, Helvetica, Arial, sans-serif),
   $govuk-functional-colours: iai.$iai-functional-colours);
 
 // i.AI override layer — must come after govuk-frontend's base styles.

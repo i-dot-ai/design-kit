@@ -40,7 +40,9 @@ const stories = (await getCollection("in-practice", ({ id }) => id !== "index"))
                             </CardLink>
                         </h3>
                     </CardHeading>
-                    <CardContent>{story.data.description}</CardContent>
+                    <CardContent>
+                        <p class="govuk-body-s">{story.data.description}</p>
+                    </CardContent>
                 </Card>
             ))
         }
