@@ -9,7 +9,9 @@ export default function Example() {
             <CardLink href="#">Dashboard</CardLink>
           </h3>
         </CardHeading>
-        <CardContent>See the state of everything in one place.</CardContent>
+        <CardContent>
+          <p class="govuk-body-s">See the state of everything in one place.</p>
+        </CardContent>
       </Card>
       <Card secondary>
         <CardHeading>
@@ -17,7 +19,9 @@ export default function Example() {
             <CardLink href="#">Reports</CardLink>
           </h3>
         </CardHeading>
-        <CardContent>Generate and download service reports.</CardContent>
+        <CardContent>
+          <p class="govuk-body-s">Generate and download service reports.</p>
+        </CardContent>
       </Card>
       <Card secondary>
         <CardHeading>
@@ -25,7 +29,9 @@ export default function Example() {
             <CardLink href="#">Settings</CardLink>
           </h3>
         </CardHeading>
-        <CardContent>Manage your account and preferences.</CardContent>
+        <CardContent>
+          <p class="govuk-body-s">Manage your account and preferences.</p>
+        </CardContent>
       </Card>
     </CardGroup>
   );
