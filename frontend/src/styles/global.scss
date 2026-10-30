@@ -1,0 +1,424 @@
+@use "sass:math";
+@use "pkg:govuk-frontend/base" as *;
+
+@font-face {
+  font-family: Inter;
+  src: url(fonts/static/Inter-Regular.ttf);
+}
+
+@font-face {
+  font-family: Inter;
+  font-weight: 500;
+  src: url(fonts/static/Inter-Medium.ttf);
+}
+
+@font-face {
+  font-family: Inter;
+  font-weight: 700;
+  src: url(fonts/static/Inter-SemiBold.ttf)
+}
+
+.component-render-options-container,
+.component-container {
+  padding: 20px;
+  border: 1px solid var(--govuk-border-colour);
+  margin-bottom: 20px;
+}
+
+.component-container .govuk-width-container {
+  padding: 0 15px;
+}
+
+/*
+ * Brand colour override for the GOV.UK-branded component previews.
+ * govuk-frontend drives the brand colour (footer top border, header, etc.)
+ * from the --govuk-brand-colour custom property, which defaults to the i.AI
+ * brand colour. On the GOV.UK header/footer docs pages we scope it to GOV.UK
+ * blue so the preview reads as GOV.UK. This affects the docs preview only.
+ */
+.component-page--govuk-header .component-container,
+.component-page--govuk-footer .component-container {
+  --govuk-brand-colour: #1d70b8;
+}
+
+.component-container--inverse {
+  background-color: var(--govuk-brand-colour);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.code-example {
+  overflow-x: scroll;
+  padding: 20px;
+}
+
+.app-code-example {
+  position: relative;
+  border: 1px solid var(--govuk-border-colour);
+  padding-top: 2rem;
+  margin-bottom: 20px;
+}
+
+.component-container+.govuk-details .app-code-example {
+  border: none;
+}
+
+.app-code-example .app-copy-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  margin-bottom: 0;
+}
+
+.app-swatch {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--govuk-border-colour);
+  vertical-align: middle;
+}
+
+/* Match the line under the site nav to the masthead (brand) colour. */
+.govuk-service-navigation {
+  border-bottom-color: var(--govuk-brand-colour);
+}
+
+.app-masthead h1,
+.app-masthead p {
+  color: #fff;
+}
+
+.app-masthead__animation,
+.app-masthead__still {
+  display: none;
+}
+
+@media (min-width: 40.0625em) {
+  .app-masthead__animation {
+    display: block;
+  }
+
+  .app-masthead__animation,
+  .app-masthead__still {
+    max-width: 100%;
+    height: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .app-masthead__animation {
+      display: none;
+    }
+
+    .app-masthead__still {
+      display: inline;
+    }
+  }
+}
+
+
+// ---------- In practice: layout ----------
+
+// Markdown text can't take grid classes, so it gets the two-thirds width here.
+.app-in-practice-body > :is(p, ul, ol, h2, h3, h4, blockquote, .govuk-inset-text) {
+  @include govuk-media-query($from: tablet) {
+    max-width: govuk-grid-width(two-thirds);
+  }
+}
+
+.app-in-practice-body > h2 {
+  @include govuk-responsive-margin(8, "top");
+}
+
+.app-in-practice-full-story {
+  border-left: $govuk-border-width-wide solid govuk-functional-colour("brand");
+  background: govuk-functional-colour("surface-background");
+}
+
+// ---------- In practice: story timeline ----------
+
+// The GOV.UK desktop breakpoint is too narrow for two columns.
+$app-story-two-column-from: 1024px;
+
+.app-story__steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.app-story__step {
+  @include govuk-responsive-margin(7, "bottom");
+  border-left: $govuk-border-width solid govuk-functional-colour("border");
+  scroll-margin-top: govuk-spacing(4);
+}
+
+.app-story__step:focus,
+.app-story__end:focus {
+  outline: none;
+}
+
+.app-story__figure {
+  margin: govuk-spacing(3) 0 0;
+}
+
+.app-story__figure img,
+.app-story__shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid govuk-functional-colour("border");
+}
+
+.app-story__stage {
+  display: none;
+}
+
+.app-story--enhanced .app-story__stage {
+  display: block;
+  @include govuk-responsive-margin(6, "bottom");
+}
+
+.app-story__frame {
+  display: none;
+}
+
+.app-story__progress {
+  display: flex;
+  gap: govuk-spacing(1);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.app-story__dot {
+  @include govuk-font($size: 16);
+  flex: 1;
+  border-top: $govuk-border-width solid govuk-functional-colour("border");
+  transition: border-color 0.2s;
+}
+
+.app-story__dot--active {
+  border-top-color: govuk-functional-colour("brand");
+}
+
+.app-story__dot-link[aria-current] {
+  @include govuk-typography-weight-bold;
+}
+
+.app-story__next {
+  display: none;
+}
+
+@include govuk-media-query($from: $app-story-two-column-from) {
+  .app-story--enhanced {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    column-gap: govuk-spacing(7);
+    align-items: start;
+  }
+
+  .app-story--enhanced .app-story__skip {
+    grid-column: 1 / -1;
+  }
+
+  .app-story--enhanced .app-story__steps {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .app-story--enhanced .app-story__stage {
+    grid-column: 2;
+    grid-row: 2;
+    position: sticky;
+    top: max(#{govuk-spacing(4)}, calc(50vh - 300px));
+    margin-bottom: 0;
+  }
+
+  .app-story--enhanced .app-story__step {
+    min-height: 60vh;
+    margin: 0;
+    padding-top: govuk-spacing(2);
+    padding-bottom: govuk-spacing(7);
+    transition: border-color 0.2s;
+  }
+
+  .app-story--enhanced .app-story__step--active {
+    border-left-color: govuk-functional-colour("brand");
+  }
+
+  // Hidden visually, not with display: none, so screen readers still get the alt text.
+  .app-story--enhanced .app-story__figure {
+    @include govuk-visually-hidden($important: false);
+  }
+
+  .app-story--enhanced .app-story__frame {
+    display: grid;
+    margin-bottom: govuk-spacing(3);
+  }
+
+  .app-story__shot {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .app-story__shot--active {
+    opacity: 1;
+  }
+
+  .app-story--enhanced .app-story__next:not([hidden]) {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-story__step,
+  .app-story__shot,
+  .app-story__dot {
+    transition: none;
+  }
+}
+
+// ---------- In practice: before and after comparison ----------
+
+.app-compare,
+.app-live-prototype {
+  margin: 0;
+}
+
+.app-compare__layer {
+  @include govuk-responsive-margin(4, "bottom");
+}
+
+.app-compare__layer img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid govuk-functional-colour("border");
+}
+
+// With JavaScript the labels move above the stage so the divide can't clip them.
+.app-compare__key,
+.app-compare__handle,
+.app-compare__control {
+  display: none;
+}
+
+.app-compare--enhanced .app-compare__layer .govuk-tag {
+  display: none;
+}
+
+.app-compare--enhanced .app-compare__key {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: govuk-spacing(2);
+}
+
+.app-compare--enhanced .app-compare__stage {
+  --app-compare-split: 50%;
+  display: grid;
+  position: relative;
+  cursor: ew-resize;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.app-compare--enhanced .app-compare__layer {
+  grid-area: 1 / 1;
+  margin: 0;
+}
+
+.app-compare--enhanced .app-compare__layer img {
+  pointer-events: none;
+}
+
+.app-compare--enhanced .app-compare__layer--after {
+  clip-path: inset(0 0 0 var(--app-compare-split));
+}
+
+.app-compare--enhanced .app-compare__handle {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--app-compare-split);
+  width: $govuk-border-width-narrow;
+  margin-left: math.div($govuk-border-width-narrow, -2);
+  background: govuk-functional-colour("brand");
+}
+
+.app-compare--enhanced .app-compare__control {
+  display: block;
+}
+
+.app-compare__range {
+  width: 100%;
+  margin: 0;
+  accent-color: govuk-functional-colour("brand");
+}
+
+.app-compare__range:focus-visible {
+  outline: $govuk-focus-width solid govuk-functional-colour("focus");
+  outline-offset: 2px;
+}
+
+// ---------- In practice: live prototype ----------
+
+.app-live-prototype__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: govuk-spacing(2) govuk-spacing(3);
+}
+
+.app-live-prototype__views {
+  display: flex;
+  gap: govuk-spacing(1);
+}
+
+.app-live-prototype__tick {
+  display: none;
+}
+
+[aria-pressed="true"] > .app-live-prototype__tick {
+  display: inline;
+}
+
+.app-live-prototype__views,
+.app-live-prototype [data-restart] {
+  display: none;
+}
+
+.app-live-prototype--enhanced .app-live-prototype__views {
+  display: flex;
+}
+
+.app-live-prototype--enhanced [data-restart] {
+  display: inline-block;
+}
+
+.app-live-prototype__open {
+  margin-left: auto;
+}
+
+.app-live-prototype__stage {
+  background: govuk-functional-colour("surface-background");
+  border: 1px solid govuk-functional-colour("border");
+}
+
+.app-live-prototype__frame {
+  display: block;
+  width: 100%;
+  height: min(800px, 80vh);
+  margin: 0 auto;
+  border: 1px solid govuk-functional-colour("border");
+  background: govuk-colour("white");
+}
+
+.app-live-prototype--phone .app-live-prototype__frame {
+  width: 390px;
+  max-width: 100%;
+  height: min(760px, 80vh);
+}
