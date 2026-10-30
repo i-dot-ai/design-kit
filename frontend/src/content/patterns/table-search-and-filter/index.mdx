@@ -1,0 +1,31 @@
+---
+name: Search and filter with a table
+description: Search and filter items listed in a table below
+painPoint: Managing multiple items or jobs
+order: 2
+---
+
+## Pain point
+
+This pattern was developed in both the [extract planning 
+app](https://github.com/i-dot-ai/extract-app/) and 
+[Minute](https://github.com/i-dot-ai/minute/). In both cases there was 
+was a need to search and filter a long list of results in a table on the page
+
+
+## Solution
+
+The arrived at pattern was to build a search and filter wrapper with the search field
+and filter option using the [summary table pattern](/patterns/summary-table) for the 
+results.
+
+**Note:** The search or filter hasn't been implemented in the example, just the design.
+
+<Example collection="patterns" component="table-search-and-filter" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
+
+
+### When to use this pattern
+
+Use a summary table when:
+
+-   users need to search, filter or manage a large list of items in a table below

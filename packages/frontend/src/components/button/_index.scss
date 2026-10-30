@@ -38,3 +38,9 @@
         flex-wrap: nowrap;
     }
 }
+
+.govuk-button-group:has(.govuk-button--small) {
+    margin-bottom: 0;
+    margin-right: -2px; // matches the 2px gap on small buttons below
+    align-items: center;
+}
