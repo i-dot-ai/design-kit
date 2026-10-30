@@ -1,25 +1,37 @@
 ---
-title: Apply the kit to an existing product
+title: Adapt an existing product
 description: For bringing a product onto the kit for the first time.
 ---
 
-Use this when you have a product that predates the kit, and you're
-bringing it on.
+You can use the i.AI Design Kit on existing products.
 
-This is still a work in progress. What follows is how the kit works
-today. We're making it easier to install, with npm component packages
-coming soon.
+To do this you need to:
+
+1. [Install frontend styles and scripts.](#1-install-frontend-styles-and-scripts)
+2. [Link to CSS and JavaScript.](#2-link-to-css-and-javascript)
+3. [Add the component library.](#3-add-the-component-library)
+4. [Record design decisions.](#4-record-design-decisions)
 
 ## 1. Install frontend styles and scripts
 
 Install Sass, govuk-frontend and i.AI amended frontend:
 
-<CodeBlock collection="get-started" component="update-a-product-interface" code="./examples/install.sh" />
+<CopyableCode code="npm install sass govuk-frontend @i-dot-ai-npm/component-library-frontend --save" />
 
 Create a idotai.scss file and copy this into it:
 
-<CodeBlock collection="get-started" component="update-a-product-interface" code="./examples/idotai.scss" />
-<br />
+<CopyableCode code={`// GOV.UK Frontend, compiled without GOV.UK branding.
+// See: https://frontend.design-system.service.gov.uk/using-govuk-frontend-without-govuk-branding/
+//
+// The i.AI brand values come from the kit, so they stay in step with it.
+@use "@i-dot-ai-npm/component-library-frontend/settings" as iai;
+@use "govuk-frontend" as * with (
+  $govuk-font-family: iai.$iai-font-family,
+  $govuk-functional-colours: iai.$iai-functional-colours
+);
+
+// i.AI override layer — must come after govuk-frontend's base styles.
+@use "@i-dot-ai-npm/component-library-frontend/css";`} />
 
 This is the recommended way to adapt GOV.UK Frontend for services that
 are not on the gov.uk domain. There is more on this in the
@@ -30,39 +42,55 @@ If your product is department-branded, this is where the department's
 colour goes. Check it passes contrast on white surfaces before you set
 it.
 
-## 2. Link to the CSS and JavaScript files
+## 2. Link to CSS and JavaScript
 
-Link to the idotai.scss file in your main layout. In astro this will be in the layout.astro file
+Link to the idotai.scss file in your main layout. In Astro this will be in the layout.astro file.
 
 In Astro:
 
-<CodeBlock collection="get-started" component="update-a-product-interface" code="./examples/import-styles.astro" />
+<CopyableCode code={`---
+import '<path-to-styles>/idotai.scss'
+---`} />
 
 In html:
 
-<CodeBlock collection="get-started" component="update-a-product-interface" code="./examples/link-styles.html" />
+<CopyableCode code={`<head>
+    ...
+    <link rel="stylesheet" href='<path-to-styles>/idotai.scss' />
+    ...
+</head>`} />
 
 
 
-After the closing body tag, import initAll from govuk-frontend and
-initAllIAIDesignSystem from the i.AI JavaScript file:
+After the closing body tag, import <code class="app-code">initAll</code> from govuk-frontend and
+<code class="app-code">initAllIAIDesignSystem</code> from the i.AI JavaScript file:
 
-<CodeBlock collection="get-started" component="update-a-product-interface" code="./examples/init-scripts.html" />
+<CopyableCode code={`<body>
+    ...
+        <script>
+            import { initAll } from "govuk-frontend";
+            import { initAllIAIDesignSystem } from '@i-dot-ai-npm/component-library-frontend';
+            initAll();
+            initAllIAIDesignSystem();
+        </script>
+    <body>
+</html>`} />
 
-## 3. Add component library in language of your choice
+## 3. Add the component library
 
-Go component by component rather than rebuilding the whole interface at
-once. For each one, check whether the kit already covers it:
+Review each component against the ones in the i.AI Design Kit component library. For each one:
 
-- if the kit has an as-is or adapted equivalent, replace your version
-  with the kit's
-- if what you have is a genuine deviation from GOV.UK, that's worth
-  recording even if you're keeping it for now
-- if what you have doesn't exist in the kit at all, that's a candidate
-  for the [kit forum](/get-started/contribute-to-the-design-kit), not just a local fix
+1. If there's an existing equivalent component, replace your original.
+2. If you think your version provides value, see if you can modify an existing component.
+3. If there isn't, record your design decisions.
 
-## 4. Record
+## 4. Record design decisions
 
-Record the components you moved onto the kit, anything you deviated from
-along the way, and anything the product needed that the kit still doesn't
-have. Take it to the [kit forum](/get-started/contribute-to-the-design-kit).
+We need your help to improve the i.AI Design Kit. Record your actions and justification if you:
+
+- added a component to the kit
+- changed any process or component
+- noticed anything missing
+- found anything confusing
+
+Please [let us know what you changed and why](/get-started/contribute-to-the-design-kit).

@@ -2,6 +2,7 @@
 import Layout from "@layouts/GetStartedLayout.astro";
 import Example from "@components/docs/example.astro";
 import CodeBlock from "@components/docs/code-block.astro";
+import CopyableCode from "@components/docs/copyable-code.astro";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
@@ -21,5 +22,5 @@ const { Content } = await render(entry);
 
 <Layout>
     <h1 class="govuk-heading-xl">{entry.data.title}</h1>
-    <Content components={{ Example, CodeBlock }} />
+    <Content components={{ Example, CodeBlock, CopyableCode }} />
 </Layout>
