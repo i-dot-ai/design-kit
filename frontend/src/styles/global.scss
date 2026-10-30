@@ -422,3 +422,65 @@ $app-story-two-column-from: 1024px;
   max-width: 100%;
   height: min(760px, 80vh);
 }
+
+// =============================================================================
+// Code blocks (GOV.UK Design System style with copy button)
+// =============================================================================
+
+.app-code-block {
+  margin: 15px 0 20px 0;
+  position: relative;
+  background-color: govuk-colour("black", $variant: "tint-95");
+  padding: 15px 15px 0 15px;
+}
+
+.app-code-block__copy-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: auto;
+  margin: 0;
+
+  // Copied state
+  &.app-code-block__copy-button--copied {
+    background-color: govuk-colour("white");
+    color: govuk-functional-colour("link");
+    border-color: govuk-functional-colour("link");
+    outline: 3px solid $govuk-focus-colour;
+    outline-offset: 0;
+  }
+}
+
+.app-code-block__pre {
+  font-family: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin: 0;
+  padding: 45px 0 15px 0;
+  overflow-x: auto;
+  background-color: transparent;
+  color: govuk-functional-colour("text");
+  white-space: pre;
+  tab-size: 2;
+}
+
+.app-code-block__code {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+// Inline code (for use within paragraphs)
+// Use: <code class="app-code">some_variable</code>
+.app-code {
+  font-family: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+  font-size: 0.875em;
+  padding: 0 4px;
+  background-color: govuk-colour("black", $variant: "tint-95");
+  color: govuk-colour("red", $variant: "shade-25");
+}
+
+// Inline code for variables/placeholders (coloured, like <project_name>)
+// Use: <code class="app-code app-code--variable">&lt;project_name&gt;</code>
+.app-code--variable {
+  color: govuk-colour("red", $variant: "shade-25");
+}
