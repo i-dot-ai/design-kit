@@ -1,6 +1,6 @@
 {
   "name": "@i-dot-ai-npm/component-library-web-components",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Web components for i.AI GOV.UK.",
   "type": "module",
   "scripts": {
