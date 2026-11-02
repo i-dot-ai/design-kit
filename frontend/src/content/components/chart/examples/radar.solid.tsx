@@ -1,0 +1,18 @@
+import { Chart } from "@i-dot-ai-npm/component-library-solid";
+
+export default function Example() {
+  return (
+    <Chart
+      variant="radar"
+      title="User satisfaction by service area"
+      data={{
+        heading: "Service area",
+        labels: ["Speed", "Clarity", "Accessibility", "Support", "Reliability"],
+        datasets: [
+          { label: "2025", colour: "blue-shade-50", data: [6.1, 7, 7.5, 6.8, 8.2] },
+          { label: "2026", colour: "blue-tint-25", line: "dashed", data: [7.4, 8.1, 7.9, 7.2, 8.6] },
+        ],
+      }}
+    />
+  );
+}

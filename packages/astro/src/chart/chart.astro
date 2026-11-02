@@ -1,0 +1,67 @@
+---
+// Server-rendered like the plain HTML version; the central behaviour layer
+// (initAllIAIDesignSystem) draws the chart from the table on the page.
+import type { HTMLAttributes } from "astro/types";
+import { formatChartValue } from "@i-dot-ai-npm/component-library-frontend";
+import type { ChartData, ChartVariant } from "@i-dot-ai-npm/component-library-frontend";
+import Details from "../details/details.astro";
+import DetailsSummary from "../details/details-summary.astro";
+import DetailsText from "../details/details-text.astro";
+import Table from "../table/table.astro";
+import TableCaption from "../table/table-caption.astro";
+import TableHead from "../table/table-head.astro";
+import TableBody from "../table/table-body.astro";
+import TableRow from "../table/table-row.astro";
+import TableHeader from "../table/table-header.astro";
+import TableCell from "../table/table-cell.astro";
+
+interface Props extends Omit<HTMLAttributes<"div">, "title"> {
+    variant: ChartVariant;
+    /** Shown as the heading and the table caption, and used as the chart's accessible name. */
+    title: string;
+    data: ChartData;
+}
+
+const { variant, title, data, class: className, ...rest } = Astro.props;
+
+const classes = ["iai-chart", `iai-chart--${variant}`, className ?? ""].filter(Boolean).join(" ");
+// Pie, doughnut and polar area colour each label from the first dataset's colour list.
+const firstColour = data.datasets[0]?.colour;
+const sliceColours = Array.isArray(firstColour) ? firstColour : [];
+---
+
+<div class={classes} data-module="iai-chart" {...rest}>
+    <h3 class="govuk-heading-m">{title}</h3>
+    <Details>
+        <DetailsSummary>Show data</DetailsSummary>
+        <DetailsText>
+            <Table>
+                <TableCaption size="small">{title}</TableCaption>
+                <TableHead>
+                    <TableRow>
+                        <TableHeader>{data.heading}</TableHeader>
+                        {data.datasets.map((dataset) => (
+                            <TableHeader
+                                numeric
+                                data-iai-chart-colour={Array.isArray(dataset.colour) ? undefined : dataset.colour}
+                                data-iai-chart-line={dataset.line === "solid" ? undefined : dataset.line}
+                            >
+                                {dataset.label}
+                            </TableHeader>
+                        ))}
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {data.labels.map((label, row) => (
+                        <TableRow>
+                            <TableHeader scope="row" data-iai-chart-colour={sliceColours[row]}>{label}</TableHeader>
+                            {data.datasets.map((dataset) => (
+                                <TableCell numeric>{formatChartValue(dataset.data[row] ?? null)}</TableCell>
+                            ))}
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </DetailsText>
+    </Details>
+</div>

@@ -8,13 +8,28 @@
 //
 // The first column holds the labels; each other column is a series. A series
 // header may set `data-iai-chart-colour="<palette name>"` and
-// `data-iai-chart-line="dashed|dotted"` (default solid). The canvas is added
-// here, so without JavaScript the table is all there is.
+// `data-iai-chart-line="dashed|dotted"` (default solid). Pie, doughnut and
+// polar area charts use the first series only and take colours from the row
+// headers instead. The canvas is added here, so without JavaScript the table
+// is all there is.
 
 import Chart from "chart.js/auto";
 
 const MODULE = "iai-chart";
-const TYPES = ["line"];
+// Modifier class -> Chart.js type.
+const TYPES = {
+    line: "line",
+    area: "line",
+    bar: "bar",
+    pie: "pie",
+    doughnut: "doughnut",
+    radar: "radar",
+    "polar-area": "polarArea",
+};
+// One series, coloured per row rather than per column.
+const PER_ROW = ["pie", "doughnut", "polar-area"];
+// Filled shapes that would hide the data behind them without transparency.
+const SEE_THROUGH = ["area", "radar"];
 
 // GOV.UK chart palette: https://brand.design-system.service.gov.uk/colour/charts/
 export const CHART_COLOURS = {
@@ -75,6 +90,9 @@ const LINE_STYLES = { dashed: [8, 4], dotted: [2, 3] };
 
 const format = (value) => value.toLocaleString("en-GB", { maximumFractionDigits: 2 });
 
+/** Format a value the way `parseValue` reads it back. Used by the framework wrappers. */
+export const formatChartValue = (value) => (value == null ? "–" : format(value));
+
 // shortcut: reads en-GB text ("1,240.5", "£12", "40%"); add a data-value
 // attribute if cells ever show values the text cannot be read back from.
 export function parseValue(text) {
@@ -83,25 +101,63 @@ export function parseValue(text) {
     return Number.isFinite(value) ? value : null;
 }
 
-function readTable(table) {
+const colourFor = (th, i) =>
+    CHART_COLOURS[th.dataset.iaiChartColour] ?? CHART_COLOURS[DEFAULT_ORDER[i % DEFAULT_ORDER.length]];
+
+function readTable(table, variant) {
     const headers = Array.from(table.querySelectorAll("thead th")).slice(1);
     const rows = Array.from(table.querySelectorAll("tbody tr"));
+    const labels = rows.map((row) => row.cells[0].textContent.trim());
+    const column = (i) => rows.map((row) => parseValue(row.cells[i + 1]?.textContent ?? ""));
+
+    if (PER_ROW.includes(variant)) {
+        return {
+            labels,
+            datasets: [
+                {
+                    label: headers[0]?.textContent.trim() ?? "",
+                    data: column(0),
+                    backgroundColor: rows.map((row, i) => colourFor(row.cells[0], i)),
+                    borderColor: "#ffffff",
+                },
+            ],
+        };
+    }
+
+    const seeThrough = SEE_THROUGH.includes(variant);
     return {
-        labels: rows.map((row) => row.cells[0].textContent.trim()),
+        labels,
         datasets: headers.map((th, i) => {
-            const colour =
-                CHART_COLOURS[th.dataset.iaiChartColour] ??
-                CHART_COLOURS[DEFAULT_ORDER[i % DEFAULT_ORDER.length]];
+            const colour = colourFor(th, i);
             return {
                 label: th.textContent.trim(),
-                data: rows.map((row) => parseValue(row.cells[i + 1]?.textContent ?? "")),
+                data: column(i),
                 borderColor: colour,
-                backgroundColor: colour,
+                // 33 = 20% opacity, so overlapping series stay visible.
+                backgroundColor: seeThrough ? `${colour}33` : colour,
                 borderDash: LINE_STYLES[th.dataset.iaiChartLine],
+                ...(variant === "area" ? { fill: "origin" } : {}),
             };
         }),
     };
 }
+
+function scalesFor(variant, font) {
+    const grid = { color: LINE_COLOUR };
+    const ticks = { color: LABEL_COLOUR, font, callback: (value) => format(Number(value)) };
+    if (variant === "pie" || variant === "doughnut") return {};
+    if (variant === "radar" || variant === "polar-area") {
+        // ticks.z: 1 draws the scale numbers above the slices, on their white backdrop.
+        return { r: { beginAtZero: true, grid, angleLines: grid, pointLabels: { color: LABEL_COLOUR, font }, ticks: { ...ticks, z: 1 } } };
+    }
+    return {
+        x: { grid, ticks: { color: LABEL_COLOUR, font } },
+        y: { beginAtZero: true, grid, ticks },
+    };
+}
+
+// Chart.js gives a number for pie/doughnut, { r } on circular scales, { y } otherwise.
+const valueOf = (parsed) => (typeof parsed === "number" ? parsed : (parsed?.r ?? parsed?.y ?? 0));
 
 /**
  * Draw a chart from its table. Idempotent: returns the existing chart if
@@ -113,8 +169,8 @@ export function initChart(el) {
     if (!el) return undefined;
     if (el.iaiChart) return el.iaiChart;
     const table = el.querySelector("table");
-    const type = TYPES.find((t) => el.classList.contains(`${MODULE}--${t}`));
-    if (!table || !type) return undefined;
+    const variant = Object.keys(TYPES).find((t) => el.classList.contains(`${MODULE}--${t}`));
+    if (!table || !variant) return undefined;
 
     const container = document.createElement("div");
     container.className = "iai-chart__canvas";
@@ -124,24 +180,40 @@ export function initChart(el) {
     container.append(canvas);
     el.querySelector("details")?.before(container);
 
-    const grid = { color: LINE_COLOUR };
+    const perRow = PER_ROW.includes(variant);
+    // Use the kit's font (set on the wrapper in CSS) rather than Chart.js's Helvetica default.
+    const font = { family: getComputedStyle(container).fontFamily, size: 14 };
+    // Line samples (not boxes) in the legend so dashed and dotted series are recognisable.
+    const lineLegend = !perRow && variant !== "bar";
     const chart = new Chart(canvas, {
-        type,
-        data: readTable(table),
+        type: TYPES[variant],
+        data: readTable(table, variant),
         options: {
             color: LABEL_COLOUR,
-            scales: {
-                x: { grid, ticks: { color: LABEL_COLOUR } },
-                y: {
-                    beginAtZero: true,
-                    grid,
-                    ticks: { color: LABEL_COLOUR, callback: (value) => format(Number(value)) },
-                },
-            },
+            scales: scalesFor(variant, font),
             plugins: {
+                legend: {
+                    labels: {
+                        font,
+                        ...(lineLegend
+                            ? {
+                                  boxHeight: 0,
+                                  generateLabels: (c) =>
+                                      Chart.defaults.plugins.legend.labels.generateLabels(c).map((label) => ({
+                                          ...label,
+                                          fillStyle: "transparent",
+                                          lineWidth: 3,
+                                      })),
+                              }
+                            : {}),
+                    },
+                },
                 tooltip: {
+                    bodyFont: font,
+                    titleFont: font,
                     callbacks: {
-                        label: (item) => `${item.dataset.label}: ${format(item.parsed.y ?? 0)}`,
+                        label: (item) =>
+                            `${perRow ? item.label : item.dataset.label}: ${format(valueOf(item.parsed))}`,
                     },
                 },
             },
@@ -149,11 +221,20 @@ export function initChart(el) {
     });
 
     const destroy = chart.destroy.bind(chart);
+    let destroyed = false;
     chart.destroy = () => {
+        destroyed = true;
         destroy();
         container.remove();
         delete el.iaiChart;
     };
+    // Charts drawn before the web font loads are measured in a fallback font; redraw once it has.
+    // shortcut: clears Chart.js's private text-width cache (no public API); recheck on Chart.js upgrades.
+    document.fonts?.ready.then(() => {
+        if (destroyed) return;
+        Object.values(chart.scales).forEach((scale) => (scale._longestTextCache = {}));
+        chart.update("none");
+    });
     el.iaiChart = chart;
     return chart;
 }
