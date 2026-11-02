@@ -16,6 +16,7 @@ export { default as CardHeading } from "./card/card-heading.astro";
 export { default as CardIcon } from "./card/card-icon.astro";
 export { default as CardLink } from "./card/card-link.astro";
 export { default as Card } from "./card/card.astro";
+export { default as Chart } from "./chart/chart.astro";
 export { default as CharacterCountMessage } from "./character-count/character-count-message.astro";
 export { default as CharacterCount } from "./character-count/character-count.astro";
 export { default as CheckboxConditional } from "./checkboxes/checkbox-conditional.astro";

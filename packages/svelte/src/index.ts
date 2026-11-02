@@ -16,6 +16,7 @@ export { default as CardHeading } from "./card/CardHeading.svelte";
 export { default as CardIcon } from "./card/CardIcon.svelte";
 export { default as CardLink } from "./card/CardLink.svelte";
 export { default as Card } from "./card/Card.svelte";
+export { default as Chart } from "./chart/Chart.svelte";
 export { default as CharacterCountMessage } from "./character-count/CharacterCountMessage.svelte";
 export { default as CharacterCount } from "./character-count/CharacterCount.svelte";
 export { default as CheckboxConditional } from "./checkboxes/CheckboxConditional.svelte";

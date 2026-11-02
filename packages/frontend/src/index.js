@@ -7,7 +7,7 @@ import { initAllModals } from "./components/modal/index.js";
 import { initAllCharts } from "./components/chart/index.js";
 
 export { open as openModal, close as closeModal, initModal } from "./components/modal/index.js";
-export { initChart, CHART_COLOURS } from "./components/chart/index.js";
+export { initChart, CHART_COLOURS, formatChartValue } from "./components/chart/index.js";
 
 export function initAllIAIDesignSystem() {
     initAllModals();

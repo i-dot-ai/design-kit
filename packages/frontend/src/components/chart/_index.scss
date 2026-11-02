@@ -1,7 +1,24 @@
 @use "pkg:govuk-frontend/base" as *;
 
+// The web component stays on the page as <iai-chart>, which is inline by default.
+iai-chart {
+    display: block;
+}
+
 // Chart.js sizes the canvas to this box, so it must be relatively positioned.
+// The JS reads this box's font for the chart's labels.
 .iai-chart__canvas {
+    @include govuk-typography-common;
     position: relative;
     margin-bottom: govuk-spacing(4);
+}
+
+// Square charts would otherwise grow as tall as the page is wide.
+.iai-chart--pie,
+.iai-chart--doughnut,
+.iai-chart--polar-area,
+.iai-chart--radar {
+    .iai-chart__canvas {
+        max-width: var(--iai-chart-max-width, 600px);
+    }
 }

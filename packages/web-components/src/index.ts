@@ -15,6 +15,7 @@ import "./card/CardGroup";
 import "./card/CardHeading";
 import "./card/CardIcon";
 import "./card/CardLink";
+import "./chart/Chart";
 import "./character-count/CharacterCount";
 import "./character-count/CharacterCountMessage";
 import "./checkboxes/CheckboxConditional";

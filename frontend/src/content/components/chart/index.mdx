@@ -7,14 +7,62 @@ status: new
 
 A line chart shows how values change over an ordered range, such as time. The data is always in a table, so it can be read without JavaScript and by screen readers.
 
-<Example component="chart" html="./examples/line.html" />
+<Example component="chart" html="./examples/line.html" astro="./examples/line.astro" react="./examples/line.react.tsx" svelte="./examples/line.svelte" solid="./examples/line.solid.tsx" webComponents="./examples/line.web-components.html" />
+
+## Bar
+
+A bar chart compares values across separate categories, such as regions. Bars always start at zero.
+
+<Example component="chart" html="./examples/bar.html" astro="./examples/bar.astro" react="./examples/bar.react.tsx" svelte="./examples/bar.svelte" solid="./examples/bar.solid.tsx" webComponents="./examples/bar.web-components.html" />
+
+## Pie
+
+A pie chart shows how a whole splits into parts. It uses the first data column only. Set each slice's colour on its row header.
+
+<Example component="chart" html="./examples/pie.html" astro="./examples/pie.astro" react="./examples/pie.react.tsx" svelte="./examples/pie.svelte" solid="./examples/pie.solid.tsx" webComponents="./examples/pie.web-components.html" />
+
+## Doughnut
+
+A doughnut chart works the same way as a pie chart. If you do not set colours, slices follow the categorical order.
+
+<Example component="chart" html="./examples/doughnut.html" astro="./examples/doughnut.astro" react="./examples/doughnut.react.tsx" svelte="./examples/doughnut.svelte" solid="./examples/doughnut.solid.tsx" webComponents="./examples/doughnut.web-components.html" />
+
+## Area
+
+An area chart is a line chart with the space under each line filled in. Use it to show how a total builds up over time. The fill is see-through so overlapping series stay visible.
+
+<Example component="chart" html="./examples/area.html" astro="./examples/area.astro" react="./examples/area.react.tsx" svelte="./examples/area.svelte" solid="./examples/area.solid.tsx" webComponents="./examples/area.web-components.html" />
+
+## Radar
+
+A radar chart compares a few series across several measures that share a scale, such as scores out of 10. It reads the table like a line chart.
+
+<Example component="chart" html="./examples/radar.html" astro="./examples/radar.astro" react="./examples/radar.react.tsx" svelte="./examples/radar.svelte" solid="./examples/radar.solid.tsx" webComponents="./examples/radar.web-components.html" />
+
+## Polar area
+
+A polar area chart is like a pie chart, but each slice is the same angle and its length shows the value. It reads the table like a pie chart.
+
+<Example component="chart" html="./examples/polar-area.html" astro="./examples/polar-area.astro" react="./examples/polar-area.react.tsx" svelte="./examples/polar-area.svelte" solid="./examples/polar-area.solid.tsx" webComponents="./examples/polar-area.web-components.html" />
+
+## Changing the size
+
+Line, area and bar charts fill the width of their container. Pie, doughnut, polar area and radar charts are square, so they stop at 600px wide. To change this, set `--iai-chart-max-width` on the chart or on a container. Use `none` to remove the limit.
+
+```html
+<div class="iai-chart iai-chart--pie" data-module="iai-chart" style="--iai-chart-max-width: 400px">
+```
 
 ## When to use this component
 
 Use a chart when the shape of the data matters more than the exact values, for example a trend over time or a comparison between a few series.
 
-Use colours from the [chart colours](/styles/chart-colours). Do not use colour as the only way to tell series apart: give each series a clear label and a different line style (solid, dashed or dotted).
+Use colours from the [chart colours](/styles/chart-colours). Do not use colour as the only way to tell series apart: give each series a clear label and, on line, area and radar charts, a different line style (solid, dashed or dotted).
 
 ## When not to use this component
 
 Do not use a chart if users need to read or compare exact values. Use a [table](/components/table) instead.
+
+Only use a pie, doughnut or polar area chart for a few parts of one whole, ideally no more than five. People find it hard to compare the size of slices, so a bar chart is usually clearer.
+
+Only use a radar chart for a few series and when every measure uses the same scale. If not, use a bar chart.

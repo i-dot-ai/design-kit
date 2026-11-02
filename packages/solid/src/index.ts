@@ -15,6 +15,7 @@ export { default as CardHeading } from "./card/CardHeading";
 export { default as CardIcon } from "./card/CardIcon";
 export { default as CardLink } from "./card/CardLink";
 export { default as Card } from "./card/Card";
+export { default as Chart } from "./chart/Chart";
 export { default as CharacterCountMessage } from "./character-count/CharacterCountMessage";
 export { default as CharacterCount } from "./character-count/CharacterCount";
 export { default as CheckboxConditional } from "./checkboxes/CheckboxConditional";
