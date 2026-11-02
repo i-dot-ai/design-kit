@@ -1,0 +1,7 @@
+@use "pkg:govuk-frontend/base" as *;
+
+// Chart.js sizes the canvas to this box, so it must be relatively positioned.
+.iai-chart__canvas {
+    position: relative;
+    margin-bottom: govuk-spacing(4);
+}
