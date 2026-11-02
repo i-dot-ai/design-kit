@@ -146,6 +146,10 @@ importers:
         version: 6.5.1
 
   packages/frontend:
+    dependencies:
+      chart.js:
+        specifier: ^4.6.1
+        version: 4.6.1
     devDependencies:
       esbuild:
         specifier: ^0.25.0
@@ -1021,6 +1025,9 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@kurkle/color@0.3.4':
+    resolution: {integrity: sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w==}
 
   '@langchain/core@0.2.36':
     resolution: {integrity: sha512-qHLvScqERDeH7y2cLuJaSAlMwg3f/3Oc9nayRSXRU2UuaK/SOhI42cxiPLj1FnuHJSmN0rBQFkrLx02gI4mcVg==}
@@ -2158,6 +2165,10 @@ packages:
 
   character-reference-invalid@2.0.1:
     resolution: {integrity: sha512-iBZ4F4wRbyORVsu0jPV7gXkOsGYjGHPmAyv+HiHG8gi5PtC9KI2j1+v8/tlibRvjoWX027ypmG/n0HtO5t7unw==}
+
+  chart.js@4.6.1:
+    resolution: {integrity: sha512-hJyniucsFmq//EvXYvJ6c6mahPoI3kaxdjVH8awTaJ/fDNWeSqqqArixMJWkWNN6fcYvPU3HneSANFNYtRi61g==}
+    engines: {pnpm: '>=8'}
 
   check-error@2.1.3:
     resolution: {integrity: sha512-PAJdDJusoxnwm1VwW07VWwUN1sl7smmC3OKggvndJFadxxDRyFJBX/ggnu/KE4kQAB7a3Dp8f/YXC1FlUprWmA==}
@@ -5114,6 +5125,8 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
 
+  '@kurkle/color@0.3.4': {}
+
   '@langchain/core@0.2.36(openai@4.104.0(ws@8.22.0)(zod@3.25.76))':
     dependencies:
       ansi-styles: 5.2.0
@@ -6326,6 +6339,10 @@ snapshots:
   character-entities@2.0.2: {}
 
   character-reference-invalid@2.0.1: {}
+
+  chart.js@4.6.1:
+    dependencies:
+      '@kurkle/color': 0.3.4
 
   check-error@2.1.3: {}
 
