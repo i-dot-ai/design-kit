@@ -10,7 +10,7 @@ export default function Example() {
         labels: ["January", "February", "March", "April", "May", "June"],
         datasets: [
           { label: "Online", data: [980, 1120, 1310, 1450, 1590, 1720] },
-          { label: "Paper", line: "dashed", data: [620, 600, 570, 500, 450, 410] },
+          { label: "Paper", data: [620, 600, 570, 500, 450, 410] },
         ],
       }}
     />

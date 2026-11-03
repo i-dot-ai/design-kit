@@ -110,7 +110,7 @@ export class IaiChart extends HTMLElement {
                     "col",
                     {
                         "data-iai-chart-colour": Array.isArray(d.colour) ? undefined : d.colour,
-                        "data-iai-chart-line": d.line === "solid" ? undefined : d.line,
+                        "data-iai-chart-line": d.line,
                     },
                     true,
                 ),
