@@ -51,7 +51,7 @@ export default function Chart({ variant, title, data, class: className, ...rest 
                                         key={i}
                                         numeric
                                         data-iai-chart-colour={Array.isArray(dataset.colour) ? undefined : dataset.colour}
-                                        data-iai-chart-line={dataset.line === "solid" ? undefined : dataset.line}
+                                        data-iai-chart-line={dataset.line}
                                     >
                                         {dataset.label}
                                     </TableHeader>

@@ -8,7 +8,8 @@
 //
 // The first column holds the labels; each other column is a series. A series
 // header may set `data-iai-chart-colour="<palette name>"` and
-// `data-iai-chart-line="dashed|dotted"` (default solid). Pie, doughnut and
+// `data-iai-chart-line="solid|dashed|dotted"`; without them, series follow the
+// default colour and line style orders. Pie, doughnut and
 // polar area charts use the first series only and take colours from the row
 // headers instead. The canvas is added here, so without JavaScript the table
 // is all there is.
@@ -86,7 +87,9 @@ export const CHART_COLOURS = {
 const DEFAULT_ORDER = ["blue", "blue-shade-50", "magenta", "purple-tint-25", "teal-tint-25", "orange-tint-25"];
 const LABEL_COLOUR = CHART_COLOURS.black;
 const LINE_COLOUR = CHART_COLOURS["black-tint-80"];
-const LINE_STYLES = { dashed: [8, 4], dotted: [2, 3] };
+const LINE_STYLES = { solid: undefined, dashed: [8, 4], dotted: [2, 3] };
+// The line style order, used for series without a line style.
+const DEFAULT_LINE_ORDER = ["solid", "dashed", "dotted"];
 
 const format = (value) => value.toLocaleString("en-GB", { maximumFractionDigits: 2 });
 
@@ -103,6 +106,11 @@ export function parseValue(text) {
 
 const colourFor = (th, i) =>
     CHART_COLOURS[th.dataset.iaiChartColour] ?? CHART_COLOURS[DEFAULT_ORDER[i % DEFAULT_ORDER.length]];
+
+const lineFor = (th, i) => {
+    const style = th.dataset.iaiChartLine;
+    return LINE_STYLES[style in LINE_STYLES ? style : DEFAULT_LINE_ORDER[i % DEFAULT_LINE_ORDER.length]];
+};
 
 function readTable(table, variant) {
     const headers = Array.from(table.querySelectorAll("thead th")).slice(1);
@@ -135,7 +143,7 @@ function readTable(table, variant) {
                 borderColor: colour,
                 // 33 = 20% opacity, so overlapping series stay visible.
                 backgroundColor: seeThrough ? `${colour}33` : colour,
-                borderDash: LINE_STYLES[th.dataset.iaiChartLine],
+                borderDash: variant === "bar" ? undefined : lineFor(th, i),
                 ...(variant === "area" ? { fill: "origin" } : {}),
             };
         }),
@@ -189,6 +197,7 @@ export function initChart(el) {
         type: TYPES[variant],
         data: readTable(table, variant),
         options: {
+            animation: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? false : undefined,
             color: LABEL_COLOUR,
             scales: scalesFor(variant, font),
             plugins: {

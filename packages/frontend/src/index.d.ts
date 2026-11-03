@@ -40,7 +40,7 @@ export type ChartData = {
         label: string;
         /** One colour, or one per label on pie, doughnut and polar area charts. */
         colour?: ChartColour | ChartColour[];
-        /** Line, area and radar charts only. Defaults to solid. */
+        /** Line, area and radar charts only. If not set, series follow the order solid, dashed, dotted. */
         line?: "solid" | "dashed" | "dotted";
         /** One value per label. `null` leaves a gap. */
         data: (number | null)[];

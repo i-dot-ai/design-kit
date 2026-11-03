@@ -14,6 +14,8 @@ status: new
 - [Area](#area)
 - [Radar](#radar)
 - [Polar area](#polar-area)
+- [Changing the colour](#changing-the-colour)
+- [Changing the line style](#changing-the-line-style)
 - [Changing the size](#changing-the-size)
 - [Accessibility](#accessibility)
 - [Component options](#component-options)
@@ -75,6 +77,18 @@ A polar area chart is like a pie chart, but each slice is the same angle and its
 
 <Example component="chart" optionsHref="#component-options" html="./examples/polar-area.html" astro="./examples/polar-area.astro" react="./examples/polar-area.react.tsx" svelte="./examples/polar-area.svelte" solid="./examples/polar-area.solid.tsx" webComponents="./examples/polar-area.web-components.html" />
 
+## Changing the colour
+
+Colours follow the categorical order by default. To choose a series' colour yourself, set `colour` on its dataset to a [chart colour](/styles/chart-colours) name. In HTML, add `data-iai-chart-colour` to the series' column header.
+
+<Example component="chart" optionsHref="#component-options" html="./examples/line-colour.html" astro="./examples/line-colour.astro" react="./examples/line-colour.react.tsx" svelte="./examples/line-colour.svelte" solid="./examples/line-colour.solid.tsx" webComponents="./examples/line-colour.web-components.html" />
+
+## Changing the line style
+
+On line, area and radar charts, lines follow the order solid, dashed, dotted by default. To choose a series' line style yourself, set `line` on its dataset to `"solid"`, `"dashed"` or `"dotted"`. In HTML, add `data-iai-chart-line` to the series' column header.
+
+<Example component="chart" optionsHref="#component-options" html="./examples/line-style.html" astro="./examples/line-style.astro" react="./examples/line-style.react.tsx" svelte="./examples/line-style.svelte" solid="./examples/line-style.solid.tsx" webComponents="./examples/line-style.web-components.html" />
+
 ## Changing the size
 
 Line, area and bar charts fill the width of their container. Pie, doughnut, polar area and radar charts are square, so they stop at 600px wide. To change this, set `--iai-chart-max-width` on the chart or on a container. Use `none` to remove the limit.
@@ -132,7 +146,7 @@ These are the same for Astro, React, Svelte and Solid. For web components, `vari
 | `label` | text | Yes | The series name, shown in the legend and as the table column header. |
 | `data` | list of numbers | Yes | One value for each label, in the same order. Use `null` to leave a gap. |
 | `colour` | a [chart colour](/styles/chart-colours) name, or a list of them | No | One colour for the series. On pie, doughnut and polar area charts, a list with one colour for each slice. If not set, colours follow the default order. |
-| `line` | `"solid"`, `"dashed"` or `"dotted"` | No | The line style, on line, area and radar charts. Defaults to `"solid"`. |
+| `line` | `"solid"`, `"dashed"` or `"dotted"` | No | The line style, on line, area and radar charts. If not set, line styles follow the order solid, dashed, dotted. |
 
 ### HTML
 
