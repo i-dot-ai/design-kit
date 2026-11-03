@@ -16,22 +16,11 @@ To do this you need to:
 
 Install Sass, govuk-frontend and i.AI amended frontend:
 
-<CopyableCode code="npm install sass govuk-frontend @i-dot-ai-npm/component-library-frontend --save" />
+<CodeBlock collection="get-started" component="update-a-product-interface" code="./examples/install.sh" />
 
 Create a idotai.scss file and copy this into it:
 
-<CopyableCode code={`// GOV.UK Frontend, compiled without GOV.UK branding.
-// See: https://frontend.design-system.service.gov.uk/using-govuk-frontend-without-govuk-branding/
-//
-// The i.AI brand values come from the kit, so they stay in step with it.
-@use "@i-dot-ai-npm/component-library-frontend/settings" as iai;
-@use "govuk-frontend" as * with (
-  $govuk-font-family: iai.$iai-font-family,
-  $govuk-functional-colours: iai.$iai-functional-colours
-);
-
-// i.AI override layer — must come after govuk-frontend's base styles.
-@use "@i-dot-ai-npm/component-library-frontend/css";`} />
+<CodeBlock collection="get-started" component="update-a-product-interface" code="./examples/idotai.scss" />
 
 This is the recommended way to adapt GOV.UK Frontend for services that
 are not on the gov.uk domain. There is more on this in the
@@ -48,33 +37,18 @@ Link to the idotai.scss file in your main layout. In Astro this will be in the l
 
 In Astro:
 
-<CopyableCode code={`---
-import '<path-to-styles>/idotai.scss'
----`} />
+<CodeBlock collection="get-started" component="update-a-product-interface" code="./examples/import-styles.astro" />
 
 In html:
 
-<CopyableCode code={`<head>
-    ...
-    <link rel="stylesheet" href='<path-to-styles>/idotai.scss' />
-    ...
-</head>`} />
+<CodeBlock collection="get-started" component="update-a-product-interface" code="./examples/link-styles.html" />
 
 
 
 After the closing body tag, import <code class="app-code">initAll</code> from govuk-frontend and
 <code class="app-code">initAllIAIDesignSystem</code> from the i.AI JavaScript file:
 
-<CopyableCode code={`<body>
-    ...
-        <script>
-            import { initAll } from "govuk-frontend";
-            import { initAllIAIDesignSystem } from '@i-dot-ai-npm/component-library-frontend';
-            initAll();
-            initAllIAIDesignSystem();
-        </script>
-    <body>
-</html>`} />
+<CodeBlock collection="get-started" component="update-a-product-interface" code="./examples/init-scripts.html" />
 
 ## 3. Add the component library
 
