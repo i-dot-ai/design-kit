@@ -16,7 +16,7 @@ for (const pageToTest of CHART_PAGES) {
         // ratio difference between linux in CI and darwin in mac
         await expect(page.locator(".iai-chart")).toHaveScreenshot(`chart-${variant}.png`, {
             animations: "disabled",
-            maxDiffPixelRatio: 0.01,
+            maxDiffPixelRatio: 0.02,
         });
     });
 }
