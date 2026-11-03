@@ -3,65 +3,159 @@ title: Chart colours
 description: The colour palette for data visualisations, and how to use it.
 ---
 
-In some charts, colours help differentiate between categories of data, such as
-in line charts or stacked bar charts. Some visualisations use colour to
-represent numerical values, such as heatmaps.
+Use the categorical colours by default. They are the most different from each
+other, so they make categories easiest to tell apart.
 
-The chart palette draws from the [web palette](/styles/colour#web-palette). This
-page only covers the parts specific to charts: the categorical picks, the rule
-on sequential and divergent scales, and the accent colours.
+Only use a sequential or divergent scale when your data has an order, such as
+low to high, or negative to positive.
 
-## Categorical palette
+These colours follow the [GOV.UK chart palette](https://brand.design-system.service.gov.uk/colour/charts/).
 
-Use these colours to differentiate between categories of data.
+## Do not rely on colour alone
 
-| Colour | Name | Hex |
-| --- | --- | --- |
-| <Swatch colour="#1d70b8" /> | Primary blue | #1D70B8 |
-| <Swatch colour="#0f385c" /> | Blue shade 50% | #0F385C |
-| <Swatch colour="#ca357c" /> | Primary magenta | #CA357C |
-| <Swatch colour="#7f65b7" /> | Purple tint 25% | #7F65B7 |
-| <Swatch colour="#50a1a5" /> | Teal tint 25% | #50A1A5 |
-| <Swatch colour="#f7996a" /> | Orange tint 25% | #F7996A |
+Some people cannot tell colours apart, and charts are often printed in black and
+white. Always give each category another way to identify it:
 
-### Axes and lines
+- a clear label or legend
+- a different line style (solid, dashed or dotted) on line, area and radar charts
+- the data in a table
 
-| Colour | Name | Hex |
-| --- | --- | --- |
-| <Swatch colour="#cecece" /> | Black tint 80% | #CECECE |
+Make sure colours contrast with the background and with any text on top of them.
 
-### Labels
+## Categorical colours
 
-| Colour | Name | Hex |
-| --- | --- | --- |
-| <Swatch colour="#0b0c0c" /> | Black | #0B0C0C |
+Use these to tell categories apart, such as the lines on a line chart or the
+slices of a pie chart.
 
-## Sequential and divergent scale palette
+The [chart component](/components/chart) uses them in this order when you do not
+set a colour. Use them in the same order if you set colours yourself.
 
-Avoid using colour alone to visualise insights. Use a maximum of two scales in a
-single chart.
+| Order | Colour | Name | Chart name | Hex |
+| --- | --- | --- | --- | --- |
+| 1 | <Swatch colour="#1d70b8" /> | Primary blue | `blue` | #1D70B8 |
+| 2 | <Swatch colour="#0f385c" /> | Blue shade 50% | `blue-shade-50` | #0F385C |
+| 3 | <Swatch colour="#ca357c" /> | Primary magenta | `magenta` | #CA357C |
+| 4 | <Swatch colour="#7f65b7" /> | Purple tint 25% | `purple-tint-25` | #7F65B7 |
+| 5 | <Swatch colour="#50a1a5" /> | Teal tint 25% | `teal-tint-25` | #50A1A5 |
+| 6 | <Swatch colour="#f7996a" /> | Orange tint 25% | `orange-tint-25` | #F7996A |
 
-The scales use the tints and shades from the [web palette](/styles/colour#web-palette).
+If you only have one category, use primary blue.
 
-## Accent colours
+Use no more than 5 colours in one chart. If you have more categories, group the
+smaller ones together or split the chart into several charts.
 
-Use only in conjunction with backgrounds using 25% and 50% shades.
+### Axes, lines and labels
 
-| Colour | Name | Hex |
-| --- | --- | --- |
-| <Swatch colour="#11e0f1" /> | Accent blue | #11E0F1 |
-| <Swatch colour="#ff52ee" /> | Accent magenta | #FF52EE |
-| <Swatch colour="#ff5e5e" /> | Accent red | #FF5E5E |
-| <Swatch colour="#66f39e" /> | Accent green | #66F39E |
-| <Swatch colour="#ba4aff" /> | Accent purple | #BA4AFF |
-| <Swatch colour="#00ffe0" /> | Accent teal | #00FFE0 |
-| <Swatch colour="#ffaf4a" /> | Accent orange | #FFAF4A |
+| Use for | Colour | Name | Chart name | Hex |
+| --- | --- | --- | --- | --- |
+| Axes and grid lines | <Swatch colour="#cecece" /> | Black tint 80% | `black-tint-80` | #CECECE |
+| Labels | <Swatch colour="#0b0c0c" /> | Black | `black` | #0B0C0C |
 
-## Using colour in charts
+## Sequential and divergent scales
 
-When choosing colours for your data visualisation:
+Use a scale when colour shows a value, not a category. For example, a heatmap or
+a rating from "very poor" to "very good".
 
-- ensure sufficient contrast with the background and overlapping text
-- avoid using colour as the only visual means of conveying information
-- focus on applying colour that enhances the clarity of the data
-- limit colours to avoid confusion
+- **Sequential**: use one colour, from light for low values to dark for high
+  values. For example, blue tint 80% up to blue shade 50%.
+- **Divergent**: use two colours that meet at a neutral middle. For example,
+  red for negative, black tint 80% for neutral and blue for positive.
+
+Use no more than 2 scales in one chart.
+
+### Divergent example
+
+| Value | Colour | Name | Chart name | Hex |
+| --- | --- | --- | --- | --- |
+| Strongly negative | <Swatch colour="#ca3535" /> | Primary red | `red` | #CA3535 |
+| Negative | <Swatch colour="#e59a9a" /> | Red tint 50% | `red-tint-50` | #E59A9A |
+| Neutral | <Swatch colour="#cecece" /> | Black tint 80% | `black-tint-80` | #CECECE |
+| Positive | <Swatch colour="#8eb8dc" /> | Blue tint 50% | `blue-tint-50` | #8EB8DC |
+| Strongly positive | <Swatch colour="#1d70b8" /> | Primary blue | `blue` | #1D70B8 |
+
+### Blues
+
+| Colour | Name | Chart name | Hex |
+| --- | --- | --- | --- |
+| <Swatch colour="#d2e2f1" /> | Blue tint 80% | `blue-tint-80` | #D2E2F1 |
+| <Swatch colour="#8eb8dc" /> | Blue tint 50% | `blue-tint-50` | #8EB8DC |
+| <Swatch colour="#5694ca" /> | Blue tint 25% | `blue-tint-25` | #5694CA |
+| <Swatch colour="#1d70b8" /> | Primary blue | `blue` | #1D70B8 |
+| <Swatch colour="#1a65a6" /> | Blue shade 10% | `blue-shade-10` | #1A65A6 |
+| <Swatch colour="#16548a" /> | Blue shade 25% | `blue-shade-25` | #16548A |
+| <Swatch colour="#0f385c" /> | Blue shade 50% | `blue-shade-50` | #0F385C |
+
+### Magentas
+
+| Colour | Name | Chart name | Hex |
+| --- | --- | --- | --- |
+| <Swatch colour="#f4d7e5" /> | Magenta tint 80% | `magenta-tint-80` | #F4D7E5 |
+| <Swatch colour="#e59abe" /> | Magenta tint 50% | `magenta-tint-50` | #E59ABE |
+| <Swatch colour="#d7689d" /> | Magenta tint 25% | `magenta-tint-25` | #D7689D |
+| <Swatch colour="#ca357c" /> | Primary magenta | `magenta` | #CA357C |
+| <Swatch colour="#98285d" /> | Magenta shade 25% | `magenta-shade-25` | #98285D |
+| <Swatch colour="#651b3e" /> | Magenta shade 50% | `magenta-shade-50` | #651B3E |
+
+### Reds
+
+| Colour | Name | Chart name | Hex |
+| --- | --- | --- | --- |
+| <Swatch colour="#f4d7d7" /> | Red tint 80% | `red-tint-80` | #F4D7D7 |
+| <Swatch colour="#e59a9a" /> | Red tint 50% | `red-tint-50` | #E59A9A |
+| <Swatch colour="#d76868" /> | Red tint 25% | `red-tint-25` | #D76868 |
+| <Swatch colour="#ca3535" /> | Primary red | `red` | #CA3535 |
+| <Swatch colour="#982828" /> | Red shade 25% | `red-shade-25` | #982828 |
+| <Swatch colour="#651b1b" /> | Red shade 50% | `red-shade-50` | #651B1B |
+
+### Greens
+
+| Colour | Name | Chart name | Hex |
+| --- | --- | --- | --- |
+| <Swatch colour="#cfe4dc" /> | Green tint 80% | `green-tint-80` | #CFE4DC |
+| <Swatch colour="#87bca8" /> | Green tint 50% | `green-tint-50` | #87BCA8 |
+| <Swatch colour="#4b9b7d" /> | Green tint 25% | `green-tint-25` | #4B9B7D |
+| <Swatch colour="#0f7a52" /> | Primary green | `green` | #0F7A52 |
+| <Swatch colour="#0b5c3e" /> | Green shade 25% | `green-shade-25` | #0B5C3E |
+| <Swatch colour="#083d29" /> | Green shade 50% | `green-shade-50` | #083D29 |
+
+### Purples
+
+| Colour | Name | Chart name | Hex |
+| --- | --- | --- | --- |
+| <Swatch colour="#ddd6ec" /> | Purple tint 80% | `purple-tint-80` | #DDD6EC |
+| <Swatch colour="#aa98cf" /> | Purple tint 50% | `purple-tint-50` | #AA98CF |
+| <Swatch colour="#7f65b7" /> | Purple tint 25% | `purple-tint-25` | #7F65B7 |
+| <Swatch colour="#54319f" /> | Primary purple | `purple` | #54319F |
+| <Swatch colour="#3f2577" /> | Purple shade 25% | `purple-shade-25` | #3F2577 |
+| <Swatch colour="#2a1950" /> | Purple shade 50% | `purple-shade-50` | #2A1950 |
+
+### Teals
+
+| Colour | Name | Chart name | Hex |
+| --- | --- | --- | --- |
+| <Swatch colour="#d0e6e7" /> | Teal tint 80% | `teal-tint-80` | #D0E6E7 |
+| <Swatch colour="#8ac0c3" /> | Teal tint 50% | `teal-tint-50` | #8AC0C3 |
+| <Swatch colour="#50a1a5" /> | Teal tint 25% | `teal-tint-25` | #50A1A5 |
+| <Swatch colour="#158187" /> | Primary teal | `teal` | #158187 |
+| <Swatch colour="#106165" /> | Teal shade 25% | `teal-shade-25` | #106165 |
+| <Swatch colour="#0b4144" /> | Teal shade 50% | `teal-shade-50` | #0B4144 |
+
+### Oranges
+
+| Colour | Name | Chart name | Hex |
+| --- | --- | --- | --- |
+| <Swatch colour="#fde4d7" /> | Orange tint 80% | `orange-tint-80` | #FDE4D7 |
+| <Swatch colour="#fabb9c" /> | Orange tint 50% | `orange-tint-50` | #FABB9C |
+| <Swatch colour="#f7996a" /> | Orange tint 25% | `orange-tint-25` | #F7996A |
+| <Swatch colour="#f47738" /> | Primary orange | `orange` | #F47738 |
+| <Swatch colour="#b7592a" /> | Orange shade 25% | `orange-shade-25` | #B7592A |
+| <Swatch colour="#7a3c1c" /> | Orange shade 50% | `orange-shade-50` | #7A3C1C |
+
+### Neutrals
+
+| Colour | Name | Chart name | Hex |
+| --- | --- | --- | --- |
+| <Swatch colour="#cecece" /> | Black tint 80% | `black-tint-80` | #CECECE |
+| <Swatch colour="#858686" /> | Black tint 50% | `black-tint-50` | #858686 |
+| <Swatch colour="#484949" /> | Black tint 25% | `black-tint-25` | #484949 |
+| <Swatch colour="#0b0c0c" /> | Black | `black` | #0B0C0C |
