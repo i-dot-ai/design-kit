@@ -29,7 +29,9 @@ export type ChartColour =
     | "orange" | "orange-tint-25" | "orange-tint-50" | "orange-tint-80" | "orange-shade-25" | "orange-shade-50"
     | "black" | "black-tint-25" | "black-tint-50" | "black-tint-80";
 
-export type ChartVariant = "line" | "area" | "bar" | "pie" | "doughnut" | "radar" | "polar-area";
+export type ChartVariant = "line" | "area" | "bar" | "horizontal-bar" | "pie" | "doughnut";
+
+export type ChartHeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 /** Chart data, shaped like Chart.js's `data`. */
 export type ChartData = {
@@ -38,9 +40,9 @@ export type ChartData = {
     labels: string[];
     datasets: {
         label: string;
-        /** One colour, or one per label on pie, doughnut and polar area charts. */
+        /** One colour, or one per label on pie and doughnut charts. */
         colour?: ChartColour | ChartColour[];
-        /** Line, area and radar charts only. If not set, series follow the order solid, dashed, dotted. */
+        /** Line and area charts only. If not set, series follow the order solid, dashed, dotted. */
         line?: "solid" | "dashed" | "dotted";
         /** One value per label. `null` leaves a gap. */
         data: (number | null)[];

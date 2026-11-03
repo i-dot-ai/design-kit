@@ -4,13 +4,12 @@ import Layout from "@layouts/TestLayout.astro";
 import Line from "../../../../content/components/chart/examples/line.react.tsx";
 import Area from "../../../../content/components/chart/examples/area.react.tsx";
 import Bar from "../../../../content/components/chart/examples/bar.react.tsx";
+import HorizontalBar from "../../../../content/components/chart/examples/horizontal-bar.react.tsx";
 import Pie from "../../../../content/components/chart/examples/pie.react.tsx";
 import Doughnut from "../../../../content/components/chart/examples/doughnut.react.tsx";
-import Radar from "../../../../content/components/chart/examples/radar.react.tsx";
-import PolarArea from "../../../../content/components/chart/examples/polar-area.react.tsx";
 
 export function getStaticPaths() {
-    return ["line", "area", "bar", "pie", "doughnut", "radar", "polar-area"].map((variant) => ({
+    return ["line", "area", "bar", "horizontal-bar", "pie", "doughnut"].map((variant) => ({
         params: { variant },
     }));
 }
@@ -22,8 +21,7 @@ const { variant } = Astro.params;
     {variant === "line" && <Line client:load />}
     {variant === "area" && <Area client:load />}
     {variant === "bar" && <Bar client:load />}
+    {variant === "horizontal-bar" && <HorizontalBar client:load />}
     {variant === "pie" && <Pie client:load />}
     {variant === "doughnut" && <Doughnut client:load />}
-    {variant === "radar" && <Radar client:load />}
-    {variant === "polar-area" && <PolarArea client:load />}
 </Layout>

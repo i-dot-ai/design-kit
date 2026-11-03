@@ -3,11 +3,10 @@ import { expect, type Page } from "@playwright/test";
 const VARIANTS = [
     { variant: "line", type: "line", title: "Applications received by month" },
     { variant: "bar", type: "bar", title: "Applications received by region" },
+    { variant: "horizontal-bar", type: "bar", title: "Applications received by region in 2026" },
     { variant: "pie", type: "pie", title: "How applications were submitted" },
     { variant: "doughnut", type: "doughnut", title: "Application outcomes" },
     { variant: "area", type: "line", title: "Applications by channel" },
-    { variant: "radar", type: "radar", title: "User satisfaction by service area" },
-    { variant: "polar-area", type: "polarArea", title: "Average processing time by application type" },
 ];
 
 const FRAMEWORKS = ["html", "astro", "react", "solid", "svelte", "web-components"];

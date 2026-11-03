@@ -10,12 +10,12 @@ type ChartInstance = ReturnType<typeof initChart>;
  * versions. It takes the `iai-chart` classes and renders the same content as
  * the plain HTML chart inside itself.
  *
- *   <iai-chart variant="pie" title="…">
+ *   <iai-chart variant="pie" title="…" description="…" heading-level="2">
  *     <script type="application/json">{ "heading": …, "labels": […], "datasets": […] }</script>
  *   </iai-chart>
  */
 export class IaiChart extends HTMLElement {
-    static observedAttributes = ["variant", "title"];
+    static observedAttributes = ["variant", "title", "description", "heading-level"];
 
     #data: ChartData | undefined;
     #title = "";
@@ -82,7 +82,14 @@ export class IaiChart extends HTMLElement {
             this.replaceChildren();
             return;
         }
-        this.replaceChildren(create("h3", "govuk-heading-m", {}, title), this.#details(title, data));
+        const level = Number(this.getAttribute("heading-level"));
+        const heading = create(`h${level >= 1 && level <= 6 ? level : 3}`, "govuk-heading-m", {}, title);
+        const description = this.getAttribute("description");
+        this.replaceChildren(
+            heading,
+            ...(description ? [create("p", "govuk-body iai-chart__description", {}, description)] : []),
+            this.#details(title, data),
+        );
         // Charts on the page when initAllIAIDesignSystem() runs are drawn by it;
         // initChart returns that chart instead of drawing a second one.
         this.#chart = initChart(this);
@@ -132,7 +139,7 @@ export class IaiChart extends HTMLElement {
             "details",
             "govuk-details",
             {},
-            create("summary", "govuk-details__summary", {}, create("span", "govuk-details__summary-text", {}, "Show data")),
+            create("summary", "govuk-details__summary", {}, create("span", "govuk-details__summary-text", {}, "Show data", create("span", "govuk-visually-hidden", {}, ` for ${title}`))),
             create(
                 "div",
                 "govuk-details__text",

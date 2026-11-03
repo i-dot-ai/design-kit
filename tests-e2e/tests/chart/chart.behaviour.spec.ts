@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 import { CHART_PAGES, pagesFor, readChart, waitForChart } from "./chart-pages";
 
 for (const target of CHART_PAGES) {
@@ -16,7 +16,7 @@ for (const target of CHART_PAGES) {
             await page.goto(target.path);
             await waitForChart(page);
             await expect(page.locator(".iai-chart table")).toBeHidden();
-            await page.getByText("Show data").click();
+            await page.getByText("Show data", { exact: false }).first().click();
             await expect(page.locator(".iai-chart table")).toBeVisible();
         });
 
@@ -26,7 +26,7 @@ for (const target of CHART_PAGES) {
             const page = await context.newPage();
             await page.goto(target.path);
             await expect(page.locator(".iai-chart canvas")).toHaveCount(0);
-            await page.getByText("Show data").click();
+            await page.getByText("Show data", { exact: false }).first().click();
             await expect(page.locator(".iai-chart table")).toBeVisible();
             await context.close();
         });
@@ -101,31 +101,124 @@ for (const target of pagesFor("area")) {
     });
 }
 
-for (const target of pagesFor("radar")) {
-    test(`radar: reads series like a line chart on a circular scale (${target.framework})`, async ({ page }) => {
-        await page.goto(target.path);
+for (const framework of ["html", "astro", "web-components"]) {
+    test(`description: the canvas is described by the chart's description (${framework})`, async ({ page }) => {
+        await page.goto(`/test/chart/bar-description/${framework}`);
         await waitForChart(page);
-        const { data, scales } = await readChart(page);
-        expect(data.labels).toEqual(["Speed", "Clarity", "Accessibility", "Support", "Reliability"]);
-        expect(data.datasets.map((d) => d.label)).toEqual(["2025", "2026"]);
-        expect(data.datasets[1].data).toEqual([7.4, 8.1, 7.9, 7.2, 8.6]);
-        expect(data.datasets.map((d) => d.borderColor)).toEqual(["#1d70b8", "#0f385c"]);
-        expect(scales).toEqual(["r"]);
+        await expect(page.locator(".iai-chart h2")).toHaveText("Applications received by region");
+        await expect(page.locator(".iai-chart canvas")).toHaveAccessibleDescription(
+            "Applications rose in every region from 2025 to 2026. The South received the most in both years.",
+        );
     });
 }
 
-for (const target of pagesFor("polar-area")) {
-    test(`polar area: colours slices in the default order on a circular scale (${target.framework})`, async ({ page }) => {
+test("clicking the legend does not hide a series", async ({ page }) => {
+    await page.goto("/test/chart/line/html");
+    await waitForChart(page);
+    const canvas = page.locator(".iai-chart canvas");
+    const box = await canvas.evaluate((el) => {
+        const chart = (el.closest(".iai-chart") as HTMLElement & {
+            iaiChart: { legend: { legendHitBoxes: { left: number; top: number; width: number; height: number }[] } };
+        }).iaiChart;
+        return chart.legend.legendHitBoxes[0];
+    });
+    await canvas.click({ position: { x: box.left + box.width / 2, y: box.top + box.height / 2 } });
+    const visible = await canvas.evaluate((el) =>
+        (el.closest(".iai-chart") as HTMLElement & { iaiChart: { isDatasetVisible: (i: number) => boolean } }).iaiChart.isDatasetVisible(0),
+    );
+    expect(visible).toBe(true);
+});
+
+for (const target of pagesFor("horizontal-bar")) {
+    test(`horizontal bar: draws bars along the x axis with their values (${target.framework})`, async ({ page }) => {
         await page.goto(target.path);
         await waitForChart(page);
         const { data, scales } = await readChart(page);
-        expect(data.labels).toEqual(["New", "Renewal", "Change of details", "Appeal"]);
-        expect(data.datasets).toHaveLength(1);
-        expect(data.datasets[0].data).toEqual([12, 5, 3, 28]);
-        expect(data.datasets[0].backgroundColor).toEqual(["#1d70b8", "#0f385c", "#ca357c", "#7f65b7"]);
-        expect(scales).toEqual(["r"]);
+        expect(data.datasets[0].data).toEqual([2650, 2100, 3350, 1020, 1410]);
+        expect(scales).toEqual(["x", "y"]);
+        const indexAxis = await page.locator(".iai-chart").evaluate(
+            (el) => (el as HTMLElement & { iaiChart: { options: { indexAxis: string } } }).iaiChart.options.indexAxis,
+        );
+        expect(indexAxis).toBe("y");
+        const legendShown = await page.locator(".iai-chart").evaluate(
+            (el) => (el as HTMLElement & { iaiChart: { legend: { options: { display: boolean } } } }).iaiChart.legend.options.display,
+        );
+        expect(legendShown).toBe(false);
     });
 }
+
+for (const variant of ["pie", "doughnut"]) {
+    test(`${variant}: labels slices directly and hides the legend, falling back to it when narrow`, async ({ page }) => {
+        const legendShown = () =>
+            page.locator(".iai-chart").evaluate(
+                (el) => (el as HTMLElement & { iaiChart: { legend: { options: { display: boolean } } } }).iaiChart.legend.options.display,
+            );
+        await page.goto(`/test/chart/${variant}/html`);
+        await waitForChart(page);
+        expect(await legendShown()).toBe(false);
+        await page.setViewportSize({ width: 360, height: 800 });
+        await expect.poll(legendShown).toBe(true);
+    });
+}
+
+for (const framework of ["html", "astro", "web-components"]) {
+    test(`line style and colour set on a series reach the drawn chart (${framework})`, async ({ page }) => {
+        await page.goto(`/test/chart/line-style/${framework}`);
+        await waitForChart(page);
+        expect((await readChart(page)).data.datasets.map((d) => d.borderDash)).toEqual([[2, 3], [8, 4], undefined]);
+        await page.goto(`/test/chart/line-colour/${framework}`);
+        await waitForChart(page);
+        expect((await readChart(page)).data.datasets.map((d) => d.borderColor)).toEqual(["#0f385c", "#1d70b8", "#5694ca"]);
+    });
+}
+
+test.describe("pie legend and labels", () => {
+    const legendShown = (page: Page) =>
+        page.locator(".iai-chart").evaluate(
+            (el) => (el as HTMLElement & { iaiChart: { legend: { options: { display: boolean } } } }).iaiChart.legend.options.display,
+        );
+    const setSlices = (page: Page, labels: string[]) =>
+        page.locator("iai-chart").evaluate((el, labels) => {
+            const chart = el as HTMLElement & { data: { labels: string[]; datasets: { data: number[] }[] } };
+            chart.data = { ...chart.data, labels, datasets: [{ ...chart.data.datasets[0], data: labels.map((_, i) => i + 1) }] };
+        }, labels);
+
+    test("more than 6 slices uses the legend instead of labels", async ({ page }) => {
+        await page.goto("/test/chart/pie/web-components");
+        await waitForChart(page);
+        await setSlices(page, ["A", "B", "C", "D", "E", "F", "G"]);
+        await expect.poll(() => legendShown(page)).toBe(true);
+    });
+
+    test("a single slice has no legend, even when narrow", async ({ page }) => {
+        await page.setViewportSize({ width: 360, height: 800 });
+        await page.goto("/test/chart/pie/web-components");
+        await waitForChart(page);
+        await setSlices(page, ["All"]);
+        await expect.poll(() => legendShown(page)).toBe(false);
+    });
+});
+
+test("chart text follows the browser font size", async ({ page }) => {
+    await page.goto("/test/chart/pie/web-components");
+    await waitForChart(page);
+    const size = await page.locator("iai-chart").evaluate((el) => {
+        document.documentElement.style.fontSize = "20px";
+        const chart = el as HTMLElement & { data: unknown };
+        chart.data = { ...(chart.data as object) };
+        return (el as HTMLElement & { iaiChart: { options: { plugins: { legend: { labels: { font: { size: number } } } } } } }).iaiChart
+            .options.plugins.legend.labels.font.size;
+    });
+    expect(size).toBe(20);
+});
+
+test("high contrast mode gives the chart a white background", async ({ page, browserName }) => {
+    test.skip(browserName === "webkit", "WebKit cannot emulate forced colours");
+    await page.emulateMedia({ forcedColors: "active" });
+    await page.goto("/test/chart/bar/html");
+    await waitForChart(page);
+    await expect(page.locator(".iai-chart__canvas")).toHaveCSS("background-color", "rgb(255, 255, 255)");
+});
 
 test.describe("web component reacts to changes", () => {
     test("setting data redraws one chart with the new values", async ({ page }) => {
@@ -137,7 +230,7 @@ test.describe("web component reacts to changes", () => {
         });
         await expect(page.locator(".iai-chart canvas")).toHaveCount(1);
         expect((await readChart(page)).data.datasets[0].data).toEqual([1, 2, 3, 4]);
-        await page.getByText("Show data").click();
+        await page.getByText("Show data", { exact: false }).first().click();
         await expect(page.locator(".iai-chart tbody td").first()).toHaveText("1");
     });
 

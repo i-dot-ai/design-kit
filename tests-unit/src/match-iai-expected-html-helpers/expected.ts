@@ -10,14 +10,18 @@ export type HostOptions = {
     hostAttrs?: string[];
     /** Classes of elements the behaviour layer adds at runtime (for example a chart's canvas). */
     ignoreAdded?: string[];
+    ignoreAddedAttrs?: string[];
 };
 
-function dropAdded(shape: Shape, ignoreAdded: string[]): Shape {
+function dropAdded(shape: Shape, ignoreAdded: string[], ignoreAddedAttrs: string[]): Shape {
     return {
         ...shape,
         children: shape.children
             .filter((child) => !child.classes.some((c) => ignoreAdded.includes(c)))
-            .map((child) => dropAdded(child, ignoreAdded)),
+            .map((child) => ({
+                ...dropAdded(child, ignoreAdded, ignoreAddedAttrs),
+                attrs: Object.fromEntries(Object.entries(child.attrs).filter(([name]) => !ignoreAddedAttrs.includes(name))),
+            })),
     };
 }
 
@@ -29,8 +33,8 @@ function dropAdded(shape: Shape, ignoreAdded: string[]): Shape {
  * class="x">` should match an expected `<div class="x">`. Classes, every other
  * attribute and all children are still compared exactly.
  */
-export function renderedShapeIgnoringHost(html: string, { hostAttrs = [], ignoreAdded = [] }: HostOptions = {}): Omit<Shape, "tag"> {
-    const { tag: _tag, attrs, ...rest } = dropAdded(renderedShape(html), ignoreAdded);
+export function renderedShapeIgnoringHost(html: string, { hostAttrs = [], ignoreAdded = [], ignoreAddedAttrs = [] }: HostOptions = {}): Omit<Shape, "tag"> {
+    const { tag: _tag, attrs, ...rest } = dropAdded(renderedShape(html), ignoreAdded, ignoreAddedAttrs);
     const kept = Object.fromEntries(Object.entries(attrs).filter(([name]) => !hostAttrs.includes(name)));
     return { ...rest, attrs: kept };
 }
@@ -42,5 +46,5 @@ export function renderedShapeIgnoringHost(html: string, { hostAttrs = [], ignore
  * `renderedShapeIgnoringHost`.
  */
 export const KEEPS_HOST: Record<string, HostOptions> = {
-    chart: { hostAttrs: ["variant"], ignoreAdded: ["iai-chart__canvas"] },
+    chart: { hostAttrs: ["variant", "description", "heading-level"], ignoreAdded: ["iai-chart__canvas"], ignoreAddedAttrs: ["id"] },
 };

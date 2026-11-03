@@ -48,6 +48,13 @@ describe("Chart web component", () => {
         expect(renderedShapeIgnoringHost(el.outerHTML, KEEPS_HOST.chart)).toEqual(renderedShapeIgnoringHost(doughnutHtml, KEEPS_HOST.chart));
     });
 
+    it("adds a description and uses the heading level", () => {
+        const el = mount(`<iai-chart variant="pie" title="t" description="A summary" heading-level="2"><script type="application/json">${JSON.stringify(DATA)}</script></iai-chart>`);
+        expect(el.querySelector("h2")?.textContent).toBe("t");
+        expect(el.querySelector("h3")).toBeNull();
+        expect(el.querySelector(".iai-chart__description")?.textContent).toBe("A summary");
+    });
+
     it("logs a clear error and renders nothing for invalid JSON", () => {
         const errors: unknown[] = [];
         const original = console.error;
