@@ -26,6 +26,8 @@ interface Props {
     /** Content collection the entry lives in. Defaults to "components". */
     collection?: "components" | "styles" | "decisions" | "get-started" | "patterns";
     variant?: "default" | "inverse";
+    /** Link to the page's options section, shown next to "Copy code". For example "#component-options". */
+    optionsHref?: string;
 }
 
 const {
@@ -39,6 +41,7 @@ const {
     component,
     collection = "components",
     variant = "default",
+    optionsHref,
 } = Astro.props;
 
 const files = import.meta.glob(
@@ -104,7 +107,14 @@ if (webComponentsCode) tabs.push({ lang: "web-components", code: webComponentsCo
                     {tabs.map((t, i) => (
                         <TabPanel id={`${base}-${t.lang}`} hidden={i !== 0}>
                             <div class="app-code-example">
-                                <CopyButton code={t.code} />
+                                <div class={`app-code-example__actions ${optionsHref ? "app-code-example__actions--with-options" : ""}`}>
+                                    {optionsHref && (
+                                        <a class="govuk-link govuk-body-s app-code-example__options" href={optionsHref}>
+                                            Component options
+                                        </a>
+                                    )}
+                                    <CopyButton code={t.code} />
+                                </div>
                                 <div class="code-example">
                                     <Code code={t.code} lang={t.shiki} theme="github-light" />
                                 </div>
