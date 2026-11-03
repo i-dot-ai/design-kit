@@ -1,6 +1,6 @@
 {
   "name": "@i-dot-ai-npm/component-library-svelte",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Svelte components for i.AI GOV.UK.",
   "type": "module",
   "scripts": {
