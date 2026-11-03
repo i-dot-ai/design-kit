@@ -11,7 +11,6 @@ export default function Example() {
         datasets: [
           {
             label: "Days",
-            colour: ["blue-shade-50", "blue", "teal-tint-25", "magenta"],
             data: [12, 5, 3, 28],
           },
         ],

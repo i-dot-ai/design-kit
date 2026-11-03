@@ -11,7 +11,6 @@ export default function Example() {
         datasets: [
           {
             label: "Applications",
-            colour: ["blue-shade-50", "blue", "teal-tint-25", "magenta"],
             data: [6200, 1450, 820, 330],
           },
         ],
