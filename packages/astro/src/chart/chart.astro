@@ -3,7 +3,7 @@
 // (initAllIAIDesignSystem) draws the chart from the table on the page.
 import type { HTMLAttributes } from "astro/types";
 import { formatChartValue } from "@i-dot-ai-npm/component-library-frontend";
-import type { ChartData, ChartVariant } from "@i-dot-ai-npm/component-library-frontend";
+import type { ChartData, ChartHeadingLevel, ChartVariant } from "@i-dot-ai-npm/component-library-frontend";
 import Details from "../details/details.astro";
 import DetailsSummary from "../details/details-summary.astro";
 import DetailsText from "../details/details-text.astro";
@@ -19,21 +19,27 @@ interface Props extends Omit<HTMLAttributes<"div">, "title"> {
     variant: ChartVariant;
     /** Shown as the heading and the table caption, and used as the chart's accessible name. */
     title: string;
+    /** A short summary of what the chart shows. Shown under the title and read out with the chart. */
+    description?: string;
+    /** The title's heading level. Defaults to 3. */
+    headingLevel?: ChartHeadingLevel;
     data: ChartData;
 }
 
-const { variant, title, data, class: className, ...rest } = Astro.props;
+const { variant, title, description, headingLevel = 3, data, class: className, ...rest } = Astro.props;
+const Heading = `h${headingLevel}`;
 
 const classes = ["iai-chart", `iai-chart--${variant}`, className ?? ""].filter(Boolean).join(" ");
-// Pie, doughnut and polar area colour each label from the first dataset's colour list.
+// Pie and doughnut colour each label from the first dataset's colour list.
 const firstColour = data.datasets[0]?.colour;
 const sliceColours = Array.isArray(firstColour) ? firstColour : [];
 ---
 
 <div class={classes} data-module="iai-chart" {...rest}>
-    <h3 class="govuk-heading-m">{title}</h3>
+    <Heading class="govuk-heading-m">{title}</Heading>
+    {description && <p class="govuk-body iai-chart__description">{description}</p>}
     <Details>
-        <DetailsSummary>Show data</DetailsSummary>
+        <DetailsSummary>Show data<span class="govuk-visually-hidden"> for {title}</span></DetailsSummary>
         <DetailsText>
             <Table>
                 <TableCaption size="small">{title}</TableCaption>

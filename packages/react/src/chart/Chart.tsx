@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import type { ComponentPropsWithoutRef } from "react";
 import { initChart, formatChartValue } from "@i-dot-ai-npm/component-library-frontend";
-import type { ChartData, ChartVariant } from "@i-dot-ai-npm/component-library-frontend";
+import type { ChartData, ChartHeadingLevel, ChartVariant } from "@i-dot-ai-npm/component-library-frontend";
 import Details from "../details/Details";
 import DetailsSummary from "../details/DetailsSummary";
 import DetailsText from "../details/DetailsText";
@@ -17,15 +17,20 @@ type ChartProps = Omit<ComponentPropsWithoutRef<"div">, "children" | "title"> & 
     variant: ChartVariant;
     /** Shown as the heading and the table caption, and used as the chart's accessible name. */
     title: string;
+    /** A short summary of what the chart shows. Shown under the title and read out with the chart. */
+    description?: string;
+    /** The title's heading level. Defaults to 3. */
+    headingLevel?: ChartHeadingLevel;
     data: ChartData;
     class?: string;
 };
 
-export default function Chart({ variant, title, data, class: className, ...rest }: ChartProps) {
+export default function Chart({ variant, title, description, headingLevel = 3, data, class: className, ...rest }: ChartProps) {
     const ref = useRef<HTMLDivElement>(null);
+    const Heading = `h${headingLevel}` as const;
     const classes = ["iai-chart", `iai-chart--${variant}`, className ?? ""].filter(Boolean).join(" ");
     const { heading, labels, datasets } = data;
-    // Pie, doughnut and polar area colour each label from the first dataset's colour list.
+    // Pie and doughnut colour each label from the first dataset's colour list.
     const sliceColours = Array.isArray(datasets[0]?.colour) ? datasets[0].colour : [];
     // Callers often rebuild `data` each render; only redraw when its values change.
     const key = JSON.stringify(data);
@@ -33,13 +38,14 @@ export default function Chart({ variant, title, data, class: className, ...rest 
     useEffect(() => {
         const chart = ref.current ? initChart(ref.current) : undefined;
         return () => chart?.destroy();
-    }, [key, variant, title]);
+    }, [key, variant, title, description]);
 
     return (
         <div ref={ref} className={classes} data-module="iai-chart" {...rest}>
-            <h3 className="govuk-heading-m">{title}</h3>
+            <Heading className="govuk-heading-m">{title}</Heading>
+            {description && <p className="govuk-body iai-chart__description">{description}</p>}
             <Details>
-                <DetailsSummary>Show data</DetailsSummary>
+                <DetailsSummary>Show data<span className="govuk-visually-hidden"> for {title}</span></DetailsSummary>
                 <DetailsText>
                     <Table>
                         <TableCaption size="small">{title}</TableCaption>

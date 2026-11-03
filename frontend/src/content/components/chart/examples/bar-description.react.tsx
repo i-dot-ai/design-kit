@@ -1,0 +1,20 @@
+import { Chart } from "@i-dot-ai-npm/component-library-react";
+
+export default function Example() {
+  return (
+    <Chart
+      variant="bar"
+      title="Applications received by region"
+      description="Applications rose in every region from 2025 to 2026. The South received the most in both years."
+      headingLevel={2}
+      data={{
+        heading: "Region",
+        labels: ["North", "Midlands", "South", "Wales", "Scotland"],
+        datasets: [
+          { label: "2025", data: [2400, 1850, 3100, 950, 1300] },
+          { label: "2026", data: [2650, 2100, 3350, 1020, 1410] },
+        ],
+      }}
+    />
+  );
+}

@@ -3,14 +3,15 @@
 // Markup:
 //   <div class="iai-chart iai-chart--line" data-module="iai-chart">
 //     <h3>Title</h3>
+//     <p class="iai-chart__description">Optional summary</p>
 //     <details> ... <table> ... </table> ... </details>
 //   </div>
 //
 // The first column holds the labels; each other column is a series. A series
 // header may set `data-iai-chart-colour="<palette name>"` and
 // `data-iai-chart-line="solid|dashed|dotted"`; without them, series follow the
-// default colour and line style orders. Pie, doughnut and
-// polar area charts use the first series only and take colours from the row
+// default colour and line style orders. Pie and doughnut charts use the first
+// series only and take colours from the row
 // headers instead. The canvas is added here, so without JavaScript the table
 // is all there is.
 
@@ -22,15 +23,14 @@ const TYPES = {
     line: "line",
     area: "line",
     bar: "bar",
+    "horizontal-bar": "bar",
     pie: "pie",
     doughnut: "doughnut",
-    radar: "radar",
-    "polar-area": "polarArea",
 };
 // One series, coloured per row rather than per column.
-const PER_ROW = ["pie", "doughnut", "polar-area"];
+const PER_ROW = ["pie", "doughnut"];
 // Filled shapes that would hide the data behind them without transparency.
-const SEE_THROUGH = ["area", "radar"];
+const SEE_THROUGH = ["area"];
 
 // GOV.UK chart palette: https://brand.design-system.service.gov.uk/colour/charts/
 export const CHART_COLOURS = {
@@ -143,7 +143,7 @@ function readTable(table, variant) {
                 borderColor: colour,
                 // 33 = 20% opacity, so overlapping series stay visible.
                 backgroundColor: seeThrough ? `${colour}33` : colour,
-                borderDash: variant === "bar" ? undefined : lineFor(th, i),
+                borderDash: TYPES[variant] === "bar" ? undefined : lineFor(th, i),
                 ...(variant === "area" ? { fill: "origin" } : {}),
             };
         }),
@@ -154,9 +154,11 @@ function scalesFor(variant, font) {
     const grid = { color: LINE_COLOUR };
     const ticks = { color: LABEL_COLOUR, font, callback: (value) => format(Number(value)) };
     if (variant === "pie" || variant === "doughnut") return {};
-    if (variant === "radar" || variant === "polar-area") {
-        // ticks.z: 1 draws the scale numbers above the slices, on their white backdrop.
-        return { r: { beginAtZero: true, grid, angleLines: grid, pointLabels: { color: LABEL_COLOUR, font }, ticks: { ...ticks, z: 1 } } };
+    if (variant === "horizontal-bar") {
+        return {
+            x: { beginAtZero: true, grid, ticks },
+            y: { grid, ticks: { color: LABEL_COLOUR, font } },
+        };
     }
     return {
         x: { grid, ticks: { color: LABEL_COLOUR, font } },
@@ -164,8 +166,120 @@ function scalesFor(variant, font) {
     };
 }
 
-// Chart.js gives a number for pie/doughnut, { r } on circular scales, { y } otherwise.
-const valueOf = (parsed) => (typeof parsed === "number" ? parsed : (parsed?.r ?? parsed?.y ?? 0));
+let descriptionCount = 0;
+
+const cssFont = (font) => `${font.size}px ${font.family}`;
+
+function widest(chart, font, texts) {
+    const { ctx } = chart;
+    ctx.save();
+    ctx.font = cssFont(font);
+    const width = Math.max(0, ...texts.map((text) => ctx.measureText(text).width));
+    ctx.restore();
+    return width;
+}
+
+const barValues = (chart) =>
+    chart.data.datasets.flatMap((dataset) => dataset.data.filter((value) => value != null).map(format));
+
+// shortcut: room is only made on the right, so labels on negative bars can overlap the axis; pad the left too if needed.
+function barValueLabels(font) {
+    return {
+        id: "iaiBarValueLabels",
+        afterDatasetsDraw(chart) {
+            const bars = chart.data.datasets.flatMap((_, i) => chart.getDatasetMeta(i).data);
+            // All or none, so a crowded chart does not show labels on only some bars.
+            if (bars.some((bar) => bar.getProps(["height"]).height < font.size)) return;
+            const { ctx } = chart;
+            ctx.save();
+            ctx.font = cssFont(font);
+            ctx.fillStyle = LABEL_COLOUR;
+            ctx.textBaseline = "middle";
+            chart.data.datasets.forEach((dataset, i) =>
+                chart.getDatasetMeta(i).data.forEach((bar, j) => {
+                    const value = dataset.data[j];
+                    if (value == null) return;
+                    const { x, y, base } = bar.getProps(["x", "y", "base"]);
+                    const after = x >= base;
+                    ctx.textAlign = after ? "left" : "right";
+                    ctx.fillText(format(value), x + (after ? 4 : -4), y);
+                }),
+            );
+            ctx.restore();
+        },
+    };
+}
+
+const SLICE_LABEL_GAP = 16;
+// Narrower than this and the labels would squeeze the circle, so the legend is used instead.
+const MIN_LABELLED_CIRCLE = 240;
+// More slices than this and the labels stack too far to read; ONS also advises no more than 6.
+const MAX_LABELLED_SLICES = 6;
+
+const sliceText = (chart, i) => `${chart.data.labels[i]}: ${format(chart.data.datasets[0].data[i] ?? 0)}`;
+
+function sliceLabels(font) {
+    const lineHeight = font.size + 4;
+    return {
+        id: "iaiSliceLabels",
+        beforeUpdate(chart) {
+            const room = widest(chart, font, chart.data.labels.map((_, i) => sliceText(chart, i))) + SLICE_LABEL_GAP * 2 + 4;
+            chart.$iaiSliceLabelRoom =
+                chart.data.labels.length <= MAX_LABELLED_SLICES && chart.width - room * 2 >= MIN_LABELLED_CIRCLE ? room : 0;
+            chart.config.options.plugins.legend.display = !chart.$iaiSliceLabelRoom && chart.data.labels.length > 1;
+        },
+        afterDatasetsDraw(chart) {
+            if (!chart.$iaiSliceLabelRoom) return;
+            const values = chart.data.datasets[0].data;
+            const labels = chart
+                .getDatasetMeta(0)
+                .data.map((arc, i) => {
+                    const { x, y, startAngle, endAngle, outerRadius } = arc.getProps(["x", "y", "startAngle", "endAngle", "outerRadius"]);
+                    const angle = (startAngle + endAngle) / 2;
+                    const out = outerRadius + SLICE_LABEL_GAP;
+                    return {
+                        i,
+                        x,
+                        r: outerRadius,
+                        right: Math.cos(angle) >= 0,
+                        rim: [x + Math.cos(angle) * outerRadius, y + Math.sin(angle) * outerRadius],
+                        elbowX: x + Math.cos(angle) * out,
+                        y: y + Math.sin(angle) * out,
+                    };
+                })
+                .filter((label) => values[label.i]);
+            // Push labels down so ones for small neighbouring slices do not overlap.
+            for (const right of [true, false]) {
+                let last = -Infinity;
+                labels
+                    .filter((label) => label.right === right)
+                    .sort((a, b) => a.y - b.y)
+                    .forEach((label) => {
+                        label.y = Math.max(label.y, last + lineHeight);
+                        last = label.y;
+                    });
+            }
+            const { ctx } = chart;
+            ctx.save();
+            ctx.font = cssFont(font);
+            ctx.fillStyle = LABEL_COLOUR;
+            ctx.strokeStyle = CHART_COLOURS["black-tint-50"];
+            ctx.textBaseline = "middle";
+            labels.forEach((label) => {
+                const side = label.right ? 1 : -1;
+                const end = label.x + side * (label.r + SLICE_LABEL_GAP * 2);
+                ctx.beginPath();
+                ctx.moveTo(...label.rim);
+                ctx.lineTo(label.elbowX, label.y);
+                ctx.lineTo(end, label.y);
+                ctx.stroke();
+                ctx.textAlign = label.right ? "left" : "right";
+                ctx.fillText(sliceText(chart, label.i), end + side * 4, label.y);
+            });
+            ctx.restore();
+        },
+    };
+}
 
 /**
  * Draw a chart from its table. Idempotent: returns the existing chart if
@@ -185,23 +299,45 @@ export function initChart(el) {
     const canvas = document.createElement("canvas");
     canvas.setAttribute("role", "img");
     canvas.setAttribute("aria-label", el.querySelector("h1, h2, h3, h4, h5, h6")?.textContent.trim() ?? "");
+    const description = el.querySelector(".iai-chart__description");
+    if (description) {
+        description.id ||= `iai-chart-description-${++descriptionCount}`;
+        canvas.setAttribute("aria-describedby", description.id);
+    }
     container.append(canvas);
     el.querySelector("details")?.before(container);
 
     const perRow = PER_ROW.includes(variant);
-    // Use the kit's font (set on the wrapper in CSS) rather than Chart.js's Helvetica default.
-    const font = { family: getComputedStyle(container).fontFamily, size: 14 };
+    // Use the kit's font and 1rem size (set on the wrapper in CSS), so chart text follows the browser's font size.
+    const style = getComputedStyle(container);
+    const font = { family: style.fontFamily, size: parseFloat(style.fontSize) };
     // Line samples (not boxes) in the legend so dashed and dotted series are recognisable.
-    const lineLegend = !perRow && variant !== "bar";
+    const lineLegend = !perRow && TYPES[variant] !== "bar";
+    const labelled = variant === "pie" || variant === "doughnut";
+    const data = readTable(table, variant);
+    const legendItems = perRow ? data.labels.length : data.datasets.length;
     const chart = new Chart(canvas, {
         type: TYPES[variant],
-        data: readTable(table, variant),
+        data,
+        plugins: variant === "horizontal-bar" ? [barValueLabels(font)] : labelled ? [sliceLabels(font)] : [],
         options: {
             animation: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? false : undefined,
             color: LABEL_COLOUR,
+            indexAxis: variant === "horizontal-bar" ? "y" : "x",
+            layout: {
+                padding: ({ chart: c }) =>
+                    variant === "horizontal-bar"
+                        ? { right: widest(c, font, barValues(c)) + 8 }
+                        : labelled && c.$iaiSliceLabelRoom
+                          ? { left: c.$iaiSliceLabelRoom, right: c.$iaiSliceLabelRoom, top: font.size * 2, bottom: font.size * 2 }
+                          : 0,
+            },
             scales: scalesFor(variant, font),
             plugins: {
                 legend: {
+                    display: legendItems > 1,
+                    // Hiding a series by click can't be done by keyboard or announced.
+                    onClick: null,
                     labels: {
                         font,
                         ...(lineLegend
@@ -222,7 +358,7 @@ export function initChart(el) {
                     titleFont: font,
                     callbacks: {
                         label: (item) =>
-                            `${perRow ? item.label : item.dataset.label}: ${format(valueOf(item.parsed))}`,
+                            `${perRow ? item.label : item.dataset.label}: ${format(item.raw)}`,
                     },
                 },
             },

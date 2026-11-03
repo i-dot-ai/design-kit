@@ -2,7 +2,7 @@
     import { tick } from "svelte";
     import type { HTMLAttributes } from "svelte/elements";
     import { initChart, formatChartValue } from "@i-dot-ai-npm/component-library-frontend";
-    import type { ChartData, ChartVariant } from "@i-dot-ai-npm/component-library-frontend";
+    import type { ChartData, ChartHeadingLevel, ChartVariant } from "@i-dot-ai-npm/component-library-frontend";
     import Details from "../details/Details.svelte";
     import DetailsSummary from "../details/DetailsSummary.svelte";
     import DetailsText from "../details/DetailsText.svelte";
@@ -18,21 +18,25 @@
         variant: ChartVariant;
         /** Shown as the heading and the table caption, and used as the chart's accessible name. */
         title: string;
+        /** A short summary of what the chart shows. Shown under the title and read out with the chart. */
+        description?: string;
+        /** The title's heading level. Defaults to 3. */
+        headingLevel?: ChartHeadingLevel;
         data: ChartData;
         class?: string;
     };
 
-    let { variant, title, data, class: className = "", ...rest }: Props = $props();
+    let { variant, title, description, headingLevel = 3, data, class: className = "", ...rest }: Props = $props();
 
     let el = $state<HTMLDivElement>();
 
     let classes = $derived(["iai-chart", `iai-chart--${variant}`, className].filter(Boolean).join(" "));
-    // Pie, doughnut and polar area colour each label from the first dataset's colour list.
+    // Pie and doughnut colour each label from the first dataset's colour list.
     let sliceColours = $derived(Array.isArray(data.datasets[0]?.colour) ? data.datasets[0].colour : []);
 
     $effect(() => {
         // Track everything that ends up in the table, so the chart redraws when it changes.
-        JSON.stringify([data, variant, title]);
+        JSON.stringify([data, variant, title, description]);
         let chart: ReturnType<typeof initChart>;
         let cancelled = false;
         // Draw after Svelte has updated the table.
@@ -47,9 +51,12 @@
 </script>
 
 <div bind:this={el} class={classes} data-module="iai-chart" {...rest}>
-    <h3 class="govuk-heading-m">{title}</h3>
+    <svelte:element this={`h${headingLevel}`} class="govuk-heading-m">{title}</svelte:element>
+    {#if description}
+        <p class="govuk-body iai-chart__description">{description}</p>
+    {/if}
     <Details>
-        <DetailsSummary>Show data</DetailsSummary>
+        <DetailsSummary>Show data<span class="govuk-visually-hidden"> for {title}</span></DetailsSummary>
         <DetailsText>
             <Table>
                 <TableCaption size="small">{title}</TableCaption>
