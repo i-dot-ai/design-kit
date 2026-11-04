@@ -38,7 +38,7 @@ export default function Chart({ variant, title, description, headingLevel = 3, d
     useEffect(() => {
         const chart = ref.current ? initChart(ref.current) : undefined;
         return () => chart?.destroy();
-    }, [key, variant, title, description]);
+    }, [key, variant, title, description, headingLevel]);
 
     return (
         <div ref={ref} className={classes} data-module="iai-chart" {...rest}>
