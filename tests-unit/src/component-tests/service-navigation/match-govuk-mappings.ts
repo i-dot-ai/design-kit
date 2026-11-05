@@ -14,6 +14,8 @@ export type ServiceNavData = {
     serviceName?: string;
     serviceUrl?: string;
     collapseNavigationOnMobile: boolean;
+    /** The raw fixture option, so tests can exercise the component's default. */
+    collapseNavigationOnMobileRaw?: boolean;
     hasNavigation: boolean;
     endSlotHtml?: string;
     endSlotInline: boolean;
@@ -59,6 +61,7 @@ export function serviceNavFixtures(): ServiceNavData[] {
             serviceName: options.serviceName,
             serviceUrl: options.serviceUrl,
             collapseNavigationOnMobile: collapse,
+            collapseNavigationOnMobileRaw: options.collapseNavigationOnMobile,
             hasNavigation: items.length > 0,
             endSlotHtml,
             endSlotInline,

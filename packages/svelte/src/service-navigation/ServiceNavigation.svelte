@@ -12,7 +12,7 @@
         ariaLabel?: string;
         /** Whether to render the navigation `<nav>` (omitted when there are no items). */
         hasNavigation?: boolean;
-        /** Show the mobile menu toggle. Defaults to true when there is >1 item. */
+        /** Show the mobile menu toggle. Defaults to true when there is a nav list (govuk defaults to >1 item; snippets can't be counted). Set false to always show the full list. */
         collapseNavigationOnMobile?: boolean;
         /** Raw HTML for the `end` slot (e.g. language navigation). */
         endSlot?: Snippet;
@@ -31,7 +31,7 @@
         menuButtonText = "Menu",
         ariaLabel,
         hasNavigation = true,
-        collapseNavigationOnMobile = false,
+        collapseNavigationOnMobile,
         endSlot,
         endSlotInline = false,
         class: className = "",
@@ -72,7 +72,7 @@
             {/if}
             {#if hasNavigation}
                 <nav aria-label={navLabel} class="govuk-service-navigation__wrapper">
-                    {#if collapseNavigationOnMobile}
+                    {#if collapseNavigationOnMobile ?? hasNavigation}
                         <button type="button" class="govuk-service-navigation__toggle govuk-js-service-navigation-toggle" aria-controls={navigationId} hidden aria-hidden="true">
                             {menuButtonText}
                         </button>

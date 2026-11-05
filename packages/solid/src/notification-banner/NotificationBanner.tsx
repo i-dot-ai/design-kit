@@ -4,7 +4,7 @@ import { splitProps } from "solid-js";
 import type { JSX } from "solid-js";
 
 type NotificationBannerProps = JSX.IntrinsicElements['div'] & {
-    success?: string;
+    success?: boolean;
     class?: string;
     children?: JSX.Element;
 };

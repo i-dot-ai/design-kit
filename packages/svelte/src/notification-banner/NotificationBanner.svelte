@@ -3,7 +3,7 @@
     import type { HTMLAttributes } from "svelte/elements";
 
     type Props = HTMLAttributes<HTMLDivElement> & {
-        success?: string;
+        success?: boolean;
         class?: string;
         children?: Snippet;
     };

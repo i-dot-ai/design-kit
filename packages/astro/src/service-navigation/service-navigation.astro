@@ -10,6 +10,7 @@ interface Props extends HTMLAttributes<"nav"> {
     menuButtonText?: string;
     ariaLabel?: string;
     hasNavigation?: boolean;
+    /** Show the mobile menu toggle. Defaults to whether there is more than one item, as in govuk-frontend. */
     collapseNavigationOnMobile?: boolean;
     endSlotInline?: boolean;
     hasEndSlot?: boolean;
@@ -24,7 +25,7 @@ const {
     menuButtonText = "Menu",
     ariaLabel,
     hasNavigation = true,
-    collapseNavigationOnMobile = false,
+    collapseNavigationOnMobile,
     endSlotInline = false,
     hasEndSlot = false,
     class: className,
@@ -41,6 +42,9 @@ const classes = [
     .join(" ");
 
 const navLabel = ariaLabel ?? menuButtonText;
+// govuk default: collapse (show the toggle) when there is more than one item
+const defaultSlot = hasNavigation ? (await Astro.slots.render("default")) ?? "" : "";
+const showToggle = collapseNavigationOnMobile ?? (defaultSlot.match(/<li\b/g) ?? []).length > 1;
 const containerClasses = [
     "govuk-width-container",
     endSlotInline ? "govuk-service-navigation__inlining-container" : "",
@@ -77,7 +81,7 @@ const Tag = useSection ? "section" : "div";
             {
                 hasNavigation && (
                     <nav aria-label={navLabel} class="govuk-service-navigation__wrapper">
-                        {collapseNavigationOnMobile && (
+                        {showToggle && (
                             <button
                                 type="button"
                                 class="govuk-service-navigation__toggle govuk-js-service-navigation-toggle"
