@@ -8,22 +8,38 @@ status: standard
 Use the default service navigation to help users navigate around your service. You do not need to add 
 the product name as this will be in our header component.
 
-<Example component="service-navigation" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="service-navigation" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
 
 ## Inverse
 
 Use the inverse service navigation on dark backgrounds.
 
-<Example component="service-navigation" html="./examples/inverse.html" astro="./examples/inverse.astro" react="./examples/inverse.react.tsx" svelte="./examples/inverse.svelte" solid="./examples/inverse.solid.tsx" webComponents="./examples/inverse.web-components.html" variant="inverse" />
+<Example optionsHref="#component-options" component="service-navigation" html="./examples/inverse.html" astro="./examples/inverse.astro" react="./examples/inverse.react.tsx" svelte="./examples/inverse.svelte" solid="./examples/inverse.solid.tsx" webComponents="./examples/inverse.web-components.html" variant="inverse" />
 
 ## Side navigation
 
 Use the side navigation variant to display navigation vertically alongside page content.
 
-<Example component="service-navigation" html="./examples/side-navigation.html" astro="./examples/side-navigation.astro" react="./examples/side-navigation.react.tsx" svelte="./examples/side-navigation.svelte" solid="./examples/side-navigation.solid.tsx" webComponents="./examples/side-navigation.web-components.html" />
+<Example optionsHref="#component-options" component="service-navigation" html="./examples/side-navigation.html" astro="./examples/side-navigation.astro" react="./examples/side-navigation.react.tsx" svelte="./examples/side-navigation.svelte" solid="./examples/side-navigation.solid.tsx" webComponents="./examples/side-navigation.web-components.html" />
 
 ## When to use this component
 
 Use the Service navigation to help users understand that they’re using your service.
 
 To decide when to use navigation links in your service, see the [Help users to navigate a service pattern](https://design-system.service.gov.uk/patterns/navigate-a-service/).
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `inverse` | boolean | No | Sets the inverse colour scheme, for use on dark backgrounds. |
+| `sideNav` | boolean | No | Adds the side navigation variant, which displays the navigation vertically alongside the page content. |
+| `serviceName` | text | No | The service name, shown before the navigation. |
+| `serviceUrl` | text | No | Turns the service name into a link to this address. |
+| `navigationId` | text | No | The id given to the navigation list, so the mobile menu button can control it. Defaults to `navigation`. |
+| `menuButtonText` | text | No | The text of the mobile menu button. Defaults to `Menu`. |
+| `ariaLabel` | text | No | The accessible name of the navigation. Defaults to the menu button text. |
+| `collapseNavigationOnMobile` | boolean | No | Adds the mobile menu toggle, so the navigation collapses on small screens. |
+| `children` | text | No | The navigation items, one link per navigation entry. |
+| `class` | text | No | Adds extra classes to the navigation. |

@@ -7,7 +7,7 @@ status: standard
 
 A default summary list shows information as a list of key facts.
 
-<Example component="summary-list" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="summary-list" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
 
 ## When to use this component
 
@@ -24,3 +24,12 @@ The summary list uses the description list (`<dl>`) HTML element, so only use it
 Do not use it for tabular data or a simple list of information or tasks, like a [Task list component](/components/task-list/). For those use a `<table>`, `<ul>` or `<ol>`.
 
 
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `noBorder` | boolean | No | Removes the borders between the rows. |
+| `children` | text | Yes | The rows, one for each key and value. |
+| `class` | text | No | Adds extra classes to the list. |

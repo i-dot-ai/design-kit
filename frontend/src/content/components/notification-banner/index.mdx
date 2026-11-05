@@ -7,13 +7,13 @@ status: standard
 
 A default notification banner tells the user about something they need to know about.
 
-<Example component="notification-banner" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="notification-banner" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
 
 ## Success
 
 Use the success variant to confirm that something the user has done has been successful.
 
-<Example component="notification-banner" html="./examples/success.html" astro="./examples/success.astro" react="./examples/success.react.tsx" svelte="./examples/success.svelte" solid="./examples/success.solid.tsx" webComponents="./examples/success.web-components.html" />
+<Example optionsHref="#component-options" component="notification-banner" html="./examples/success.html" astro="./examples/success.astro" react="./examples/success.react.tsx" svelte="./examples/success.svelte" solid="./examples/success.solid.tsx" webComponents="./examples/success.web-components.html" />
 
 ## When to use this component
 
@@ -33,3 +33,13 @@ Do not:
 
 -   use a notification banner to tell the user about validation errors - use an [Error message component](/components/error-message/) and [Error summary component](/components/error-summary/) instead
 -   show a notification banner and an [Error summary component](/components/error-summary/) on the same page - just show the error summary
+
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `success` | boolean | No | Adds the `govuk-notification-banner--success` modifier and announces the banner with `role="alert"`. |
+| `class` | string | No | Added to `govuk-notification-banner` on the `<div>` element. The way to restyle the banner. |
+| `children` | text | Yes | The banner's content, usually a title, heading and body text built from the other notification banner components. |

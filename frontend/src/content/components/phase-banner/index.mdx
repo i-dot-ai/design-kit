@@ -7,8 +7,16 @@ status: standard
 
 Use the default phase banner with a tag to show the phase of your service.
 
-<Example component="phase-banner" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="phase-banner" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
 
 ## When to use this component
 
 Services hosted on a service.gov.uk domain must use the phase banner until they pass a live assessment.
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `children` | text | Yes | The banner content, usually a [tag](/components/tag) with the phase, followed by a sentence. |
+| `class` | text | No | Adds extra classes to the banner. |

@@ -7,7 +7,7 @@ status: standard
 
 The default details component reveals more detailed information when the summary is activated.
 
-<Example component="details" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="details" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
 
 ## When to use this component
 
@@ -16,3 +16,13 @@ Use the details component to make a page easier to scan when it contains informa
 ## When not to use this component
 
 Do not use the details component to hide information that the majority of your users will need.
+
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `open` | boolean | No | Set to show the details content when the page loads. |
+| `class` | text | No | Additional classes on the `details` element. |
+| `children` | text | No | The summary and the revealed content. |

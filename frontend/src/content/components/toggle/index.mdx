@@ -5,7 +5,7 @@ status: new
 
 ## Default
 
-<Example component="toggle" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="toggle" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
 
 ## When to use this component
 
@@ -14,3 +14,15 @@ Use the toggle when a user changes a setting that takes effect immediately, with
 ## When not to use this component
 
 Do not use the toggle if the change needs a submit button to take effect, if there is no sensible default state, or if the choice is a yes/no answer to a question — use a checkbox or two radio buttons instead.
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `checked` | boolean | No | Whether the toggle starts on. |
+| `disabled` | boolean | No | Stops users changing the toggle. |
+| `id` | text | No | The input's id. Set this so the toggle's label can point at it. |
+| `class` | text | No | Adds extra classes to the toggle input. |
+
+Other standard attributes of the `input` element, such as `name`, can be set on the component as well.

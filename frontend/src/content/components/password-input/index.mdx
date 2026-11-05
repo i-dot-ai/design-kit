@@ -7,7 +7,7 @@ status: adapted
 
 A default password input lets users enter a password and toggle its visibility.
 
-<Example component="password-input" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="password-input" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
 
 ## When to use this component
 
@@ -26,3 +26,12 @@ Use a [Text input component](/components/text-input/) to ask for other security 
 -   other personally identifiable information
 
 Also see the [Confirm a phone number pattern](https://design-system.service.gov.uk/patterns/confirm-a-phone-number/).
+
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `class` | string | No | Added to the classes on the `<input>` element alongside `govuk-input` and the password input modifiers. The way to restyle the input. |
+| `children` | text | No | Replaces the `Show` label on the show and hide password button. |

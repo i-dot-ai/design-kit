@@ -5,7 +5,7 @@ status: standard
 
 ## Default
 
-<Example component="footer" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="footer" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
 
 ## When to use this component
 
@@ -21,3 +21,14 @@ footer](/components/govuk-footer) later.
 Do not use the generic footer for a public-facing or cross-government service. Use
 the [GOV.UK footer](/components/govuk-footer) instead so the product reads as
 GOV.UK.
+
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `links` | array of objects | No | Support links shown in the inline list, for example Accessibility statement, Cookies and Privacy. Each link takes `href`, `text` and `attributes`. |
+| `visuallyHiddenTitle` | text | No | Visually hidden heading above the support links. Defaults to `Support links`. |
+| `containerClasses` | string | No | Extra classes for the width container that wraps the footer content. |
+| `class` | string | No | Added to `govuk-footer` on the `<footer>` element. The way to restyle the footer. |

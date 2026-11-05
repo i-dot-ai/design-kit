@@ -10,7 +10,7 @@ Add the product name and the i.AI logo to the header.
 The header landmark is intentionally left out of the component so that you can add 
 other components such as phase banner or service navigation to the header landmark.
 
-<Example component="header" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="header" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
 
 ## When to use this component
 
@@ -26,3 +26,14 @@ audience is not yet settled, starts with this header and can switch to the
 Do not use the generic header for a public-facing or cross-government service. Use
 the [GOV.UK header](/components/govuk-header) instead so the product reads as
 GOV.UK.
+
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `href` | string | No | Where the homepage link points. |
+| `children` | text | Yes | Shown as the logo inside the homepage link, usually the product name or logo image. |
+| `containerClasses` | string | No | Classes for the header's container. Defaults to `govuk-width-container`. |
+| `class` | string | No | Added to `govuk-generic-header` on the `<div>` element. The way to restyle the header. |

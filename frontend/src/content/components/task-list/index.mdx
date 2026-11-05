@@ -7,7 +7,7 @@ status: standard
 
 A default task list shows all the tasks a user needs to do and their status.
 
-<Example component="task-list" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="task-list" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
 
 ## When to use this component
 
@@ -25,3 +25,11 @@ Try to simplify the service before you use a task list. If you’re able to redu
 Do not use the task list for a long service that needs to be completed in a specific order. If it needs to be completed over multiple sessions, consider allowing users to save their progress, and then to continue where they left off when they return. Use the start page to explain what users will be expected to do during the service.
 
 The task list should not be used as a way of showing users their answers. For this, you should use a [Summary list component](/components/summary-list/) instead.
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `children` | text | Yes | The task items, one for each task. Each holds the task's name, an optional hint and its status. |
+| `class` | text | No | Adds extra classes to the list. |

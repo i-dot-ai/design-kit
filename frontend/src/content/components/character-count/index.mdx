@@ -7,7 +7,7 @@ status: standard
 
 Use a maximum characters count to tell users how many characters they can enter.
 
-<Example component="character-count" html="./examples/with-maximum-characters.html" astro="./examples/with-maximum-characters.astro" react="./examples/with-maximum-characters.react.tsx" svelte="./examples/with-maximum-characters.svelte" solid="./examples/with-maximum-characters.solid.tsx" webComponents="./examples/with-maximum-characters.web-components.html" />
+<Example optionsHref="#component-options" component="character-count" html="./examples/with-maximum-characters.html" astro="./examples/with-maximum-characters.astro" react="./examples/with-maximum-characters.react.tsx" svelte="./examples/with-maximum-characters.svelte" solid="./examples/with-maximum-characters.solid.tsx" webComponents="./examples/with-maximum-characters.web-components.html" />
 
 ## When to use this component
 
@@ -21,3 +21,12 @@ Only use the character count component when there is a good reason for limiting 
 ## When not to use this component
 
 If your users keep hitting the character limit imposed by the backend of your service then try to increase the limit rather than use a character count.
+
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `class` | text | No | Additional classes on the textarea. |
+| `children` | text | No | The textarea's initial text. |

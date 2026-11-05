@@ -9,7 +9,7 @@ When we use the GOV.UK brand our products will be named as follows "GOV.UK Produ
 e.g. "GOV.UK Minute". Therefore you should add the product name to the header 
 component.
 
-<Example component="govuk-header" html="./examples/default.html" astro="./examples/default.astro" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="govuk-header" html="./examples/default.html" astro="./examples/default.astro" webComponents="./examples/default.web-components.html" />
 
 ## When to use this component
 
@@ -20,3 +20,14 @@ is public-facing or used across the public sector.
 
 For a departmental or i.AI-defaulted product, use the [i.AI header](/components/header)
 instead.
+
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `homepageUrl` | string | No | Where the GOV.UK logo links to. Defaults to `//gov.uk`. |
+| `productName` | text | No | Shown next to the GOV.UK crown as the product name, for example "GOV.UK Minute". |
+| `containerClasses` | string | No | Classes for the header's container. Defaults to `govuk-width-container`. |
+| `class` | string | No | Added to `govuk-header` on the `<div>` element. The way to restyle the header. |

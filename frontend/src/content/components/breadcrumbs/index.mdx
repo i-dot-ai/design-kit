@@ -5,13 +5,13 @@ status: standard
 
 ## Example
 
-<Example component="breadcrumbs" html="./examples/example.html" astro="./examples/example.astro" react="./examples/example.react.tsx" svelte="./examples/example.svelte" solid="./examples/example.solid.tsx" webComponents="./examples/example.web-components.html" />
+<Example optionsHref="#component-options" component="breadcrumbs" html="./examples/example.html" astro="./examples/example.astro" react="./examples/example.react.tsx" svelte="./examples/example.svelte" solid="./examples/example.solid.tsx" webComponents="./examples/example.web-components.html" />
 
 ## Inverse
 
 Use the inverse breadcrumbs on dark backgrounds.
 
-<Example component="breadcrumbs" html="./examples/inverse.html" astro="./examples/inverse.astro" react="./examples/inverse.react.tsx" svelte="./examples/inverse.svelte" solid="./examples/inverse.solid.tsx" variant="inverse" webComponents="./examples/inverse.web-components.html" />
+<Example optionsHref="#component-options" component="breadcrumbs" html="./examples/inverse.html" astro="./examples/inverse.astro" react="./examples/inverse.react.tsx" svelte="./examples/inverse.svelte" solid="./examples/inverse.solid.tsx" variant="inverse" webComponents="./examples/inverse.web-components.html" />
 
 ## When to use this component
 
@@ -22,3 +22,14 @@ Use the breadcrumbs component when you need to help users understand and move be
 Do not use the breadcrumbs component on websites with a flat structure, or to show progress through a linear journey or transaction.
 
 If you’re using other navigational elements on the page, such as a sidebar, consider whether your users need the additional support of breadcrumbs.
+
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `inverse` | boolean | No | Adds the `govuk-breadcrumbs--inverse` modifier, for use on dark backgrounds. |
+| `collapseOnMobile` | boolean | No | Adds the `govuk-breadcrumbs--collapse-on-mobile` modifier, which hides all but the last crumb on small screens. |
+| `class` | text | No | Additional classes on the `nav` element. |
+| `children` | text | No | The breadcrumb items. |

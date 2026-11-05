@@ -9,7 +9,7 @@ The GOV.UK footer sits at the bottom of every page. It carries the Crown logo, t
 Open Government Licence statement and the Crown copyright notice, and can hold
 navigation links to other parts of the service.
 
-<Example component="govuk-footer" html="./examples/default.html" astro="./examples/default.astro" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="govuk-footer" html="./examples/default.html" astro="./examples/default.astro" webComponents="./examples/default.web-components.html" />
 
 ## When to use this component
 
@@ -42,3 +42,16 @@ identify itself as GOV.UK, follow the [Service Manual guidance on making your se
 look like
 GOV.UK](https://www.gov.uk/service-manual/design/making-your-service-look-like-govuk)
 and remove or replace these elements.
+
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `navigation` | array of objects | No | Sections of navigation links shown above the meta area. Each section takes `title`, `columns`, `width` and `items`, where each item is a link with `href` and `text`. |
+| `meta` | object | No | Support links and text in the footer's meta section. Takes `visuallyHiddenTitle`, `items`, `text` and `content`. |
+| `contentLicence` | object | No | The licence statement shown next to the Open Government Licence logo. Takes `text` or `content`. Set to `null` to remove the licence notice. |
+| `copyright` | object | No | The copyright notice shown in the bottom right. Takes `text` or `content`. Defaults to `© Crown copyright`. |
+| `containerClasses` | string | No | Extra classes for the width container that wraps the footer content. |
+| `class` | string | No | Added to `govuk-footer` on the `<div>` element. The way to restyle the footer. |

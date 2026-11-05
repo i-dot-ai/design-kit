@@ -7,8 +7,17 @@ status: standard
 
 The default error summary lists validation errors and links to each field.
 
-<Example component="error-summary" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="error-summary" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
 
 ## When to use this component
 
 Always show an error summary when there is a validation error, even if there’s only one.
+
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `class` | text | No | Additional classes on the outer `div`. |
+| `children` | text | No | The error summary's title, body and list. |

@@ -7,7 +7,7 @@ status: new
 
 Use a modal to interrupt the user with content they need to see or act on before they continue, without taking them away from the page they are on.
 
-<Example component="modal" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="modal" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
 
 ## When to use
 
@@ -51,3 +51,13 @@ is open and returns it to the trigger on close. The component then:
     screen reader announces where the user has been taken before they act
 -   closes on the close button, the Escape key, or a backdrop click
 -   locks background scroll while open
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `open` | boolean | No | Controls whether the modal is open. Defaults to `false`. |
+| `onClose` | function | No | Called when the modal requests to close — from the close button, the Esc key or a backdrop click. Update your `open` state here. |
+| `class` | string | No | Added to `iai-modal` on the `<dialog>` element. The way to restyle the modal. |
+| `children` | text | Yes | The modal's content, usually a title, body and footer built from the other modal components. |

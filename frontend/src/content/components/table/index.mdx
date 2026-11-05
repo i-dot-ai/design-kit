@@ -7,13 +7,13 @@ status: adapted
 
 A default table lets users compare information in rows and columns.
 
-<Example component="table" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="table" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
 
 ## Subtle
 
 Use a subtle table to reduce its prominence when it is not the main focus of the page.
 
-<Example component="table" html="./examples/subtle.html" astro="./examples/subtle.astro" react="./examples/subtle.react.tsx" svelte="./examples/subtle.svelte" solid="./examples/subtle.solid.tsx" webComponents="./examples/subtle.web-components.html" />
+<Example optionsHref="#component-options" component="table" html="./examples/subtle.html" astro="./examples/subtle.astro" react="./examples/subtle.react.tsx" svelte="./examples/subtle.svelte" solid="./examples/subtle.solid.tsx" webComponents="./examples/subtle.web-components.html" />
 
 ## When to use this component
 
@@ -22,3 +22,14 @@ Use the table component to let users compare information in rows and columns.
 ## When not to use this component
 
 Never use the table component to layout content on a page. Instead, use the [grid system](https://design-system.service.gov.uk/styles/layout/#using-the-grid-system).
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `subtle` | boolean | No | Adds the subtle style, to reduce the table's prominence when it is not the main focus of the page. |
+| `smallTextUntilTablet` | boolean | No | Uses smaller text on screens narrower than a tablet. |
+| `summary` | boolean | No | Uses the compact summary layout, with vertically centred cells and tighter padding. |
+| `children` | text | Yes | The table content, with the rows grouped in a head and a body. |
+| `class` | text | No | Adds extra classes to the table. |
