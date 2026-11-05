@@ -30,3 +30,5 @@ These are the same for Astro, React, Svelte and Solid.
 | --- | --- | --- | --- |
 | `class` | text | No | Additional classes on the textarea. |
 | `children` | text | No | The textarea's initial text. |
+
+The character limit is not set on the `CharacterCount` component itself. Wrap it in a `FormGroup` with the `govuk-character-count` class and set `data-maxlength` (or `data-maxwords`, `data-threshold`) on that, and add a `CharacterCountMessage` underneath — as in the example above.

@@ -6,10 +6,13 @@ export class IaiServiceNavigation extends HTMLElement {
         const serviceUrl = this.getAttribute("serviceurl");
         const navigationId = this.getAttribute("navigationid") ?? "navigation";
         const menuButtonText = this.getAttribute("menubuttontext") ?? "Menu";
-        const collapse = this.hasAttribute("collapsenavigationonmobile");
         const nodes = takeChildren(this);
         const end = slotted(nodes, "end");
         const items = nodes.filter((n) => n !== end && (isTag("iai-service-navigation-item")(n) || isTag("li")(n)));
+        // govuk default: collapse (show the toggle) when there is more than one item.
+        // attribute absent = auto, value "false" = off, anything else = on
+        const collapseAttr = this.getAttribute("collapsenavigationonmobile");
+        const collapse = collapseAttr !== "false" && (collapseAttr !== null || items.length > 1);
         const useSection = serviceName !== null || end !== undefined;
 
         const inner = create("div", "govuk-service-navigation__container");

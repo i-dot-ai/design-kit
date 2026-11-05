@@ -1,3 +1,4 @@
+import { Children } from "react";
 import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 
 type ServiceNavigationProps = ComponentPropsWithoutRef<'section'> & ComponentPropsWithoutRef<'div'> & {
@@ -10,7 +11,7 @@ type ServiceNavigationProps = ComponentPropsWithoutRef<'section'> & ComponentPro
     ariaLabel?: string;
     /** Whether to render the navigation `<nav>` (omitted when there are no items). */
     hasNavigation?: boolean;
-    /** Show the mobile menu toggle. Defaults to true when there is >1 item. */
+    /** Show the mobile menu toggle. Defaults to whether there is more than one item, as in govuk-frontend. */
     collapseNavigationOnMobile?: boolean;
     /** Raw HTML for the `end` slot (e.g. language navigation). */
     endSlot?: ReactNode;
@@ -46,7 +47,8 @@ export default function ServiceNavigation({
         .join(" ");
 
     const navLabel = ariaLabel ?? menuButtonText;
-    const showToggle = collapseNavigationOnMobile ?? false;
+    // govuk default: collapse (show the toggle) when there is more than one item
+    const showToggle = collapseNavigationOnMobile ?? Children.count(children) > 1;
     const useSection = serviceName !== undefined || endSlot !== undefined;
 
     const containerClasses = [

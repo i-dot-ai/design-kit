@@ -1,7 +1,7 @@
 import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 
 type NotificationBannerProps = ComponentPropsWithoutRef<'div'> & {
-    success?: string;
+    success?: boolean;
     class?: string;
     children?: ReactNode;
 };

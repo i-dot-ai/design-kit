@@ -27,6 +27,7 @@ Use the side navigation variant to display navigation vertically alongside page 
 Use the Service navigation to help users understand that they’re using your service.
 
 To decide when to use navigation links in your service, see the [Help users to navigate a service pattern](https://design-system.service.gov.uk/patterns/navigate-a-service/).
+
 ## Component options
 
 These are the same for Astro, React, Svelte and Solid.
@@ -40,6 +41,8 @@ These are the same for Astro, React, Svelte and Solid.
 | `navigationId` | text | No | The id given to the navigation list, so the mobile menu button can control it. Defaults to `navigation`. |
 | `menuButtonText` | text | No | The text of the mobile menu button. Defaults to `Menu`. |
 | `ariaLabel` | text | No | The accessible name of the navigation. Defaults to the menu button text. |
-| `collapseNavigationOnMobile` | boolean | No | Adds the mobile menu toggle, so the navigation collapses on small screens. |
-| `children` | text | No | The navigation items, one link per navigation entry. |
+| `collapseNavigationOnMobile` | boolean | No | Adds the mobile menu toggle, so the navigation collapses into a "Menu" button on small screens. On by default when there is more than one item; set to `false` to always show the full list. |
+| `children` | text | Yes | The navigation items, one link per navigation entry. |
 | `class` | text | No | Adds extra classes to the navigation. |
+
+In Svelte and Solid the toggle is on by default whenever there is a list of items, so set `collapseNavigationOnMobile={false}` there if you have a single item.

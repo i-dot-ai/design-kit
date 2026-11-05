@@ -12,6 +12,7 @@ type ServiceNavigationProps = JSX.IntrinsicElements['section'] & JSX.IntrinsicEl
     menuButtonText?: string;
     ariaLabel?: string;
     hasNavigation?: boolean;
+    /** Show the mobile menu toggle. Defaults to true when there is a nav list (govuk defaults to >1 item). Set false to always show the full list. */
     collapseNavigationOnMobile?: boolean;
     endSlot?: JSX.Element;
     endSlotInline?: boolean;
@@ -77,7 +78,7 @@ export default function ServiceNavigation(rawProps: ServiceNavigationProps) {
                 </Show>
                 <Show when={local.hasNavigation}>
                     <nav aria-label={navLabel()} class="govuk-service-navigation__wrapper">
-                        <Show when={local.collapseNavigationOnMobile}>
+                        <Show when={local.collapseNavigationOnMobile ?? local.hasNavigation}>
                             <button
                                 type="button"
                                 class="govuk-service-navigation__toggle govuk-js-service-navigation-toggle"

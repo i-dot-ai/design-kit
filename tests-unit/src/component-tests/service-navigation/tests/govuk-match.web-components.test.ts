@@ -9,7 +9,8 @@ const markup = (d: ServiceNavData) =>
         class: d.classes,
         servicename: d.serviceName,
         serviceurl: d.serviceUrl,
-        collapsenavigationonmobile: d.collapseNavigationOnMobile,
+        // raw option: absent = let the web component decide, "false" = off, true = on
+        collapsenavigationonmobile: d.collapseNavigationOnMobileRaw === undefined ? undefined : d.collapseNavigationOnMobileRaw === false ? "false" : true,
         endslotinline: d.endSlotInline,
     })}>${d.items
         .map((i) => `<iai-service-navigation-item${attrs({ href: i.href, current: i.current, active: i.active })}>${i.html ?? esc(i.text ?? "")}</iai-service-navigation-item>`)
