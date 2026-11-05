@@ -7,7 +7,7 @@ status: standard
 
 Use the default inset text to differentiate a block of text from the content that surrounds it.
 
-<Example component="inset-text" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="inset-text" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
 
 ## When to use this component
 
@@ -22,3 +22,12 @@ Use the inset text component to differentiate a block of text from the content t
 Some users do not notice inset text if it’s used on complex pages or near to other visually prominent elements. For this reason, avoid using inset text as a way of highlighting very important information that users need to see.
 
 If you need to draw attention to very important content, like legal information, use the [Warning text component](/components/warning-text/) instead.
+
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `class` | string | No | Added to `govuk-inset-text` on the `<div>` element. The way to restyle the inset text. |
+| `children` | text | Yes | The block of text kept apart from the content around it. |

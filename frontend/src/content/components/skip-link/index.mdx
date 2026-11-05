@@ -7,7 +7,7 @@ status: standard
 
 Use the default skip link to let keyboard-only users skip to the main content on a page.
 
-<Example component="skip-link" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="skip-link" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
 
 ## When to use this component
 
@@ -16,3 +16,12 @@ All GOV.UK pages must include a skip link. Usually, you should place the skip li
 Some automated accessibility testing tools may warn that the skip link element is not inside a landmark. This warning does not apply to skip links, so you can ignore it. Do not wrap the skip link in a `<nav>` region, or move it inside the header.
 
 
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `href` | text | Yes | Where the link takes the user, usually an anchor on the main content. |
+| `children` | text | Yes | The link text, for example "Skip to main content". |
+| `class` | text | No | Adds extra classes to the link. |

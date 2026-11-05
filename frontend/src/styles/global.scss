@@ -62,7 +62,8 @@
   margin-bottom: 20px;
 }
 
-.component-container+.govuk-details .app-code-example {
+.component-container+.govuk-details .app-code-example,
+.component-container--inverse+.govuk-details .app-code-example {
   border: none;
 }
 
@@ -454,4 +455,8 @@ $app-story-two-column-from: 1024px;
 // Use: <code class="app-code app-code--variable">&lt;project_name&gt;</code>
 .app-code--variable {
   color: govuk-colour("red", $variant: "shade-25");
+}
+
+.iai-code-text {
+  background-color: var(--govuk-surface-background-colour);
 }

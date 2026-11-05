@@ -5,6 +5,17 @@ status: standard
 
 ## Example
 
-<Example component="label" html="./examples/example.html" astro="./examples/example.astro" react="./examples/example.react.tsx" svelte="./examples/example.svelte" solid="./examples/example.solid.tsx" webComponents="./examples/example.web-components.html" />
+<Example optionsHref="#component-options" component="label" html="./examples/example.html" astro="./examples/example.astro" react="./examples/example.react.tsx" svelte="./examples/example.svelte" solid="./examples/example.solid.tsx" webComponents="./examples/example.web-components.html" />
 
 No "when to use" guidance was found for this component.
+
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `size` | `"small"`, `"medium"`, `"large"` or `"xl"` | No | The label's size. Adds the matching size modifier, for example `govuk-label--m`. |
+| `isPageHeading` | boolean | No | Wraps the label in an `<h1>` so it acts as the page heading. |
+| `class` | string | No | Added to `govuk-label` on the `<label>` element. The way to restyle the label. |
+| `children` | text | Yes | The label text shown above or beside the form field. |

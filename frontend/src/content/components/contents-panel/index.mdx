@@ -5,7 +5,7 @@ status: new
 
 ## Default
 
-<Example component="contents-panel" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="contents-panel" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" webComponents="./examples/default.web-components.html" />
 
 ## When to use this component
 
@@ -35,3 +35,14 @@ Inside it, list the pages as links. Optionally group them under one or more
 list headings. Mark the page the user is currently on with the current
 modifier, which draws a left-hand indicator and sets `aria-current="page"` on
 the link so it is announced to screen readers.
+
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `heading` | text | No | Text for the visually hidden heading inside the panel. Defaults to `Pages in this section`. |
+| `headingId` | text | No | The hidden heading's `id`, used by the panel's `aria-labelledby`. Defaults to `contents-panel-heading`. |
+| `class` | text | No | Additional classes on the `nav` element. |
+| `children` | text | No | The contents lists. |

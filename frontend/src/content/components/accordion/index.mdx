@@ -7,7 +7,7 @@ status: standard
 
 A default accordion lets users show and hide sections of related content on a page.
 
-<Example component="accordion" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="accordion" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
 
 ## When to use this component
 
@@ -43,3 +43,12 @@ Accordions work best for simple content and links. Do not use accordions to spli
 Do not put accordions within accordions, as it will make content difficult to find.
 
 Do not use the accordion component if the amount of content inside will make the page slow to load.
+
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `class` | text | No | Additional classes on the outer `div`. |
+| `children` | text | No | The accordion sections. |

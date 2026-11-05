@@ -11,7 +11,7 @@ Use this when the card contains one destination and no other links.
 -   Hit area is stretched from the single heading link.
 -   Underline is what marks the card as clickable.
 
-<Example component="card" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="card" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
 
 ## Clickable link card
 
@@ -22,7 +22,7 @@ Coming soon
 Use the secondary variant on a light-grey surface where the card set sits within
 existing content and does not need a bordered, standalone frame.
 
-<Example component="card" html="./examples/secondary.html" astro="./examples/secondary.astro" react="./examples/secondary.react.tsx" svelte="./examples/secondary.svelte" solid="./examples/secondary.solid.tsx" webComponents="./examples/secondary.web-components.html" />
+<Example optionsHref="#component-options" component="card" html="./examples/secondary.html" astro="./examples/secondary.astro" react="./examples/secondary.react.tsx" svelte="./examples/secondary.svelte" solid="./examples/secondary.solid.tsx" webComponents="./examples/secondary.web-components.html" />
 
 ## When to use
 
@@ -86,3 +86,13 @@ Measured values are contrast ratios against the surface the token sits on.
 | `--card-secondary-text-hover` | `#cecece` black tint-80, for captions and hints | 12.45 on ink |
 | `--card-border` | `#b1b4b6` `$govuk-border-colour` | 2.08 — decorative framing |
 | `--card-border-width` | `2px` | — |
+
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `secondary` | boolean | No | Adds the `iai-card--secondary` modifier, for the secondary variant. |
+| `class` | text | No | Additional classes on the outer `div`. |
+| `children` | text | No | The card's parts, such as the heading, content and link. |

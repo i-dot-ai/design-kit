@@ -7,13 +7,13 @@ status: standard
 
 Use the default back link to help users go back to the previous page.
 
-<Example component="back-link" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="back-link" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
 
 ## Inverse
 
 Use the inverse back link on dark backgrounds.
 
-<Example component="back-link" html="./examples/inverse.html" astro="./examples/inverse.astro" react="./examples/inverse.react.tsx" svelte="./examples/inverse.svelte" solid="./examples/inverse.solid.tsx" variant="inverse" webComponents="./examples/inverse.web-components.html" />
+<Example optionsHref="#component-options" component="back-link" html="./examples/inverse.html" astro="./examples/inverse.astro" react="./examples/inverse.react.tsx" svelte="./examples/inverse.svelte" solid="./examples/inverse.solid.tsx" variant="inverse" webComponents="./examples/inverse.web-components.html" />
 
 ## When to use this component
 
@@ -24,3 +24,14 @@ You can include a back link on other pages within a multi-page transaction, if i
 ## When not to use this component
 
 Never use the back link component together with the [Breadcrumbs component](/components/breadcrumbs/). If necessary, you should do research with your users to learn which they find more helpful in your service.
+
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `href` | string | No | The address the back link goes to. |
+| `inverse` | boolean | No | Adds the `govuk-back-link--inverse` modifier, for use on dark backgrounds. |
+| `class` | text | No | Additional classes on the link. |
+| `children` | text | No | The link text. |

@@ -7,7 +7,7 @@ status: standard
 
 A default pagination helps users navigate collections of numbered pages.
 
-<Example component="pagination" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
+<Example optionsHref="#component-options" component="pagination" html="./examples/default.html" astro="./examples/default.astro" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" webComponents="./examples/default.web-components.html" />
 
 ## When to use this component
 
@@ -23,3 +23,13 @@ Only break up content onto separate pages if it improves the performance or usab
 Avoid using the 'infinite scroll' technique to automatically load content when the user approaches the bottom of the page. This causes problems for keyboard users.
 
 Do not use this Pagination component for linear journeys – for example, where you’re asking the user to complete a form. Instead, use the [Button component](/components/button/) (usually a 'Continue' button) to let the user move to the next page – and a [Back link component](/components/back-link/) to let them move to the previous page.
+
+## Component options
+
+These are the same for Astro, React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `block` | boolean | No | Adds the `govuk-pagination--block` modifier. Switches to a block layout for collections without numbered pages, showing only previous and next. |
+| `class` | string | No | Added to `govuk-pagination` on the `<nav>` element. The way to restyle the pagination. |
+| `children` | text | Yes | The pagination's links — previous and next, and optionally numbered page items built from the other pagination components. |
