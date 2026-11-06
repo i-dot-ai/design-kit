@@ -142,6 +142,8 @@ These tests were written once to ensure that the base GOV.UK components matched 
 
 Live in `tests-e2e/tests/<component>/` and drive the component's test pages. Both the accessibility and behaviour tests share the same test pages and `*-pages.ts` helper, so set those up first.
 
+Name each spec file `*.a11y.spec.ts`, `*.behaviour.spec.ts` or `*.snapshots.spec.ts`. CI runs each kind in its own workflow by matching these names, so a spec file named any other way will not run in CI.
+
 #### Test pages
 
 Each test runs against one page per framework: plain HTML, Astro, React, Solid and Svelte. They live at `/test/<component>/<variant>/<framework>`.
