@@ -250,7 +250,7 @@ for (const framework of ["html", "astro", "web-components"]) {
     });
 }
 
-for (const framework of ["solid", "svelte"]) {
+for (const framework of ["react", "solid", "svelte", "web-components"]) {
     test(`format: changing only the format redraws the axes and tooltips (${framework})`, async ({ page }) => {
         await page.goto(`/test/chart/format-change/${framework}`);
         await waitForChart(page);
@@ -266,6 +266,15 @@ for (const framework of ["solid", "svelte"]) {
         await expect(page.locator(".iai-chart canvas")).toHaveCount(1);
     });
 }
+
+test("format: a new inline format that shows the same text does not redraw the chart (react)", async ({ page }) => {
+    await page.goto("/test/chart/format-change/react");
+    await waitForChart(page);
+    await page.locator(".iai-chart canvas").evaluate((canvas) => canvas.setAttribute("data-test-first", ""));
+    await page.getByTestId("re-render").click();
+    await expect(page.getByTestId("re-render")).toHaveText("Re-render 1");
+    await expect(page.locator(".iai-chart canvas[data-test-first]")).toHaveCount(1);
+});
 
 test.describe("pie legend and labels", () => {
     const legendShown = (page: Page) =>
