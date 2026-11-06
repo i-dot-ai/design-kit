@@ -45,7 +45,7 @@ jobs:
       - name: Run E2E snapshot tests
         # The Playwright config builds the frontend and starts the node server
         # itself (see tests-e2e/playwright.config.ts webServer).
-        run: pnpm --filter @i-dot-ai-npm/component-library-tests-e2e exec playwright test '\.snapshot\.'
+        run: pnpm --filter @i-dot-ai-npm/component-library-tests-e2e exec playwright test '\.snapshots\.'
         env:
           CI: "true"
 
