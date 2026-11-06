@@ -1,6 +1,6 @@
 {
   "name": "@i-dot-ai-npm/component-library-svelte",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Svelte components for i.AI GOV.UK.",
   "type": "module",
   "scripts": {
@@ -18,7 +18,7 @@
     "src"
   ],
   "peerDependencies": {
-    "@i-dot-ai-npm/component-library-frontend": ">=0.0.9",
+    "@i-dot-ai-npm/component-library-frontend": ">=0.0.20",
     "govuk-frontend": ">=6",
     "svelte": ">=5"
   },

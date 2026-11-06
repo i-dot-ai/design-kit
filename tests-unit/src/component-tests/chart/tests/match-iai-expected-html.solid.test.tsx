@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { renderSolid } from "../../../render/solid";
 import { renderedShape } from "../../../match-iai-expected-html-helpers/expected";
 import Line from "@content/components/chart/examples/line.solid";
+import LineFormat from "@content/components/chart/examples/line-format-function.solid";
 import LineColour from "@content/components/chart/examples/line-colour.solid";
 import LineStyle from "@content/components/chart/examples/line-style.solid";
 import Area from "@content/components/chart/examples/area.solid";
@@ -11,6 +12,7 @@ import BarDescription from "@content/components/chart/examples/bar-description.s
 import Pie from "@content/components/chart/examples/pie.solid";
 import Doughnut from "@content/components/chart/examples/doughnut.solid";
 import lineHtml from "@content/components/chart/examples/line.html?raw";
+import lineFormatHtml from "@content/components/chart/examples/line-format-function.html?raw";
 import lineColourHtml from "@content/components/chart/examples/line-colour.html?raw";
 import lineStyleHtml from "@content/components/chart/examples/line-style.html?raw";
 import areaHtml from "@content/components/chart/examples/area.html?raw";
@@ -22,6 +24,7 @@ import doughnutHtml from "@content/components/chart/examples/doughnut.html?raw";
 
 const cases: [string, never, string][] = [
     ["line", Line, lineHtml],
+    ["line-format-function", LineFormat, lineFormatHtml],
     ["line-colour", LineColour, lineColourHtml],
     ["line-style", LineStyle, lineStyleHtml],
     ["area", Area, areaHtml],

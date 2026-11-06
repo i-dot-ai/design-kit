@@ -1,6 +1,6 @@
 {
   "name": "@i-dot-ai-npm/component-library-astro",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Astro components for i.AI GOV.UK",
   "type": "module",
   "exports": {
@@ -14,7 +14,7 @@
     "src"
   ],
   "peerDependencies": {
-    "@i-dot-ai-npm/component-library-frontend": ">=0.0.9",
+    "@i-dot-ai-npm/component-library-frontend": ">=0.0.20",
     "astro": ">=4",
     "govuk-frontend": ">=6"
   },

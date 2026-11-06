@@ -91,13 +91,31 @@ const LINE_STYLES = { solid: undefined, dashed: [8, 4], dotted: [2, 3] };
 // The line style order, used for series without a line style.
 const DEFAULT_LINE_ORDER = ["solid", "dashed", "dotted"];
 
-const format = (value) => value.toLocaleString("en-GB", { maximumFractionDigits: 2 });
+// Two decimal places at most, unless the options set their own (merging both can be out of range and throw)
+// or are a currency, which has its own number of decimals.
+const withDefaults = (options = {}) =>
+    "minimumFractionDigits" in options || "maximumFractionDigits" in options || options.style === "currency"
+        ? options
+        : { maximumFractionDigits: 2, ...options };
 
-/** Format a value the way `parseValue` reads it back. Used by the framework wrappers. */
-export const formatChartValue = (value) => (value == null ? "–" : format(value));
+const format = (value, options) => value.toLocaleString("en-GB", withDefaults(options));
 
-// shortcut: reads en-GB text ("1,240.5", "£12", "40%"); add a data-value
-// attribute if cells ever show values the text cannot be read back from.
+/** Format a value for the table, with optional `Intl.NumberFormat` options. Used by the framework wrappers. */
+export const formatChartValue = (value, options) => (value == null ? "–" : format(value, options));
+
+// Plain HTML and Astro charts cannot pass a function, so they set Intl.NumberFormat options as JSON on the chart.
+function formatFromMarkup(el) {
+    const json = el.dataset.iaiChartFormat;
+    if (!json) return format;
+    try {
+        const formatter = new Intl.NumberFormat("en-GB", withDefaults(JSON.parse(json)));
+        return (value) => formatter.format(value);
+    } catch (error) {
+        console.error("iai-chart: data-iai-chart-format is not valid Intl.NumberFormat options as JSON.", error);
+        return format;
+    }
+}
+
 export function parseValue(text) {
     const cleaned = text.replace(/[^\d.-]/g, "");
     const value = cleaned === "" ? NaN : Number(cleaned);
@@ -116,7 +134,8 @@ function readTable(table, variant) {
     const headers = Array.from(table.querySelectorAll("thead th")).slice(1);
     const rows = Array.from(table.querySelectorAll("tbody tr"));
     const labels = rows.map((row) => row.cells[0].textContent.trim());
-    const column = (i) => rows.map((row) => parseValue(row.cells[i + 1]?.textContent ?? ""));
+    // A data-value attribute beats the text, so cells can show a value the text cannot be read back from.
+    const column = (i) => rows.map((row) => parseValue(row.cells[i + 1]?.dataset.value ?? row.cells[i + 1]?.textContent ?? ""));
 
     if (PER_ROW.includes(variant)) {
         return {
@@ -150,9 +169,9 @@ function readTable(table, variant) {
     };
 }
 
-function scalesFor(variant, font) {
+function scalesFor(variant, font, formatValue) {
     const grid = { color: LINE_COLOUR };
-    const ticks = { color: LABEL_COLOUR, font, callback: (value) => format(Number(value)) };
+    const ticks = { color: LABEL_COLOUR, font, callback: (value) => formatValue(Number(value)) };
     if (variant === "pie" || variant === "doughnut") return {};
     if (variant === "horizontal-bar") {
         return {
@@ -179,11 +198,11 @@ function widest(chart, font, texts) {
     return width;
 }
 
-const barValues = (chart) =>
-    chart.data.datasets.flatMap((dataset) => dataset.data.filter((value) => value != null).map(format));
+const barValues = (chart, formatValue) =>
+    chart.data.datasets.flatMap((dataset) => dataset.data.filter((value) => value != null).map((value) => formatValue(value)));
 
 // shortcut: room is only made on the right, so labels on negative bars can overlap the axis; pad the left too if needed.
-function barValueLabels(font) {
+function barValueLabels(font, formatValue) {
     return {
         id: "iaiBarValueLabels",
         afterDatasetsDraw(chart) {
@@ -202,7 +221,7 @@ function barValueLabels(font) {
                     const { x, y, base } = bar.getProps(["x", "y", "base"]);
                     const after = x >= base;
                     ctx.textAlign = after ? "left" : "right";
-                    ctx.fillText(format(value), x + (after ? 4 : -4), y);
+                    ctx.fillText(formatValue(value), x + (after ? 4 : -4), y);
                 }),
             );
             ctx.restore();
@@ -216,14 +235,14 @@ const MIN_LABELLED_CIRCLE = 240;
 // More slices than this and the labels stack too far to read; ONS also advises no more than 6.
 const MAX_LABELLED_SLICES = 6;
 
-const sliceText = (chart, i) => `${chart.data.labels[i]}: ${format(chart.data.datasets[0].data[i] ?? 0)}`;
+const sliceText = (chart, i, formatValue) => `${chart.data.labels[i]}: ${formatValue(chart.data.datasets[0].data[i] ?? 0)}`;
 
-function sliceLabels(font) {
+function sliceLabels(font, formatValue) {
     const lineHeight = font.size + 4;
     return {
         id: "iaiSliceLabels",
         beforeUpdate(chart) {
-            const room = widest(chart, font, chart.data.labels.map((_, i) => sliceText(chart, i))) + SLICE_LABEL_GAP * 2 + 4;
+            const room = widest(chart, font, chart.data.labels.map((_, i) => sliceText(chart, i, formatValue))) + SLICE_LABEL_GAP * 2 + 4;
             chart.$iaiSliceLabelRoom =
                 chart.data.labels.length <= MAX_LABELLED_SLICES && chart.width - room * 2 >= MIN_LABELLED_CIRCLE ? room : 0;
             chart.config.options.plugins.legend.display = !chart.$iaiSliceLabelRoom && chart.data.labels.length > 1;
@@ -274,7 +293,7 @@ function sliceLabels(font) {
                 ctx.lineTo(end, label.y);
                 ctx.stroke();
                 ctx.textAlign = label.right ? "left" : "right";
-                ctx.fillText(sliceText(chart, label.i), end + side * 4, label.y);
+                ctx.fillText(sliceText(chart, label.i, formatValue), end + side * 4, label.y);
             });
             ctx.restore();
         },
@@ -285,14 +304,23 @@ function sliceLabels(font) {
  * Draw a chart from its table. Idempotent: returns the existing chart if
  * already drawn. Call `.destroy()` on the result before redrawing.
  * @param {HTMLElement} el
+ * @param {{ format?: (value: number) => string }} [options] - `format` replaces
+ * the default en-GB number formatting wherever values are shown. Without it,
+ * the chart's `data-iai-chart-format` Intl.NumberFormat options are used.
  * @returns {Chart | undefined}
  */
-export function initChart(el) {
+export function initChart(el, { format: formatValue } = {}) {
     if (!el) return undefined;
-    if (el.iaiChart) return el.iaiChart;
+    if (el.iaiChart) {
+        // initAllCharts may have drawn it first without the caller's format; redraw with it.
+        if (!formatValue || el.iaiChart.$iaiFormat === formatValue) return el.iaiChart;
+        el.iaiChart.destroy();
+    }
+    const requestedFormat = formatValue;
     const table = el.querySelector("table");
     const variant = Object.keys(TYPES).find((t) => el.classList.contains(`${MODULE}--${t}`));
     if (!table || !variant) return undefined;
+    formatValue ??= formatFromMarkup(el);
 
     const container = document.createElement("div");
     container.className = "iai-chart__canvas";
@@ -319,7 +347,7 @@ export function initChart(el) {
     const chart = new Chart(canvas, {
         type: TYPES[variant],
         data,
-        plugins: variant === "horizontal-bar" ? [barValueLabels(font)] : labelled ? [sliceLabels(font)] : [],
+        plugins: variant === "horizontal-bar" ? [barValueLabels(font, formatValue)] : labelled ? [sliceLabels(font, formatValue)] : [],
         options: {
             animation: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? false : undefined,
             color: LABEL_COLOUR,
@@ -327,12 +355,12 @@ export function initChart(el) {
             layout: {
                 padding: ({ chart: c }) =>
                     variant === "horizontal-bar"
-                        ? { right: widest(c, font, barValues(c)) + 8 }
+                        ? { right: widest(c, font, barValues(c, formatValue)) + 8 }
                         : labelled && c.$iaiSliceLabelRoom
                           ? { left: c.$iaiSliceLabelRoom, right: c.$iaiSliceLabelRoom, top: font.size * 2, bottom: font.size * 2 }
                           : 0,
             },
-            scales: scalesFor(variant, font),
+            scales: scalesFor(variant, font, formatValue),
             plugins: {
                 legend: {
                     display: legendItems > 1,
@@ -358,7 +386,7 @@ export function initChart(el) {
                     titleFont: font,
                     callbacks: {
                         label: (item) =>
-                            `${perRow ? item.label : item.dataset.label}: ${format(item.raw)}`,
+                            `${perRow ? item.label : item.dataset.label}: ${formatValue(item.raw)}`,
                     },
                 },
             },
@@ -381,10 +409,11 @@ export function initChart(el) {
         chart.update("none");
     });
     el.iaiChart = chart;
+    chart.$iaiFormat = requestedFormat;
     return chart;
 }
 
 /** Draw every chart on the page. Idempotent. */
 export function initAllCharts() {
-    document.querySelectorAll(`[data-module="${MODULE}"]`).forEach(initChart);
+    document.querySelectorAll(`[data-module="${MODULE}"]`).forEach((el) => initChart(el));
 }

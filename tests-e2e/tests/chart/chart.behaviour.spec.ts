@@ -172,6 +172,84 @@ for (const framework of ["html", "astro", "web-components"]) {
     });
 }
 
+const FORMAT_CASES = [
+    // HTML, Astro and web components: Intl.NumberFormat options, values in minutes.
+    ...["html", "astro", "web-components"].map((framework) => ({
+        framework,
+        variant: "line-format",
+        median: [12.4, 11.5, 15.2, 18.1, 14.3, 13.3],
+        firstCell: { value: "12.4", text: /^12\.4 min/ },
+    })),
+    // React, Solid, Svelte, web components: a format function, values in seconds.
+    ...["react", "solid", "svelte", "web-components"].map((framework) => ({
+        framework,
+        variant: "line-format-function",
+        median: [744, 690, 912, 1083, 856, 798],
+        firstCell: { value: "744", text: /^12m 24s$/ },
+        shown: { value: 3723, text: "1h 2m 3s" },
+    })),
+];
+
+for (const { framework, variant, median, firstCell, shown } of FORMAT_CASES as { framework: string; variant: string; median: number[]; firstCell: { value: string; text: RegExp }; shown?: { value: number; text: string } }[]) {
+    test(`${variant}: the chart reads the real values behind formatted table text (${framework})`, async ({ page }) => {
+        await page.goto(`/test/chart/${variant}/${framework}`);
+        await waitForChart(page);
+        expect((await readChart(page)).data.datasets[0].data).toEqual(median);
+        await page.getByText("Show data", { exact: false }).first().click();
+        const cell = page.locator(".iai-chart tbody td").first();
+        await expect(cell).toHaveAttribute("data-value", firstCell.value);
+        await expect(cell).toHaveText(firstCell.text);
+    });
+
+    if (!shown) continue;
+    test(`${variant}: the axis ticks and tooltips use the format (${framework})`, async ({ page }) => {
+        await page.goto(`/test/chart/${variant}/${framework}`);
+        await waitForChart(page);
+        const text = await page.locator(".iai-chart").evaluate((el, value) => {
+            const chart = (el as HTMLElement & {
+                iaiChart: {
+                    options: {
+                        scales: { y: { ticks: { callback: (value: number) => string } } };
+                        plugins: { tooltip: { callbacks: { label: (item: { raw: number; dataset: { label: string } }) => string } } };
+                    };
+                };
+            }).iaiChart;
+            return {
+                tick: chart.options.scales.y.ticks.callback(value),
+                tooltip: chart.options.plugins.tooltip.callbacks.label({ raw: value, dataset: { label: "Slowest 10%" } }),
+            };
+        }, shown.value);
+        expect(text.tick).toBe(shown.text);
+        expect(text.tooltip).toBe(`Slowest 10%: ${shown.text}`);
+    });
+}
+
+// Unit names vary between browsers' Intl data (WebKit says "min", Chromium "mins"), so compare with the browser's own.
+for (const framework of ["html", "astro", "web-components"]) {
+    test(`line-format: the axis ticks and tooltips use the Intl.NumberFormat options (${framework})`, async ({ page }) => {
+        await page.goto(`/test/chart/line-format/${framework}`);
+        await waitForChart(page);
+        const text = await page.locator(".iai-chart").evaluate((el) => {
+            const chart = (el as HTMLElement & {
+                iaiChart: {
+                    options: {
+                        scales: { y: { ticks: { callback: (value: number) => string } } };
+                        plugins: { tooltip: { callbacks: { label: (item: { raw: number; dataset: { label: string } }) => string } } };
+                    };
+                };
+            }).iaiChart;
+            return {
+                expected: new Intl.NumberFormat("en-GB", { style: "unit", unit: "minute", maximumFractionDigits: 1 }).format(62.1),
+                tick: chart.options.scales.y.ticks.callback(62.1),
+                tooltip: chart.options.plugins.tooltip.callbacks.label({ raw: 62.1, dataset: { label: "Slowest 10%" } }),
+            };
+        });
+        expect(text.tick).toMatch(/^62\.1 min/);
+        expect(text.tick).toBe(text.expected);
+        expect(text.tooltip).toBe(`Slowest 10%: ${text.expected}`);
+    });
+}
+
 test.describe("pie legend and labels", () => {
     const legendShown = (page: Page) =>
         page.locator(".iai-chart").evaluate(

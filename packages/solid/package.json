@@ -1,6 +1,6 @@
 {
   "name": "@i-dot-ai-npm/component-library-solid",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Solid.js components for i.AI GOV.UK.",
   "type": "module",
   "scripts": {
@@ -14,7 +14,7 @@
     "src"
   ],
   "peerDependencies": {
-    "@i-dot-ai-npm/component-library-frontend": ">=0.0.9",
+    "@i-dot-ai-npm/component-library-frontend": ">=0.0.20",
     "govuk-frontend": ">=6",
     "solid-js": ">=1.8"
   },

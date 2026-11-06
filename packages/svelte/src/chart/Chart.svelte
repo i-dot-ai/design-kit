@@ -23,10 +23,12 @@
         /** The title's heading level. Defaults to 3. */
         headingLevel?: ChartHeadingLevel;
         data: ChartData;
+        /** Formats values in the table, on the axes, in tooltips and in value labels. Defaults to en-GB number formatting. */
+        format?: (value: number) => string;
         class?: string;
     };
 
-    let { variant, title, description, headingLevel = 3, data, class: className = "", ...rest }: Props = $props();
+    let { variant, title, description, headingLevel = 3, data, format, class: className = "", ...rest }: Props = $props();
 
     let el = $state<HTMLDivElement>();
 
@@ -41,7 +43,7 @@
         let cancelled = false;
         // Draw after Svelte has updated the table.
         tick().then(() => {
-            if (!cancelled && el) chart = initChart(el);
+            if (!cancelled && el) chart = initChart(el, { format });
         });
         return () => {
             cancelled = true;
@@ -79,7 +81,10 @@
                         <TableRow>
                             <TableHeader scope="row" data-iai-chart-colour={sliceColours[row]}>{label}</TableHeader>
                             {#each data.datasets as dataset}
-                                <TableCell numeric>{formatChartValue(dataset.data[row] ?? null)}</TableCell>
+                                {@const value = dataset.data[row]}
+                                <TableCell numeric data-value={format && value != null ? value : undefined}>
+                                    {value == null ? "–" : format ? format(value) : formatChartValue(value)}
+                                </TableCell>
                             {/each}
                         </TableRow>
                     {/each}
