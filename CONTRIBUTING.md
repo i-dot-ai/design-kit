@@ -184,7 +184,7 @@ This drives the component on each framework's test page and checks it behaves th
 - Checks for any visual regression from previous snapshots and between frameworks on each browser
 - Steps:
     - set up the test pages and `*-pages.ts` helper (see [Test pages](#test-pages)).
-    - write the `*.snapshot.spec.ts` test: loop the pages, go to each component and assert it matches the previous snapshots for that browser
+    - write the `*.snapshots.spec.ts` test: loop the pages, go to each component and assert it matches the previous snapshots for that browser
 - Example: `tests-e2e/tests/modal/`.
 
 ## Conventions
