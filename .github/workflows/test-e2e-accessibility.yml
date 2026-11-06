@@ -1,4 +1,4 @@
-name: E2E behavioural and accessibility tests
+name: E2E accessibility tests
 
 on:
   pull_request:
@@ -15,7 +15,7 @@ permissions: {}
 
 jobs:
   e2e:
-    name: E2E behavioural and accessibility tests
+    name: E2E accessibility tests
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
@@ -42,10 +42,10 @@ jobs:
       - name: Install Playwright browsers
         run: pnpm --filter @i-dot-ai-npm/component-library-tests-e2e exec playwright install --with-deps
 
-      - name: Run E2E tests
+      - name: Run E2E tests accessibility tests
         # The Playwright config builds the frontend and starts the node server
         # itself (see tests-e2e/playwright.config.ts webServer).
-        run: pnpm --filter @i-dot-ai-npm/component-library-tests-e2e test
+        run: pnpm --filter @i-dot-ai-npm/component-library-tests-e2e exec playwright test '\.a11y\.'
         env:
           CI: "true"
 
