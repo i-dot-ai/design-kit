@@ -58,6 +58,12 @@ describe("Chart format - Astro", () => {
         expect(html).toContain(">JP¥2<");
     });
 
+    it("treats a null format as no format", async () => {
+        const html = await renderAstro(ChartComponent, { variant: "line", title: "t", data, format: null });
+        expect(html).toContain(">1.5<");
+        expect(html).not.toContain("data-value");
+    });
+
     it("fails the render for invalid Intl.NumberFormat options", async () => {
         await expect(renderAstro(ChartComponent, { variant: "line", title: "t", data, format: { style: "unit", unit: "minuts" } })).rejects.toThrow(RangeError);
     });

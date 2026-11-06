@@ -39,11 +39,13 @@
     $effect(() => {
         // Track everything that ends up in the table, so the chart redraws when it changes.
         JSON.stringify([data, variant, title, description]);
+        // Read before the delay below, which Svelte does not track, so a new format redraws the chart.
+        const formatValue = format;
         let chart: ReturnType<typeof initChart>;
         let cancelled = false;
         // Draw after Svelte has updated the table.
         tick().then(() => {
-            if (!cancelled && el) chart = initChart(el, { format });
+            if (!cancelled && el) chart = initChart(el, { format: formatValue });
         });
         return () => {
             cancelled = true;
