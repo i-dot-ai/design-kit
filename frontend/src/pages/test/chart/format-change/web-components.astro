@@ -1,0 +1,21 @@
+---
+// test/chart/format-change/web-components
+import Layout from "@layouts/TestLayout.astro";
+---
+
+<Layout>
+    <button type="button" class="govuk-button" data-testid="change-format">Change format</button>
+    <iai-chart id="format-change" variant="line" title="Processing time per audio hour">
+        <script type="application/json">
+            { "heading": "Time", "labels": ["09:00", "10:00"], "datasets": [{ "label": "Median", "data": [744, 690] }] }
+        </script>
+    </iai-chart>
+    <script is:inline>
+        // Runs before the kit defines iai-chart, as a page script usually does.
+        const chart = document.getElementById("format-change");
+        chart.format = (value) => `${value}s`;
+        document.querySelector('[data-testid="change-format"]').addEventListener("click", () => {
+            chart.format = (value) => `${value}sec`;
+        });
+    </script>
+</Layout>

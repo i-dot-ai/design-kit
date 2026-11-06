@@ -36,14 +36,15 @@ export default function Chart({ variant, title, description, headingLevel = 3, d
     const sliceColours = Array.isArray(datasets[0]?.colour) ? datasets[0].colour : [];
     // Callers often rebuild `data` each render; only redraw when its values change.
     const key = JSON.stringify(data);
-    // `format` is often a new function each render; the chart reads it at draw time, so it does not redraw.
+    // `format` is often a new inline function each render, so redraw when what it shows changes, not the function.
+    const formatKey = format ? JSON.stringify(datasets.map((dataset) => dataset.data.map((value) => (value == null ? null : format(value))))) : "";
     const formatRef = useRef(format);
     formatRef.current = format;
 
     useEffect(() => {
         const chart = ref.current ? initChart(ref.current, { format: formatRef.current }) : undefined;
         return () => chart?.destroy();
-    }, [key, variant, title, description, headingLevel]);
+    }, [key, formatKey, variant, title, description, headingLevel]);
 
     return (
         <div ref={ref} className={classes} data-module="iai-chart" {...rest}>
