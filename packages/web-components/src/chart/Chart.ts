@@ -41,6 +41,7 @@ export class IaiChart extends HTMLElement {
 
     set format(value: ((value: number) => string) | undefined) {
         this.#format = value;
+        if (this.isConnected) this.#render();
     }
 
     connectedCallback() {
