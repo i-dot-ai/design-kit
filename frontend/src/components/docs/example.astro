@@ -95,7 +95,7 @@ const base = (
     .replace(/\.(react|solid|web-components)$/, "");
 
 const testHref =
-    html && collection === "components"
+    html && (collection === "components" || collection === "patterns")
         ? `/test/${component}/${html.replace(/^.*\//, "").replace(/\.html$/, "")}/html`
         : undefined;
 
