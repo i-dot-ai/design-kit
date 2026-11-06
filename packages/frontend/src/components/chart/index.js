@@ -93,10 +93,12 @@ const DEFAULT_LINE_ORDER = ["solid", "dashed", "dotted"];
 
 // Two decimal places at most, unless the options set their own (merging both can be out of range and throw)
 // or are a currency, which has its own number of decimals.
-const withDefaults = (options = {}) =>
-    "minimumFractionDigits" in options || "maximumFractionDigits" in options || options.style === "currency"
-        ? options
-        : { maximumFractionDigits: 2, ...options };
+const withDefaults = (options) =>
+    options == null
+        ? { maximumFractionDigits: 2 }
+        : "minimumFractionDigits" in options || "maximumFractionDigits" in options || options.style === "currency"
+          ? options
+          : { maximumFractionDigits: 2, ...options };
 
 const format = (value, options) => value.toLocaleString("en-GB", withDefaults(options));
 

@@ -250,6 +250,23 @@ for (const framework of ["html", "astro", "web-components"]) {
     });
 }
 
+for (const framework of ["solid", "svelte"]) {
+    test(`format: changing only the format redraws the axes and tooltips (${framework})`, async ({ page }) => {
+        await page.goto(`/test/chart/format-change/${framework}`);
+        await waitForChart(page);
+        const tick = () =>
+            page.locator(".iai-chart").evaluate((el) =>
+                (el as HTMLElement & { iaiChart: { options: { scales: { y: { ticks: { callback: (value: number) => string } } } } } }).iaiChart.options.scales.y.ticks.callback(744),
+            );
+        expect(await tick()).toBe("744s");
+        await page.getByTestId("change-format").click();
+        await expect.poll(tick).toBe("744sec");
+        await page.getByText("Show data", { exact: false }).first().click();
+        await expect(page.locator(".iai-chart tbody td").first()).toHaveText("744sec");
+        await expect(page.locator(".iai-chart canvas")).toHaveCount(1);
+    });
+}
+
 test.describe("pie legend and labels", () => {
     const legendShown = (page: Page) =>
         page.locator(".iai-chart").evaluate(

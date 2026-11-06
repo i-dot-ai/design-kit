@@ -45,11 +45,13 @@ export default function Chart(props: ChartProps) {
     createEffect(() => {
         // Track everything that ends up in the table, so the chart redraws when it changes.
         JSON.stringify([local.data, local.variant, local.title, local.description]);
+        // Read before the delay below, which Solid does not track, so a new format redraws the chart.
+        const format = local.format;
         let chart: ReturnType<typeof initChart>;
         let cancelled = false;
         // Draw after Solid has updated the table.
         queueMicrotask(() => {
-            if (!cancelled && el) chart = initChart(el, { format: local.format });
+            if (!cancelled && el) chart = initChart(el, { format });
         });
         onCleanup(() => {
             cancelled = true;
