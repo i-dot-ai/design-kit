@@ -141,13 +141,13 @@
 // ---------- In practice: layout ----------
 
 // Markdown text can't take grid classes, so it gets the two-thirds width here.
-.app-in-practice-body > :is(p, ul, ol, h2, h3, h4, blockquote, .govuk-inset-text) {
+.app-in-practice-body> :is(p, ul, ol, h2, h3, h4, blockquote, .govuk-inset-text) {
   @include govuk-media-query($from: tablet) {
     max-width: govuk-grid-width(two-thirds);
   }
 }
 
-.app-in-practice-body > h2 {
+.app-in-practice-body>h2 {
   @include govuk-responsive-margin(8, "top");
 }
 
@@ -293,6 +293,7 @@ $app-story-two-column-from: 1024px;
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .app-story__step,
   .app-story__shot,
   .app-story__dot {
@@ -402,7 +403,7 @@ $app-story-two-column-from: 1024px;
   display: none;
 }
 
-[aria-pressed="true"] > .app-live-prototype__tick {
+[aria-pressed="true"]>.app-live-prototype__tick {
   display: inline;
 }
 
@@ -461,4 +462,8 @@ $app-story-two-column-from: 1024px;
 
 .iai-code-text {
   background-color: var(--govuk-surface-background-colour);
+}
+
+.iai-docs-image {
+  width: 100%;
 }
