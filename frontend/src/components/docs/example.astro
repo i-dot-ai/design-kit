@@ -94,9 +94,10 @@ const base = (
     .replace(/\.(astro|html|svelte|tsx)$/, "")
     .replace(/\.(react|solid|web-components)$/, "");
 
+const variantName = html?.replace(/^.*\//, "").replace(/\.html$/, "");
 const testHref =
     html && (collection === "components" || collection === "patterns")
-        ? `/test/${component}/${html.replace(/^.*\//, "").replace(/\.html$/, "")}/html`
+        ? `/test/${component}/${variantName}/html`
         : undefined;
 
 type TabLang =
@@ -150,6 +151,9 @@ if (webComponentsCode)
                     rel="noopener"
                 >
                     Open this example in a new tab
+                    <span class="govuk-visually-hidden">
+                        : {component} {variantName}
+                    </span>
                 </a>
             </div>
         )
