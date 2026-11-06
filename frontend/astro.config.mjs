@@ -35,6 +35,7 @@ const govukClasses = {
   th: 'govuk-table__header',
   td: 'govuk-table__cell',
   code: 'iai-code-text',
+  img: 'iai-docs-image',
 };
 
 // https://astro.build/config
