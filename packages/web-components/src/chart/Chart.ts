@@ -13,11 +13,15 @@ type ChartInstance = ReturnType<typeof initChart>;
  *   <iai-chart variant="pie" title="…" description="…" heading-level="2">
  *     <script type="application/json">{ "heading": …, "labels": […], "datasets": […] }</script>
  *   </iai-chart>
+ *
+ * Values can be formatted with Intl.NumberFormat options as JSON in a `format`
+ * attribute, or with a function set as the `format` property, which wins.
  */
 export class IaiChart extends HTMLElement {
-    static observedAttributes = ["variant", "title", "description", "heading-level"];
+    static observedAttributes = ["variant", "title", "description", "heading-level", "format"];
 
     #data: ChartData | undefined;
+    #format: ((value: number) => string) | undefined;
     #title = "";
     #chart: ChartInstance;
 
@@ -30,7 +34,29 @@ export class IaiChart extends HTMLElement {
         this.#render();
     }
 
+    /** Formats values in the table, on the axes, in tooltips and in value labels. Overrides the `format` attribute. */
+    get format(): ((value: number) => string) | undefined {
+        return this.#format;
+    }
+
+    set format(value: ((value: number) => string) | undefined) {
+        this.#format = value;
+        if (this.isConnected) this.#render();
+    }
+
     connectedCallback() {
+        // A page script can set these before the element is defined, which hides the setters; take them over.
+        const early = this as { data?: ChartData; format?: (value: number) => string };
+        if (Object.hasOwn(this, "data")) {
+            const data = early.data;
+            delete early.data;
+            this.#data = data;
+        }
+        if (Object.hasOwn(this, "format")) {
+            const format = early.format;
+            delete early.format;
+            this.#format = format;
+        }
         this.#render();
     }
 
@@ -76,6 +102,10 @@ export class IaiChart extends HTMLElement {
         for (const cls of Array.from(this.classList)) if (cls.startsWith("iai-chart--")) this.classList.remove(cls);
         this.classList.add("iai-chart", `iai-chart--${variant}`);
         this.setAttribute("data-module", "iai-chart");
+        // The behaviour layer reads Intl.NumberFormat options from data-iai-chart-format, as on a plain HTML chart.
+        const formatOptions = this.#formatOptions(title);
+        if (formatOptions) this.setAttribute("data-iai-chart-format", JSON.stringify(formatOptions));
+        else this.removeAttribute("data-iai-chart-format");
 
         const data = this.#data;
         if (!data) {
@@ -88,14 +118,29 @@ export class IaiChart extends HTMLElement {
         this.replaceChildren(
             heading,
             ...(description ? [create("p", "govuk-body iai-chart__description", {}, description)] : []),
-            this.#details(title, data),
+            this.#details(title, data, formatOptions),
         );
-        // Charts on the page when initAllIAIDesignSystem() runs are drawn by it;
-        // initChart returns that chart instead of drawing a second one.
-        this.#chart = initChart(this);
+        // Charts on the page when initAllIAIDesignSystem() runs are drawn by it; initChart returns
+        // that chart instead of drawing a second one, or redraws it if a format property is set.
+        this.#chart = initChart(this, { format: this.#format });
     }
 
-    #details(title: string, { heading, labels, datasets }: ChartData) {
+    // Intl.NumberFormat options from the format attribute, checked once here so a bad value logs one error
+    // and the chart falls back to plain numbers, as a plain HTML chart does.
+    #formatOptions(title: string): Intl.NumberFormatOptions | undefined {
+        const json = this.getAttribute("format");
+        if (!json) return undefined;
+        try {
+            const options = JSON.parse(json) as Intl.NumberFormatOptions;
+            formatChartValue(0, options);
+            return options;
+        } catch (error) {
+            console.error(`iai-chart "${title}": format is not valid Intl.NumberFormat options as JSON.`, error);
+            return undefined;
+        }
+    }
+
+    #details(title: string, { heading, labels, datasets }: ChartData, formatOptions?: Intl.NumberFormatOptions) {
         const firstColour = datasets[0]?.colour;
         const sliceColours = Array.isArray(firstColour) ? firstColour : [];
         const th = (text: string, scope: string, attrs: Record<string, string | undefined> = {}, numeric = false) =>
@@ -129,9 +174,17 @@ export class IaiChart extends HTMLElement {
                 "govuk-table__row",
                 {},
                 th(label, "row", { "data-iai-chart-colour": sliceColours[row] }),
-                ...datasets.map((d) =>
-                    create("td", "govuk-table__cell govuk-table__cell--numeric", {}, formatChartValue(d.data[row] ?? null)),
-                ),
+                ...datasets.map((d) => {
+                    const value = d.data[row] ?? null;
+                    const format = this.#format;
+                    const options = format ? undefined : formatOptions;
+                    return create(
+                        "td",
+                        "govuk-table__cell govuk-table__cell--numeric",
+                        (format || options) && value != null ? { "data-value": String(value) } : {},
+                        value == null ? "–" : format ? format(value) : formatChartValue(value, options),
+                    );
+                }),
             ),
         );
 

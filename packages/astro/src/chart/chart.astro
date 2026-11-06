@@ -24,9 +24,14 @@ interface Props extends Omit<HTMLAttributes<"div">, "title"> {
     /** The title's heading level. Defaults to 3. */
     headingLevel?: ChartHeadingLevel;
     data: ChartData;
+    /**
+     * Intl.NumberFormat options for the values in the table, on the axes, in
+     * tooltips and in value labels. For example `{ style: "unit", unit: "minute" }`.
+     */
+    format?: Intl.NumberFormatOptions;
 }
 
-const { variant, title, description, headingLevel = 3, data, class: className, ...rest } = Astro.props;
+const { variant, title, description, headingLevel = 3, data, format, class: className, ...rest } = Astro.props;
 const Heading = `h${headingLevel}`;
 
 const classes = ["iai-chart", `iai-chart--${variant}`, className ?? ""].filter(Boolean).join(" ");
@@ -35,7 +40,7 @@ const firstColour = data.datasets[0]?.colour;
 const sliceColours = Array.isArray(firstColour) ? firstColour : [];
 ---
 
-<div class={classes} data-module="iai-chart" {...rest}>
+<div class={classes} data-module="iai-chart" data-iai-chart-format={format ? JSON.stringify(format) : undefined} {...rest}>
     <Heading class="govuk-heading-m">{title}</Heading>
     {description && <p class="govuk-body iai-chart__description">{description}</p>}
     <Details>
@@ -61,9 +66,14 @@ const sliceColours = Array.isArray(firstColour) ? firstColour : [];
                     {data.labels.map((label, row) => (
                         <TableRow>
                             <TableHeader scope="row" data-iai-chart-colour={sliceColours[row]}>{label}</TableHeader>
-                            {data.datasets.map((dataset) => (
-                                <TableCell numeric>{formatChartValue(dataset.data[row] ?? null)}</TableCell>
-                            ))}
+                            {data.datasets.map((dataset) => {
+                                const value = dataset.data[row];
+                                return (
+                                    <TableCell numeric data-value={format && value != null ? value : undefined}>
+                                        {formatChartValue(value ?? null, format)}
+                                    </TableCell>
+                                );
+                            })}
                         </TableRow>
                     ))}
                 </TableBody>

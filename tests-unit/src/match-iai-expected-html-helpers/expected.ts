@@ -46,5 +46,5 @@ export function renderedShapeIgnoringHost(html: string, { hostAttrs = [], ignore
  * `renderedShapeIgnoringHost`.
  */
 export const KEEPS_HOST: Record<string, HostOptions> = {
-    chart: { hostAttrs: ["variant", "description", "heading-level"], ignoreAdded: ["iai-chart__canvas"], ignoreAddedAttrs: ["id"] },
+    chart: { hostAttrs: ["id", "variant", "description", "heading-level", "format"], ignoreAdded: ["iai-chart__canvas"], ignoreAddedAttrs: ["id"] },
 };

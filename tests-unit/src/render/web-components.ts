@@ -15,6 +15,12 @@ export function renderHtml(html: string): string {
     const host = document.createElement("div");
     host.innerHTML = html;
     document.body.append(host);
+    // innerHTML does not run scripts, but a server-rendered page does; recreate them so they run.
+    for (const old of host.querySelectorAll("script:not([type])")) {
+        const script = document.createElement("script");
+        script.textContent = old.textContent;
+        old.replaceWith(script);
+    }
     const out = host.innerHTML;
     host.remove();
     return out;

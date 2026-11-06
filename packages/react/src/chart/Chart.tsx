@@ -22,10 +22,12 @@ type ChartProps = Omit<ComponentPropsWithoutRef<"div">, "children" | "title"> & 
     /** The title's heading level. Defaults to 3. */
     headingLevel?: ChartHeadingLevel;
     data: ChartData;
+    /** Formats values in the table, on the axes, in tooltips and in value labels. Defaults to en-GB number formatting. */
+    format?: (value: number) => string;
     class?: string;
 };
 
-export default function Chart({ variant, title, description, headingLevel = 3, data, class: className, ...rest }: ChartProps) {
+export default function Chart({ variant, title, description, headingLevel = 3, data, format, class: className, ...rest }: ChartProps) {
     const ref = useRef<HTMLDivElement>(null);
     const Heading = `h${headingLevel}` as const;
     const classes = ["iai-chart", `iai-chart--${variant}`, className ?? ""].filter(Boolean).join(" ");
@@ -34,9 +36,12 @@ export default function Chart({ variant, title, description, headingLevel = 3, d
     const sliceColours = Array.isArray(datasets[0]?.colour) ? datasets[0].colour : [];
     // Callers often rebuild `data` each render; only redraw when its values change.
     const key = JSON.stringify(data);
+    // `format` is often a new function each render; the chart reads it at draw time, so it does not redraw.
+    const formatRef = useRef(format);
+    formatRef.current = format;
 
     useEffect(() => {
-        const chart = ref.current ? initChart(ref.current) : undefined;
+        const chart = ref.current ? initChart(ref.current, { format: formatRef.current }) : undefined;
         return () => chart?.destroy();
     }, [key, variant, title, description, headingLevel]);
 
@@ -70,11 +75,14 @@ export default function Chart({ variant, title, description, headingLevel = 3, d
                                     <TableHeader scope="row" data-iai-chart-colour={sliceColours[row]}>
                                         {label}
                                     </TableHeader>
-                                    {datasets.map((dataset, i) => (
-                                        <TableCell key={i} numeric>
-                                            {formatChartValue(dataset.data[row] ?? null)}
-                                        </TableCell>
-                                    ))}
+                                    {datasets.map((dataset, i) => {
+                                        const value = dataset.data[row];
+                                        return (
+                                            <TableCell key={i} numeric data-value={format && value != null ? value : undefined}>
+                                                {value == null ? "–" : format ? format(value) : formatChartValue(value)}
+                                            </TableCell>
+                                        );
+                                    })}
                                 </TableRow>
                             ))}
                         </TableBody>

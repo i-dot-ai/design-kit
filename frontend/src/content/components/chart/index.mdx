@@ -17,6 +17,7 @@ This component is a wrapper around [Chart.js](https://www.chartjs.org/). This ha
 - [Changing the colour](#changing-the-colour)
 - [Changing the line style](#changing-the-line-style)
 - [Adding a description](#adding-a-description)
+- [Formatting values](#formatting-values)
 - [Changing the size](#changing-the-size)
 - [Accessibility](#accessibility)
 - [Component options](#component-options)
@@ -53,7 +54,7 @@ A horizontal bar chart compares values across categories, with each value shown 
 
 ## Pie
 
-A pie chart shows how a whole splits into parts. It uses the first data column only. Each slice is labelled with its name and value; on narrow screens, or with more than 6 slices, a legend is used instead. Slices follow the categorical colour order. To set a slice's colour yourself, add it to the slice's row header.
+A pie chart shows how a whole splits into parts. It uses the first data column only. Each slice is labelled with its name and value; on narrow screens, or with more than 6 slices, a legend is used instead. Slices follow the categorical colour order. You can [change the colour](#changing-the-colour) of each slice.
 
 <Example component="chart" optionsHref="#component-options" html="./examples/pie.html" astro="./examples/pie.astro" react="./examples/pie.react.tsx" svelte="./examples/pie.svelte" solid="./examples/pie.solid.tsx" webComponents="./examples/pie.web-components.html" />
 
@@ -71,31 +72,35 @@ An area chart is a line chart with the space under each line filled in. Use it t
 
 ## Changing the colour
 
-Colours follow the categorical order by default. To choose a series' colour yourself, set `colour` on its dataset to a [chart colour](/styles/chart-colours) name. In HTML, add `data-iai-chart-colour` to the series' column header.
+Colours follow the categorical order by default. You can choose a different [chart colour](/styles/chart-colours) for each series, or for each slice on pie and doughnut charts. See the [component options](#component-options).
 
 <Example component="chart" optionsHref="#component-options" html="./examples/line-colour.html" astro="./examples/line-colour.astro" react="./examples/line-colour.react.tsx" svelte="./examples/line-colour.svelte" solid="./examples/line-colour.solid.tsx" webComponents="./examples/line-colour.web-components.html" />
 
 ## Changing the line style
 
-On line and area charts, lines follow the order solid, dashed, dotted by default. To choose a series' line style yourself, set `line` on its dataset to `"solid"`, `"dashed"` or `"dotted"`. In HTML, add `data-iai-chart-line` to the series' column header.
+On line and area charts, lines follow the order solid, dashed, dotted by default. You can choose the line style for each series. See the [component options](#component-options).
 
 <Example component="chart" optionsHref="#component-options" html="./examples/line-style.html" astro="./examples/line-style.astro" react="./examples/line-style.react.tsx" svelte="./examples/line-style.svelte" solid="./examples/line-style.solid.tsx" webComponents="./examples/line-style.web-components.html" />
 
 ## Adding a description
 
-Add a `description` to say what the chart shows in a sentence or two, for example the main trend or the biggest value. It appears under the title, and screen readers read it with the chart. In HTML, add a paragraph with the `iai-chart__description` class after the heading.
+Add a description to say what the chart shows in a sentence or two, for example the main trend or the biggest value. It appears under the title, and screen readers read it with the chart.
 
-The title is an `h3` by default. Set `headingLevel` so it fits the headings on your page. In HTML, use any heading element; in web components, use the `heading-level` attribute.
+The title is an `h3` by default. Change the heading level so it fits the headings on your page. See the [component options](#component-options).
 
 <Example component="chart" optionsHref="#component-options" html="./examples/bar-description.html" astro="./examples/bar-description.astro" react="./examples/bar-description.react.tsx" svelte="./examples/bar-description.svelte" solid="./examples/bar-description.solid.tsx" webComponents="./examples/bar-description.web-components.html" />
 
+## Formatting values
+
+By default, values are shown as en-GB numbers. Set `format` to show them another way, for example as times. The format is used in the data table, on the axes, in tooltips and in value labels.
+
+<Example component="chart" optionsHref="#component-options" html="./examples/line-format.html" astro="./examples/line-format.astro" react="./examples/line-format-function.react.tsx" svelte="./examples/line-format-function.svelte" solid="./examples/line-format-function.solid.tsx" webComponents="./examples/line-format-function.web-components.html" />
+
+Formatting works differently in HTML and Astro. They take [`Intl.NumberFormat` options](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#options), which can only show one unit, such as "62.1 mins", not "1h 2m 3s". This is why the HTML and Astro examples give their values in minutes, and the others in seconds. React, Svelte and Solid take a function, so they can show any format. Web components take either: `Intl.NumberFormat` options in the `format` attribute, or a function set as the `format` property. If you need a format that `Intl.NumberFormat` cannot show, we recommend using one of the frameworks.
+
 ## Changing the size
 
-Line, area, bar and horizontal bar charts fill the width of their container. Pie and doughnut charts are square, so they stop at 600px wide. To change this, set `--iai-chart-max-width` on the chart or on a container. Use `none` to remove the limit.
-
-```html
-<div class="iai-chart iai-chart--pie" data-module="iai-chart" style="--iai-chart-max-width: 400px">
-```
+Line, area, bar and horizontal bar charts fill the width of their container. Pie and doughnut charts are square, so they stop at 600px wide. You can change this maximum width, or remove it. See the [component options](#component-options).
 
 ## Accessibility
 
@@ -124,15 +129,14 @@ Every chart includes its data as a table, under "Show data".
 
 ## Component options
 
-These are the same for Astro, React, Svelte and Solid. For web components, `variant`, `title` and `description` are attributes, `headingLevel` is the `heading-level` attribute, and `data` is JSON in a `<script type="application/json">` inside the element.
-
 | Option | Type | Required | Description |
 | --- | --- | --- | --- |
-| `variant` | `"line"`, `"area"`, `"bar"`, `"horizontal-bar"`, `"pie"` or `"doughnut"` | Yes | The type of chart. |
-| `title` | text | Yes | Shown as the heading and the table caption. Screen readers read it as the chart's name. |
-| `description` | text | No | A short summary of what the chart shows. Shown under the title, and screen readers read it with the chart. |
-| `headingLevel` | `1` to `6` | No | The title's heading level. Defaults to `3`. |
-| `data` | object | Yes | The chart's data. See below. |
+| `variant` | `"line"`, `"area"`, `"bar"`, `"horizontal-bar"`, `"pie"` or `"doughnut"` | Yes | The type of chart. In web components, an attribute. |
+| `title` | text | Yes | Shown as the heading and the table caption. Screen readers read it as the chart's name. In web components, an attribute. |
+| `description` | text | No | A short summary of what the chart shows. Shown under the title, and screen readers read it with the chart. In web components, an attribute. |
+| `headingLevel` | `1` to `6` | No | The title's heading level. Defaults to `3`. In web components, the `heading-level` attribute. |
+| `data` | object | Yes | The chart's data. See below. In web components, JSON in a `<script type="application/json">` inside the element. |
+| `format` | function, or `Intl.NumberFormat` options | No | Formats values in the table, on the axes, in tooltips and in value labels. In React, Svelte and Solid, a function that takes a value and returns text. In Astro, `Intl.NumberFormat` options. In web components, `Intl.NumberFormat` options as JSON in the `format` attribute, or a function set as the `format` property, which takes priority. |
 
 ### `data`
 
@@ -163,5 +167,6 @@ In plain HTML, set the same options on the markup:
 | Series colour | An attribute on the column header | `<th data-iai-chart-colour="blue-shade-50">` |
 | Slice colour | An attribute on the row header | `<th scope="row" data-iai-chart-colour="blue">` |
 | Line style | An attribute on the column header | `<th data-iai-chart-line="dashed">` |
-| Values | The table cells, as numbers | `<td>1,240</td>`. Use `–` or leave empty for a gap. |
-| Maximum width | A CSS variable, on pie and doughnut charts | `style="--iai-chart-max-width: 400px"` |
+| Value format | `Intl.NumberFormat` options as JSON, on the outer `div` | `data-iai-chart-format='{"style":"unit","unit":"minute"}'` |
+| Values | The table cells, as numbers | `<td>1,240</td>`. Use `–` or leave empty for a gap. If the text is not the number, add the number in a `data-value` attribute, for example `<td data-value="12.4">12.4 mins</td>`. |
+| Maximum width | The `--iai-chart-max-width` CSS variable, on the chart or a container, for pie and doughnut charts. Use `none` to remove the limit | `style="--iai-chart-max-width: 400px"` |

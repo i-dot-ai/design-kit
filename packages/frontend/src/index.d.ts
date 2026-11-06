@@ -49,12 +49,22 @@ export type ChartData = {
     }[];
 };
 
-/** Format a value as the chart reads it back from the table: en-GB, `null` as "–". */
-export function formatChartValue(value: number | null): string;
+/** Format a value for the chart's table: en-GB, `null` as "–", with optional `Intl.NumberFormat` options. */
+export function formatChartValue(value: number | null, options?: Intl.NumberFormatOptions): string;
+
+/** Options for `initChart`. */
+export type InitChartOptions = {
+    /**
+     * Formats a value wherever the chart shows one: axis ticks, tooltips,
+     * value labels and slice labels. Defaults to the chart's
+     * `data-iai-chart-format` Intl.NumberFormat options, then en-GB number formatting.
+     */
+    format?: (value: number) => string;
+};
 
 /**
  * Draw a chart from its data table. Idempotent. Returns the Chart.js instance,
  * or undefined if the element has no table or chart type. Call `destroy()` on
  * it before redrawing.
  */
-export function initChart(el: HTMLElement): import("chart.js").Chart | undefined;
+export function initChart(el: HTMLElement, options?: InitChartOptions): import("chart.js").Chart | undefined;

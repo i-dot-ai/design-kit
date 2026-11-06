@@ -2,6 +2,7 @@
 // test/chart/[variant]/solid.astro
 import Layout from "@layouts/TestLayout.astro";
 import Line from "../../../../content/components/chart/examples/line.solid.tsx";
+import LineFormat from "../../../../content/components/chart/examples/line-format-function.solid.tsx";
 import Area from "../../../../content/components/chart/examples/area.solid.tsx";
 import Bar from "../../../../content/components/chart/examples/bar.solid.tsx";
 import HorizontalBar from "../../../../content/components/chart/examples/horizontal-bar.solid.tsx";
@@ -9,7 +10,7 @@ import Pie from "../../../../content/components/chart/examples/pie.solid.tsx";
 import Doughnut from "../../../../content/components/chart/examples/doughnut.solid.tsx";
 
 export function getStaticPaths() {
-    return ["line", "area", "bar", "horizontal-bar", "pie", "doughnut"].map((variant) => ({
+    return ["line", "line-format-function", "area", "bar", "horizontal-bar", "pie", "doughnut"].map((variant) => ({
         params: { variant },
     }));
 }
@@ -19,6 +20,7 @@ const { variant } = Astro.params;
 
 <Layout>
     {variant === "line" && <Line client:load />}
+    {variant === "line-format-function" && <LineFormat client:load />}
     {variant === "area" && <Area client:load />}
     {variant === "bar" && <Bar client:load />}
     {variant === "horizontal-bar" && <HorizontalBar client:load />}

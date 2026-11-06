@@ -64,6 +64,8 @@ export default defineConfig({
                     name: "web-components",
                     include: ["src/**/*.web-components.test.ts"],
                     environment: "happy-dom",
+                    // Lets example scripts run, as they do on a page (see renderHtml).
+                    environmentOptions: { happyDOM: { settings: { enableJavaScriptEvaluation: true } } },
                 },
             },
             "./vitest.astro.config.ts",
