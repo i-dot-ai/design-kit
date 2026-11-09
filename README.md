@@ -16,8 +16,6 @@ Each package is published independently to npm under the `@i-dot-ai-npm` scope.
 | `@i-dot-ai-npm/component-library-react` | React component wrappers. |
 | `@i-dot-ai-npm/component-library-solid` | Solid component wrappers. |
 | `@i-dot-ai-npm/component-library-svelte` | Svelte component wrappers. |
-| `@i-dot-ai-npm/component-library-astro` | Astro component wrappers. |
-| `@i-dot-ai-npm/component-library-web-components` | Web component wrappers. |
 
 ## Using the kit in your app
 
