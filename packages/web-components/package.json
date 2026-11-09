@@ -1,6 +1,6 @@
 {
   "name": "@i-dot-ai-npm/component-library-web-components",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Web components for i.AI GOV.UK.",
   "type": "module",
   "scripts": {
@@ -14,7 +14,7 @@
     "src"
   ],
   "peerDependencies": {
-    "@i-dot-ai-npm/component-library-frontend": ">=0.0.20",
+    "@i-dot-ai-npm/component-library-frontend": ">=0.0.21",
     "govuk-frontend": ">=6"
   },
   "repository": {

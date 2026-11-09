@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@i-dot-ai-npm/component-library-astro": "workspace:*",
+    "@i-dot-ai-npm/component-library-frontend": "workspace:*",
     "@i-dot-ai-npm/component-library-react": "workspace:*",
     "@i-dot-ai-npm/component-library-solid": "workspace:*",
     "@i-dot-ai-npm/component-library-svelte": "workspace:*",

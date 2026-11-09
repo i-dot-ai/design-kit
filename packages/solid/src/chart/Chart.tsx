@@ -27,11 +27,13 @@ type ChartProps = Omit<JSX.IntrinsicElements["div"], "children" | "title"> & {
     data: ChartData;
     /** Formats values in the table, on the axes, in tooltips and in value labels. Defaults to en-GB number formatting. */
     format?: (value: number) => string;
+    /** Plots `null` values as 0, keeping a line unbroken; the table still shows –. Intended for line and area charts. */
+    showNullValuesAsZero?: boolean;
     class?: string;
 };
 
 export default function Chart(props: ChartProps) {
-    const [local, rest] = splitProps(props, ["variant", "title", "description", "headingLevel", "data", "format", "class"]);
+    const [local, rest] = splitProps(props, ["variant", "title", "description", "headingLevel", "data", "format", "showNullValuesAsZero", "class"]);
     let el: HTMLDivElement | undefined;
 
     const classes = () =>
@@ -47,11 +49,12 @@ export default function Chart(props: ChartProps) {
         JSON.stringify([local.data, local.variant, local.title, local.description]);
         // Read before the delay below, which Solid does not track, so a new format redraws the chart.
         const format = local.format;
+        const showNulls = local.showNullValuesAsZero;
         let chart: ReturnType<typeof initChart>;
         let cancelled = false;
         // Draw after Solid has updated the table.
         queueMicrotask(() => {
-            if (!cancelled && el) chart = initChart(el, { format });
+            if (!cancelled && el) chart = initChart(el, { format, showNullValuesAsZero: showNulls });
         });
         onCleanup(() => {
             cancelled = true;

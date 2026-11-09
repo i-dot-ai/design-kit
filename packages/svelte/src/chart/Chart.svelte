@@ -25,10 +25,12 @@
         data: ChartData;
         /** Formats values in the table, on the axes, in tooltips and in value labels. Defaults to en-GB number formatting. */
         format?: (value: number) => string;
+        /** Plots `null` values as 0, keeping a line unbroken; the table still shows –. Intended for line and area charts. */
+        showNullValuesAsZero?: boolean;
         class?: string;
     };
 
-    let { variant, title, description, headingLevel = 3, data, format, class: className = "", ...rest }: Props = $props();
+    let { variant, title, description, headingLevel = 3, data, format, showNullValuesAsZero, class: className = "", ...rest }: Props = $props();
 
     let el = $state<HTMLDivElement>();
 
@@ -41,11 +43,12 @@
         JSON.stringify([data, variant, title, description]);
         // Read before the delay below, which Svelte does not track, so a new format redraws the chart.
         const formatValue = format;
+        const showNulls = showNullValuesAsZero;
         let chart: ReturnType<typeof initChart>;
         let cancelled = false;
         // Draw after Svelte has updated the table.
         tick().then(() => {
-            if (!cancelled && el) chart = initChart(el, { format: formatValue });
+            if (!cancelled && el) chart = initChart(el, { format: formatValue, showNullValuesAsZero: showNulls });
         });
         return () => {
             cancelled = true;

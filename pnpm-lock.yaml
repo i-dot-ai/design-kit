@@ -241,6 +241,9 @@ importers:
       '@i-dot-ai-npm/component-library-astro':
         specifier: workspace:*
         version: link:../packages/astro
+      '@i-dot-ai-npm/component-library-frontend':
+        specifier: workspace:*
+        version: link:../packages/frontend
       '@i-dot-ai-npm/component-library-react':
         specifier: workspace:*
         version: link:../packages/react
