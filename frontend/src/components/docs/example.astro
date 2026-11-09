@@ -2,7 +2,7 @@
 /*
  * Example — renders one component example on a docs page:
  *   1. a live preview, rendered from the example's .html file, and
- *   2. the "Show code" Astro/HTML tabs, from the .astro/.html files.
+ *   2. the "Show code" framework tabs, from the per-framework files.
  *
  * Example files are referenced by relative path from the entry's index.mdx
  * (e.g. "./examples/default.astro"). The `component` prop is the slug of the
@@ -18,17 +18,15 @@ import {
     Details,
     DetailsSummary,
     DetailsText,
-} from "@i-dot-ai-npm/component-library-astro";
+} from "@i-dot-ai-npm/component-library-solid";
 import CopyButton from "@components/docs/copy-button.astro";
 
 interface Props {
-    astro?: string;
     html?: string;
     react?: string;
     next?: string;
     svelte?: string;
     solid?: string;
-    webComponents?: string;
     /** Entry folder slug (from the page), used to resolve example paths. */
     component: string;
     /** Content collection the entry lives in. Defaults to "components". */
@@ -40,13 +38,11 @@ interface Props {
 }
 
 const {
-    astro,
     html,
     react,
     next,
     svelte,
     solid,
-    webComponents,
     component,
     collection = "components",
     variant = "default",
@@ -54,7 +50,7 @@ const {
 } = Astro.props;
 
 const files = import.meta.glob(
-    "/src/content/{components,styles,decisions,get-started,patterns}/**/examples/*.{astro,html,svelte,tsx}",
+    "/src/content/{components,styles,decisions,get-started,patterns}/**/examples/*.{html,svelte,tsx}",
     { query: "?raw", import: "default", eager: true },
 ) as Record<string, string>;
 
@@ -66,13 +62,11 @@ function resolve(relPath?: string): string | undefined {
     return hit?.[1];
 }
 
-const astroCode = resolve(astro);
 const htmlCode = resolve(html);
 const reactCode = resolve(react);
 const nextCode = resolve(next);
 const svelteCode = resolve(svelte);
 const solidCode = resolve(solid);
-const webComponentsCode = resolve(webComponents);
 
 const containerClass =
     variant === "inverse"
@@ -80,19 +74,17 @@ const containerClass =
         : "component-container";
 
 const base = (
-    astro ||
     html ||
     react ||
     next ||
     svelte ||
     solid ||
-    webComponents ||
     "example"
 )
     .replace(/^\.\//, "")
     .replace(/\//g, "-")
     .replace(/\.(astro|html|svelte|tsx)$/, "")
-    .replace(/\.(react|solid|web-components)$/, "");
+    .replace(/\.(react|solid)$/, "");
 
 const variantName = html?.replace(/^.*\//, "").replace(/\.html$/, "");
 const testHref =
@@ -100,24 +92,16 @@ const testHref =
         ? `/test/${component}/${variantName}/html`
         : undefined;
 
-type TabLang =
-    "html" | "astro" | "react" | "next" | "svelte" | "solid" | "web-components";
+type TabLang = "html" | "react" | "next" | "svelte" | "solid";
 const tabs: Array<{
     lang: TabLang;
     code: string;
     label: string;
     shiki: string;
 }> = [];
-// Order: HTML, Astro, React, Next, Svelte, Solid, Web Components
+// Order: HTML, React, Next, Svelte, Solid
 if (htmlCode)
     tabs.push({ lang: "html", code: htmlCode, label: "HTML", shiki: "html" });
-if (astroCode)
-    tabs.push({
-        lang: "astro",
-        code: astroCode,
-        label: "Astro",
-        shiki: "astro",
-    });
 if (reactCode)
     tabs.push({ lang: "react", code: reactCode, label: "React", shiki: "tsx" });
 if (nextCode)
@@ -131,13 +115,6 @@ if (svelteCode)
     });
 if (solidCode)
     tabs.push({ lang: "solid", code: solidCode, label: "Solid", shiki: "tsx" });
-if (webComponentsCode)
-    tabs.push({
-        lang: "web-components",
-        code: webComponentsCode,
-        label: "Web Components",
-        shiki: "html",
-    });
 ---
 
 <div class={containerClass}>

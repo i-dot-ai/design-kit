@@ -29,9 +29,8 @@ The component library is made up of different packages:
 - `@i-dot-ai-npm/component-library-frontend` - central js and css styles
 
 The rest are language specific wrapper components
-- `@i-dot-ai-npm/component-library-astro`
 - `@i-dot-ai-npm/component-library-react`
 - `@i-dot-ai-npm/component-library-svelte`
 - `@i-dot-ai-npm/component-library-solid`
 
-Pick the relevant component package to use. We recommend astro but if the project has not been set up with astro or the dev prefers a particular framework use that instead
+Pick the relevant component package to use for the framework the project uses

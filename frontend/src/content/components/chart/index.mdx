@@ -38,49 +38,49 @@ Only use a pie or doughnut chart for a few parts of one whole, ideally no more t
 
 A line chart shows how values change over an ordered range, such as time. The data is always in a table, so it can be read without JavaScript and by screen readers.
 
-<Example component="chart" optionsHref="#component-options" html="./examples/line.html" astro="./examples/line.astro" react="./examples/line.react.tsx" svelte="./examples/line.svelte" solid="./examples/line.solid.tsx" webComponents="./examples/line.web-components.html" />
+<Example component="chart" optionsHref="#component-options" html="./examples/line.html" react="./examples/line.react.tsx" svelte="./examples/line.svelte" solid="./examples/line.solid.tsx" />
 
 ## Bar
 
 A bar chart compares values across separate categories, such as regions. Bars always start at zero.
 
-<Example component="chart" optionsHref="#component-options" html="./examples/bar.html" astro="./examples/bar.astro" react="./examples/bar.react.tsx" svelte="./examples/bar.svelte" solid="./examples/bar.solid.tsx" webComponents="./examples/bar.web-components.html" />
+<Example component="chart" optionsHref="#component-options" html="./examples/bar.html" react="./examples/bar.react.tsx" svelte="./examples/bar.svelte" solid="./examples/bar.solid.tsx" />
 
 ## Horizontal bar
 
 A horizontal bar chart compares values across categories, with each value shown at the end of its bar. Use it when category names are long or there are many categories. Keep it to one or two series so the values stay readable. If the bars get too thin for their values, the values are hidden; they are still in the table.
 
-<Example component="chart" optionsHref="#component-options" html="./examples/horizontal-bar.html" astro="./examples/horizontal-bar.astro" react="./examples/horizontal-bar.react.tsx" svelte="./examples/horizontal-bar.svelte" solid="./examples/horizontal-bar.solid.tsx" webComponents="./examples/horizontal-bar.web-components.html" />
+<Example component="chart" optionsHref="#component-options" html="./examples/horizontal-bar.html" react="./examples/horizontal-bar.react.tsx" svelte="./examples/horizontal-bar.svelte" solid="./examples/horizontal-bar.solid.tsx" />
 
 ## Pie
 
 A pie chart shows how a whole splits into parts. It uses the first data column only. Each slice is labelled with its name and value; on narrow screens, or with more than 6 slices, a legend is used instead. Slices follow the categorical colour order. You can [change the colour](#changing-the-colour) of each slice.
 
-<Example component="chart" optionsHref="#component-options" html="./examples/pie.html" astro="./examples/pie.astro" react="./examples/pie.react.tsx" svelte="./examples/pie.svelte" solid="./examples/pie.solid.tsx" webComponents="./examples/pie.web-components.html" />
+<Example component="chart" optionsHref="#component-options" html="./examples/pie.html" react="./examples/pie.react.tsx" svelte="./examples/pie.svelte" solid="./examples/pie.solid.tsx" />
 
 ## Doughnut
 
 A doughnut chart works the same way as a pie chart.
 
-<Example component="chart" optionsHref="#component-options" html="./examples/doughnut.html" astro="./examples/doughnut.astro" react="./examples/doughnut.react.tsx" svelte="./examples/doughnut.svelte" solid="./examples/doughnut.solid.tsx" webComponents="./examples/doughnut.web-components.html" />
+<Example component="chart" optionsHref="#component-options" html="./examples/doughnut.html" react="./examples/doughnut.react.tsx" svelte="./examples/doughnut.svelte" solid="./examples/doughnut.solid.tsx" />
 
 ## Area
 
 An area chart is a line chart with the space under each line filled in. Use it to show how a total builds up over time. The fill is see-through so overlapping series stay visible.
 
-<Example component="chart" optionsHref="#component-options" html="./examples/area.html" astro="./examples/area.astro" react="./examples/area.react.tsx" svelte="./examples/area.svelte" solid="./examples/area.solid.tsx" webComponents="./examples/area.web-components.html" />
+<Example component="chart" optionsHref="#component-options" html="./examples/area.html" react="./examples/area.react.tsx" svelte="./examples/area.svelte" solid="./examples/area.solid.tsx" />
 
 ## Changing the colour
 
 Colours follow the categorical order by default. You can choose a different [chart colour](/styles/chart-colours) for each series, or for each slice on pie and doughnut charts. See the [component options](#component-options).
 
-<Example component="chart" optionsHref="#component-options" html="./examples/line-colour.html" astro="./examples/line-colour.astro" react="./examples/line-colour.react.tsx" svelte="./examples/line-colour.svelte" solid="./examples/line-colour.solid.tsx" webComponents="./examples/line-colour.web-components.html" />
+<Example component="chart" optionsHref="#component-options" html="./examples/line-colour.html" react="./examples/line-colour.react.tsx" svelte="./examples/line-colour.svelte" solid="./examples/line-colour.solid.tsx" />
 
 ## Changing the line style
 
 On line and area charts, lines follow the order solid, dashed, dotted by default. You can choose the line style for each series. See the [component options](#component-options).
 
-<Example component="chart" optionsHref="#component-options" html="./examples/line-style.html" astro="./examples/line-style.astro" react="./examples/line-style.react.tsx" svelte="./examples/line-style.svelte" solid="./examples/line-style.solid.tsx" webComponents="./examples/line-style.web-components.html" />
+<Example component="chart" optionsHref="#component-options" html="./examples/line-style.html" react="./examples/line-style.react.tsx" svelte="./examples/line-style.svelte" solid="./examples/line-style.solid.tsx" />
 
 ## Adding a description
 
@@ -88,15 +88,15 @@ Add a description to say what the chart shows in a sentence or two, for example 
 
 The title is an `h3` by default. Change the heading level so it fits the headings on your page. See the [component options](#component-options).
 
-<Example component="chart" optionsHref="#component-options" html="./examples/bar-description.html" astro="./examples/bar-description.astro" react="./examples/bar-description.react.tsx" svelte="./examples/bar-description.svelte" solid="./examples/bar-description.solid.tsx" webComponents="./examples/bar-description.web-components.html" />
+<Example component="chart" optionsHref="#component-options" html="./examples/bar-description.html" react="./examples/bar-description.react.tsx" svelte="./examples/bar-description.svelte" solid="./examples/bar-description.solid.tsx" />
 
 ## Formatting values
 
 By default, values are shown as en-GB numbers. Set `format` to show them another way, for example as times. The format is used in the data table, on the axes, in tooltips and in value labels.
 
-<Example component="chart" optionsHref="#component-options" html="./examples/line-format.html" astro="./examples/line-format.astro" react="./examples/line-format-function.react.tsx" svelte="./examples/line-format-function.svelte" solid="./examples/line-format-function.solid.tsx" webComponents="./examples/line-format-function.web-components.html" />
+<Example component="chart" optionsHref="#component-options" html="./examples/line-format.html" react="./examples/line-format-function.react.tsx" svelte="./examples/line-format-function.svelte" solid="./examples/line-format-function.solid.tsx" />
 
-Formatting works differently in HTML and Astro. They take [`Intl.NumberFormat` options](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#options), which can only show one unit, such as "62.1 mins", not "1h 2m 3s". This is why the HTML and Astro examples give their values in minutes, and the others in seconds. React, Svelte and Solid take a function, so they can show any format. Web components take either: `Intl.NumberFormat` options in the `format` attribute, or a function set as the `format` property. If you need a format that `Intl.NumberFormat` cannot show, we recommend using one of the frameworks.
+Formatting works differently in HTML. It takes [`Intl.NumberFormat` options](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#options), which can only show one unit, such as "62.1 mins", not "1h 2m 3s". This is why the HTML examples give their values in minutes. React, Svelte and Solid take a function, so they can show any format. If you need a format that `Intl.NumberFormat` cannot show, use one of the framework components.
 
 ## Changing the size
 
@@ -124,20 +124,20 @@ Bar, horizontal bar, pie and doughnut charts cannot use line styles. Keep these 
 Every chart includes its data as a table, under "Show data".
 
 - Screen readers announce the chart's title and description, and users can open the table to read the values.
-- If JavaScript does not load, the table is still there. This does not apply to web components, which need JavaScript.
+- If JavaScript does not load, the table is still there.
 - Users can read exact values that are hard to judge from the chart.
 
 ## Component options
 
 | Option | Type | Required | Description |
 | --- | --- | --- | --- |
-| `variant` | `"line"`, `"area"`, `"bar"`, `"horizontal-bar"`, `"pie"` or `"doughnut"` | Yes | The type of chart. In web components, an attribute. |
-| `title` | text | Yes | Shown as the heading and the table caption. Screen readers read it as the chart's name. In web components, an attribute. |
-| `description` | text | No | A short summary of what the chart shows. Shown under the title, and screen readers read it with the chart. In web components, an attribute. |
-| `headingLevel` | `1` to `6` | No | The title's heading level. Defaults to `3`. In web components, the `heading-level` attribute. |
-| `data` | object | Yes | The chart's data. See below. In web components, JSON in a `<script type="application/json">` inside the element. |
-| `format` | function, or `Intl.NumberFormat` options | No | Formats values in the table, on the axes, in tooltips and in value labels. In React, Svelte and Solid, a function that takes a value and returns text. In Astro, `Intl.NumberFormat` options. In web components, `Intl.NumberFormat` options as JSON in the `format` attribute, or a function set as the `format` property, which takes priority. |
-| `showNullValuesAsZero` | boolean | No | Plots `null` values as 0 so a line stays unbroken instead of leaving gaps. The data table still shows `–` for those values. Intended for line and area charts. In Astro and plain HTML, an empty `data-iai-chart-show-null-values-as-zero` attribute. In web components, the same attribute or a `showNullValuesAsZero` property, which takes priority when set. |
+| `variant` | `"line"`, `"area"`, `"bar"`, `"horizontal-bar"`, `"pie"` or `"doughnut"` | Yes | The type of chart. |
+| `title` | text | Yes | Shown as the heading and the table caption. Screen readers read it as the chart's name. |
+| `description` | text | No | A short summary of what the chart shows. Shown under the title, and screen readers read it with the chart. |
+| `headingLevel` | `1` to `6` | No | The title's heading level. Defaults to `3`. |
+| `data` | object | Yes | The chart's data. See below. |
+| `format` | function, or `Intl.NumberFormat` options | No | Formats values in the table, on the axes, in tooltips and in value labels. In React, Svelte and Solid, a function that takes a value and returns text. In HTML, `Intl.NumberFormat` options. |
+| `showNullValuesAsZero` | boolean | No | Plots `null` values as 0 so a line stays unbroken instead of leaving gaps. The data table still shows `–` for those values. Intended for line and area charts. In plain HTML, an empty `data-iai-chart-show-null-values-as-zero` attribute. |
 
 ### `data`
 
