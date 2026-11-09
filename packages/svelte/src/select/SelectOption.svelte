@@ -1,8 +1,8 @@
 <script lang="ts">
     import type { Snippet } from "svelte";
-    import type { HTMLAttributes } from "svelte/elements";
+    import type { HTMLOptionAttributes } from "svelte/elements";
 
-    type Props = HTMLAttributes<HTMLOptionElement> & {
+    type Props = HTMLOptionAttributes & {
         class?: string;
         children?: Snippet;
     };
