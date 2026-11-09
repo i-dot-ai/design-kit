@@ -8,16 +8,6 @@ import type { Shape } from "./reduce.js";
  * "exact on semantic attrs, allowlist noise" (not the other way around).
  */
 const NOISE_ATTRS = new Set<string>([
-    // Astro island / hydration wrappers
-    "astro-island",
-    "ssr",
-    "uid",
-    "component-url",
-    "component-export",
-    "renderer-url",
-    "props",
-    "opts",
-    "await-children",
     // Solid hydration keys
     "data-hk",
     // Generic hydration/runtime markers
