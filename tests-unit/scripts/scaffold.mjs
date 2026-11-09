@@ -6,10 +6,9 @@
 //   tests/govuk-match.react.test.tsx
 //   tests/govuk-match.solid.test.tsx
 //   tests/govuk-match.svelte.test.ts
-//   tests/govuk-match.astro.test.ts
 //
-// The four test files are near-identical Tier-1 skeletons that differ only by
-// framework (package import, render helper, describe label, async for astro).
+// The three test files are near-identical Tier-1 skeletons that differ only by
+// framework (package import, render helper, describe label).
 // You then fill in match-govuk-mappings.ts with the component's real prop
 // divergence. Composite (Tier-2) components need extra examples/content files
 // authored by hand — see CONTRIBUTING.md.
@@ -46,8 +45,6 @@ const FRAMEWORKS = [
     { key: "react", label: "React", pkg: "react", render: "renderReact", ext: "tsx", async: false, importsExport: true },
     { key: "solid", label: "Solid", pkg: "solid", render: "renderSolid", ext: "tsx", async: false, importsExport: true },
     { key: "svelte", label: "Svelte", pkg: "svelte", render: "renderSvelte", ext: "ts", async: false, importsExport: true },
-    { key: "astro", label: "Astro", pkg: "astro", render: "renderAstro", ext: "ts", async: true, importsExport: true },
-    { key: "web-components", label: "Web Components", pkg: "web-components", render: "renderWebComponent", ext: "ts", async: false, importsExport: false },
 ];
 
 function parseArgs(argv) {

@@ -1,4 +1,4 @@
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import { CHART_PAGES, pagesFor, readChart, waitForChart } from "./chart-pages";
 
 for (const target of CHART_PAGES) {
@@ -21,7 +21,6 @@ for (const target of CHART_PAGES) {
         });
 
         test("without JavaScript the table is still there and no canvas is drawn", async ({ browser }) => {
-            test.skip(target.framework === "web-components", "web components need JavaScript to render anything");
             const context = await browser.newContext({ javaScriptEnabled: false });
             const page = await context.newPage();
             await page.goto(target.path);
@@ -101,7 +100,7 @@ for (const target of pagesFor("area")) {
     });
 }
 
-for (const framework of ["html", "astro", "web-components"]) {
+for (const framework of ["html"]) {
     test(`description: the canvas is described by the chart's description (${framework})`, async ({ page }) => {
         await page.goto(`/test/chart/bar-description/${framework}`);
         await waitForChart(page);
@@ -161,7 +160,7 @@ for (const variant of ["pie", "doughnut"]) {
     });
 }
 
-for (const framework of ["html", "astro", "web-components"]) {
+for (const framework of ["html"]) {
     test(`line style and colour set on a series reach the drawn chart (${framework})`, async ({ page }) => {
         await page.goto(`/test/chart/line-style/${framework}`);
         await waitForChart(page);
@@ -173,15 +172,15 @@ for (const framework of ["html", "astro", "web-components"]) {
 }
 
 const FORMAT_CASES = [
-    // HTML, Astro and web components: Intl.NumberFormat options, values in minutes.
-    ...["html", "astro", "web-components"].map((framework) => ({
+    // HTML: Intl.NumberFormat options, values in minutes.
+    ...["html"].map((framework) => ({
         framework,
         variant: "line-format",
         median: [12.4, 11.5, 15.2, 18.1, 14.3, 13.3],
         firstCell: { value: "12.4", text: /^12\.4 min/ },
     })),
-    // React, Solid, Svelte, web components: a format function, values in seconds.
-    ...["react", "solid", "svelte", "web-components"].map((framework) => ({
+    // React, Solid, Svelte: a format function, values in seconds.
+    ...["react", "solid", "svelte"].map((framework) => ({
         framework,
         variant: "line-format-function",
         median: [744, 690, 912, 1083, 856, 798],
@@ -225,7 +224,7 @@ for (const { framework, variant, median, firstCell, shown } of FORMAT_CASES as {
 }
 
 // Unit names vary between browsers' Intl data (WebKit says "min", Chromium "mins"), so compare with the browser's own.
-for (const framework of ["html", "astro", "web-components"]) {
+for (const framework of ["html"]) {
     test(`line-format: the axis ticks and tooltips use the Intl.NumberFormat options (${framework})`, async ({ page }) => {
         await page.goto(`/test/chart/line-format/${framework}`);
         await waitForChart(page);
@@ -250,7 +249,7 @@ for (const framework of ["html", "astro", "web-components"]) {
     });
 }
 
-for (const framework of ["react", "solid", "svelte", "web-components"]) {
+for (const framework of ["react", "solid", "svelte"]) {
     test(`format: changing only the format redraws the axes and tooltips (${framework})`, async ({ page }) => {
         await page.goto(`/test/chart/format-change/${framework}`);
         await waitForChart(page);
@@ -276,46 +275,6 @@ test("format: a new inline format that shows the same text does not redraw the c
     await expect(page.locator(".iai-chart canvas[data-test-first]")).toHaveCount(1);
 });
 
-test.describe("pie legend and labels", () => {
-    const legendShown = (page: Page) =>
-        page.locator(".iai-chart").evaluate(
-            (el) => (el as HTMLElement & { iaiChart: { legend: { options: { display: boolean } } } }).iaiChart.legend.options.display,
-        );
-    const setSlices = (page: Page, labels: string[]) =>
-        page.locator("iai-chart").evaluate((el, labels) => {
-            const chart = el as HTMLElement & { data: { labels: string[]; datasets: { data: number[] }[] } };
-            chart.data = { ...chart.data, labels, datasets: [{ ...chart.data.datasets[0], data: labels.map((_, i) => i + 1) }] };
-        }, labels);
-
-    test("more than 6 slices uses the legend instead of labels", async ({ page }) => {
-        await page.goto("/test/chart/pie/web-components");
-        await waitForChart(page);
-        await setSlices(page, ["A", "B", "C", "D", "E", "F", "G"]);
-        await expect.poll(() => legendShown(page)).toBe(true);
-    });
-
-    test("a single slice has no legend, even when narrow", async ({ page }) => {
-        await page.setViewportSize({ width: 360, height: 800 });
-        await page.goto("/test/chart/pie/web-components");
-        await waitForChart(page);
-        await setSlices(page, ["All"]);
-        await expect.poll(() => legendShown(page)).toBe(false);
-    });
-});
-
-test("chart text follows the browser font size", async ({ page }) => {
-    await page.goto("/test/chart/pie/web-components");
-    await waitForChart(page);
-    const size = await page.locator("iai-chart").evaluate((el) => {
-        document.documentElement.style.fontSize = "20px";
-        const chart = el as HTMLElement & { data: unknown };
-        chart.data = { ...(chart.data as object) };
-        return (el as HTMLElement & { iaiChart: { options: { plugins: { legend: { labels: { font: { size: number } } } } } } }).iaiChart
-            .options.plugins.legend.labels.font.size;
-    });
-    expect(size).toBe(20);
-});
-
 test("high contrast mode gives the chart a white background", async ({ page, browserName }) => {
     test.skip(browserName === "webkit", "WebKit cannot emulate forced colours");
     await page.emulateMedia({ forcedColors: "active" });
@@ -324,29 +283,3 @@ test("high contrast mode gives the chart a white background", async ({ page, bro
     await expect(page.locator(".iai-chart__canvas")).toHaveCSS("background-color", "rgb(255, 255, 255)");
 });
 
-test.describe("web component reacts to changes", () => {
-    test("setting data redraws one chart with the new values", async ({ page }) => {
-        await page.goto("/test/chart/pie/web-components");
-        await waitForChart(page);
-        await page.locator("iai-chart").evaluate((el) => {
-            const chart = el as HTMLElement & { data: { datasets: { data: number[] }[] } };
-            chart.data = { ...chart.data, datasets: [{ ...chart.data.datasets[0], data: [1, 2, 3, 4] }] };
-        });
-        await expect(page.locator(".iai-chart canvas")).toHaveCount(1);
-        expect((await readChart(page)).data.datasets[0].data).toEqual([1, 2, 3, 4]);
-        await page.getByText("Show data", { exact: false }).first().click();
-        await expect(page.locator(".iai-chart tbody td").first()).toHaveText("1");
-    });
-
-    test("changing the variant and title redraws the chart", async ({ page }) => {
-        await page.goto("/test/chart/pie/web-components");
-        await waitForChart(page);
-        await page.locator("iai-chart").evaluate((el) => {
-            el.setAttribute("variant", "doughnut");
-            el.setAttribute("title", "Submissions this quarter");
-        });
-        await expect(page.locator(".iai-chart canvas")).toHaveCount(1);
-        await expect(page.locator(".iai-chart canvas")).toHaveAccessibleName("Submissions this quarter");
-        expect((await readChart(page)).type).toBe("doughnut");
-    });
-});
