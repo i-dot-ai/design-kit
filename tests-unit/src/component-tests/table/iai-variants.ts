@@ -5,7 +5,7 @@ export const iaiTableVariants: IaiVariant[] = [
     { name: "summary", props: { summary: true }, expectClass: "govuk-table--summary" },
 ];
 
-// noWrap also works for web components: HTML attribute names are lowercased to "nowrap".
+// The HTML attribute name is the lowercased "nowrap".
 export const iaiTableCellVariants: IaiVariant[] = [
     { name: "stretch", props: { stretch: true }, expectClass: "govuk-table__cell--stretch" },
     { name: "no-wrap", props: { noWrap: true }, expectClass: "govuk-table__cell--no-wrap" },
