@@ -5,6 +5,8 @@ Date: 2026-09-18
 ## Status
 Accepted
 
+- Partly superseded by [decision 0016](/docs/architecture/decisions/0016-restrict-component-library-to-solid-react-and-svelte.md)
+
 ## Context
 
 Products in i.AI are written in React and Svelte. Solid and Svelte has been proposed as languages to be encouraged to be used in i.AI.

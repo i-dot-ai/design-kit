@@ -3,7 +3,7 @@
 Date: 2026-11-03
 
 ## Status
-Accepted
+Superseded
 
 ## Context
 
