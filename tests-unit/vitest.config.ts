@@ -14,7 +14,6 @@ const contentAlias = {
  *   *.react.test.tsx   -> react   (esbuild automatic JSX)
  *   *.solid.test.tsx   -> solid   (vite-plugin-solid babel transform)
  *   *.svelte.test.ts   -> svelte  (vite-plugin-svelte)
- *   *.astro.test.ts    -> astro   (astro Container API, see vitest.astro.config.ts)
  *
  * Each framework needs its own transform pipeline, so they can't share a
  * single project — but every test file targets exactly one framework.
@@ -58,17 +57,6 @@ export default defineConfig({
                     environment: "node",
                 },
             },
-            {
-                resolve: { alias: contentAlias },
-                test: {
-                    name: "web-components",
-                    include: ["src/**/*.web-components.test.ts"],
-                    environment: "happy-dom",
-                    // Lets example scripts run, as they do on a page (see renderHtml).
-                    environmentOptions: { happyDOM: { settings: { enableJavaScriptEvaluation: true } } },
-                },
-            },
-            "./vitest.astro.config.ts",
         ],
     },
 });

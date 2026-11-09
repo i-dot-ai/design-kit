@@ -9,7 +9,7 @@ const VARIANTS = [
     { variant: "area", type: "line", title: "Applications by channel" },
 ];
 
-const FRAMEWORKS = ["html", "astro", "react", "solid", "svelte", "web-components"];
+const FRAMEWORKS = ["html", "react", "solid", "svelte"];
 
 /** Every chart page: one per variant per framework. */
 export const CHART_PAGES = FRAMEWORKS.flatMap((framework) =>
