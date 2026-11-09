@@ -8,7 +8,6 @@
     "build": "npm run sync:skill-zip && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "migrate:decisions": "node scripts/migrate-decisions.mjs",
     "lint": "npx eslint --fix"
   },
   "dependencies": {

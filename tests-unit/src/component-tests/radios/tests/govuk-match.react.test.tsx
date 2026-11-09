@@ -7,7 +7,7 @@ import { renderRadios } from "../examples/radios.react.jsx";
 
 // React can't inject raw HTML unwrapped, so html-label fixtures are skipped, and
 // only one representative conditional-reveal fixture is hand-authored (see the
-// example) to exercise RadioConditional. Svelte/Astro cover the rest.
+// example) to exercise RadioConditional. Svelte covers the rest.
 const REPRESENTATIVE_CONDITIONAL = "with conditional items";
 
 describe("Matches govuk fixture shape - Radios", () => {
