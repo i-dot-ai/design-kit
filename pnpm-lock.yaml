@@ -41,9 +41,6 @@ importers:
       '@astrojs/svelte':
         specifier: ^9.0.1
         version: 9.0.1(@types/node@22.20.5)(astro@7.3.8(@astrojs/markdown-remark@7.3.2(supports-color@8.1.1))(@types/node@22.20.5)(jiti@2.7.0)(sass@1.105.1)(yaml@2.9.1))(jiti@2.7.0)(sass@1.105.1)(svelte@5.57.2(@typescript-eslint/types@8.71.1))(typescript@5.9.3)(yaml@2.9.1)
-      '@i-dot-ai-npm/component-library-astro':
-        specifier: workspace:*
-        version: link:../packages/astro
       '@i-dot-ai-npm/component-library-frontend':
         specifier: workspace:*
         version: link:../packages/frontend
@@ -56,12 +53,9 @@ importers:
       '@i-dot-ai-npm/component-library-svelte':
         specifier: workspace:*
         version: link:../packages/svelte
-      '@i-dot-ai-npm/component-library-web-components':
-        specifier: workspace:*
-        version: link:../packages/web-components
       '@i-dot-ai-npm/utilities':
         specifier: ^1.0.0
-        version: 1.0.1(debug@4.4.3(supports-color@8.1.1))(openai@4.104.0(ws@8.22.0)(zod@3.25.76))(supports-color@7.2.0)(ws@8.22.0)
+        version: 1.0.1(debug@4.4.3(supports-color@8.1.1))(openai@4.104.0(zod@3.25.76))(supports-color@7.2.0)
       '@sentry/astro':
         specifier: ^11.6.0
         version: 11.6.0(@babel/core@7.29.7(supports-color@8.1.1))(astro@7.3.8(@astrojs/markdown-remark@7.3.2(supports-color@8.1.1))(@types/node@22.20.5)(jiti@2.7.0)(sass@1.105.1)(yaml@2.9.1))(rollup@4.64.5)
@@ -136,18 +130,6 @@ importers:
         specifier: ^8.35.1
         version: 8.71.1(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@8.1.1)(typescript@5.9.3)
 
-  packages/astro:
-    devDependencies:
-      '@i-dot-ai-npm/component-library-frontend':
-        specifier: workspace:*
-        version: link:../frontend
-      astro:
-        specifier: ^7.3.2
-        version: 7.3.8(@astrojs/markdown-remark@7.3.2)(@types/node@22.20.5)(jiti@2.7.0)(sass@1.105.1)(yaml@2.9.1)
-      govuk-frontend:
-        specifier: ^6.5.0
-        version: 6.5.1
-
   packages/frontend:
     dependencies:
       chart.js:
@@ -215,18 +197,6 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  packages/web-components:
-    devDependencies:
-      '@i-dot-ai-npm/component-library-frontend':
-        specifier: workspace:*
-        version: link:../frontend
-      govuk-frontend:
-        specifier: ^6.5.0
-        version: 6.5.1
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
   tests-e2e:
     devDependencies:
       '@axe-core/playwright':
@@ -238,9 +208,6 @@ importers:
 
   tests-unit:
     dependencies:
-      '@i-dot-ai-npm/component-library-astro':
-        specifier: workspace:*
-        version: link:../packages/astro
       '@i-dot-ai-npm/component-library-frontend':
         specifier: workspace:*
         version: link:../packages/frontend
@@ -253,9 +220,6 @@ importers:
       '@i-dot-ai-npm/component-library-svelte':
         specifier: workspace:*
         version: link:../packages/svelte
-      '@i-dot-ai-npm/component-library-web-components':
-        specifier: workspace:*
-        version: link:../packages/web-components
     devDependencies:
       '@sveltejs/vite-plugin-svelte':
         specifier: ^7.3.0
@@ -266,15 +230,9 @@ importers:
       '@types/react-dom':
         specifier: 19.3.0
         version: 19.3.0(@types/react@19.3.0)
-      astro:
-        specifier: ^7.3.2
-        version: 7.3.8(@astrojs/markdown-remark@7.3.2(supports-color@8.1.1))(@types/node@22.20.5)(jiti@2.7.0)(sass@1.105.1)(yaml@2.9.1)
       govuk-frontend:
         specifier: ^6.5.0
         version: 6.5.1
-      happy-dom:
-        specifier: ^21.0.0
-        version: 21.0.4
       node-html-parser:
         specifier: ^7.1.0
         version: 7.1.0
@@ -295,7 +253,7 @@ importers:
         version: 2.11.14(solid-js@1.9.17)(supports-color@8.1.1)(vite@8.3.4(@types/node@22.20.5)(jiti@2.7.0)(sass@1.105.1)(yaml@2.9.1))
       vitest:
         specifier: ^3.0.0
-        version: 3.2.7(@types/debug@4.1.13)(@types/node@22.20.5)(happy-dom@21.0.4)(jiti@2.7.0)(lightningcss@1.33.0)(sass@1.105.1)(supports-color@7.2.0)(yaml@2.9.1)
+        version: 3.2.7(@types/debug@4.1.13)(@types/node@22.20.5)(jiti@2.7.0)(lightningcss@1.33.0)(sass@1.105.1)(supports-color@7.2.0)(yaml@2.9.1)
 
 packages:
 
@@ -1816,12 +1774,6 @@ packages:
   '@types/uuid@10.0.0':
     resolution: {integrity: sha512-7gqG38EyHgyP1S+7+xomFtL+ZNHcKv6DwNaCZmJmo1vgMugyF3TCnXVg4t1uk89mLNwnLtnY3TpOpCOyp1/xHQ==}
 
-  '@types/whatwg-mimetype@3.0.2':
-    resolution: {integrity: sha512-c2AKvDT8ToxLIOUlN51gTiHXflsfIFisS4pO7pDPoKouJCESkhZnEy623gwP9laCy5lnLDAw1vAzu2vM2YLOrA==}
-
-  '@types/ws@8.18.2':
-    resolution: {integrity: sha512-67MQl+fpWKVTT1NYdnmo3U4sc/xPo/zQBncVnI74qmQa0z/b+1g6iYqNmGCPbxO+zz2aklb08a0oHfegiVd0/w==}
-
   '@typescript-eslint/eslint-plugin@8.71.1':
     resolution: {integrity: sha512-nNlBf6HuotqMgZvSkWD5hNdemiBIxQ2NmrlgfcUIeZRs+BbakjscCQRq/Hb74EFVnFiSWWdL12JruqwBy3ERDw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -2119,10 +2071,6 @@ packages:
     resolution: {integrity: sha512-Db1SbgBS/fg/392AblrMJk97KggmvYhr4pB5ZIMTWtaivCPMWLkmb7m21cJvpvgK+J3nsU2CmmixNBZx4vFj/w==}
     engines: {node: '>=8.0.0'}
 
-  buffer-image-size@0.6.4:
-    resolution: {integrity: sha512-nEh+kZOPY1w+gcCMobZ6ETUp9WfibndnosbpwB1iJk/8Gt5ZF2bhS6+B6bPYz424KtwsR6Rflc3tCz1/ghX2dQ==}
-    engines: {node: '>=4.0'}
-
   buffer@6.0.3:
     resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
 
@@ -2407,10 +2355,6 @@ packages:
 
   entities@6.0.1:
     resolution: {integrity: sha512-aN97NXWF6AWBTahfVOIrB/NShkzi5H7F9r1s9mD3cDj4Ko5f2qhhVoYMibXF7GlLveb/D2ioWay8lxI97Ven3g==}
-    engines: {node: '>=0.12'}
-
-  entities@7.0.1:
-    resolution: {integrity: sha512-TWrgLOFUQTH994YUyl1yT4uyavY5nNB5muff+RtWaqNVCAK408b5ZnnbNAUEWLTCpum9w6arT70i1XdQ4UeOPA==}
     engines: {node: '>=0.12'}
 
   es-define-property@1.0.1:
@@ -2715,10 +2659,6 @@ packages:
 
   h3@1.15.11:
     resolution: {integrity: sha512-L3THSe2MPeBwgIZVSH5zLdBBU90TOxarvhK9d04IDY2AmVS8j2Jz2LIWtwsGOU3lu2I5jCN7FNvVfY2+XyF+mg==}
-
-  happy-dom@21.0.4:
-    resolution: {integrity: sha512-tFm+GaLBgo6o0awHnvHaNoraVo27qJ+2tZEtZ+cIa08hXbeitrxAJajLI05hsUy/2/YTKcUjQYzHe5mCcraLBw==}
-    engines: {node: '>=20.0.0'}
 
   has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
@@ -4301,10 +4241,6 @@ packages:
   webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
 
-  whatwg-mimetype@3.0.0:
-    resolution: {integrity: sha512-nt+N2dzIutVRxARx1nghPKGv1xHikU7HKdfafKkLNLindmPU/ch3U31NOCGGA/dmPcmb1VlofO0vnKAcsm0o/Q==}
-    engines: {node: '>=12'}
-
   whatwg-url@5.0.0:
     resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}
 
@@ -4321,18 +4257,6 @@ packages:
   word-wrap@1.2.5:
     resolution: {integrity: sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==}
     engines: {node: '>=0.10.0'}
-
-  ws@8.22.0:
-    resolution: {integrity: sha512-Ydggc987+RO0AnWtZ/7Wq9FtNvcrL1b/RO0ud9mWjUPgDrsAAwQSF51sm2hm1XofbU/4jkpGEsLFsZZxU+1DOg==}
-    engines: {node: '>=10.0.0'}
-    peerDependencies:
-      bufferutil: ^4.0.1
-      utf-8-validate: '>=5.0.2'
-    peerDependenciesMeta:
-      bufferutil:
-        optional: true
-      utf-8-validate:
-        optional: true
 
   xxhash-wasm@1.1.0:
     resolution: {integrity: sha512-147y/6YNh+tlp6nd/2pWq38i9h6mz/EuQ6njIrmW8D1BS5nCqs0P6DG+m6zTGnNz5I+uhZ0SHxBs9BsPrwcKDA==}
@@ -4444,34 +4368,6 @@ snapshots:
       smol-toml: 1.9.1
       unified: 11.0.5
       yaml: 2.9.1
-
-  '@astrojs/markdown-remark@7.3.2':
-    dependencies:
-      '@astrojs/internal-helpers': 0.12.0
-      '@astrojs/prism': 4.0.2
-      '@mdx-js/mdx': 3.1.1
-      acorn: 8.19.0
-      estree-util-visit: 2.0.0
-      github-slugger: 2.0.0
-      hast-util-from-html: 2.0.3
-      hast-util-to-html: 9.0.5
-      hast-util-to-text: 4.0.2
-      mdast-util-definitions: 6.0.0
-      rehype-raw: 7.0.0
-      rehype-stringify: 10.0.1
-      remark-gfm: 4.0.1
-      remark-parse: 11.0.0
-      remark-rehype: 11.1.2
-      remark-smartypants: 3.0.3
-      source-map: 0.7.6
-      unified: 11.0.5
-      unist-util-remove-position: 5.0.0
-      unist-util-visit: 5.1.0
-      unist-util-visit-parents: 6.0.2
-      vfile: 6.0.3
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
 
   '@astrojs/markdown-remark@7.3.2(supports-color@8.1.1)':
     dependencies:
@@ -4991,10 +4887,10 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@i-dot-ai-npm/utilities@1.0.1(debug@4.4.3(supports-color@8.1.1))(openai@4.104.0(ws@8.22.0)(zod@3.25.76))(supports-color@7.2.0)(ws@8.22.0)':
+  '@i-dot-ai-npm/utilities@1.0.1(debug@4.4.3(supports-color@8.1.1))(openai@4.104.0(zod@3.25.76))(supports-color@7.2.0)':
     dependencies:
-      '@langchain/core': 0.2.36(openai@4.104.0(ws@8.22.0)(zod@3.25.76))
-      '@langchain/openai': 0.2.11(ws@8.22.0)
+      '@langchain/core': 0.2.36(openai@4.104.0(zod@3.25.76))
+      '@langchain/openai': 0.2.11
       axios: 1.20.0(debug@4.4.3(supports-color@8.1.1))(supports-color@7.2.0)
       langfuse-langchain: 3.39.2
       uuid: 9.0.1
@@ -5133,13 +5029,13 @@ snapshots:
 
   '@kurkle/color@0.3.4': {}
 
-  '@langchain/core@0.2.36(openai@4.104.0(ws@8.22.0)(zod@3.25.76))':
+  '@langchain/core@0.2.36(openai@4.104.0(zod@3.25.76))':
     dependencies:
       ansi-styles: 5.2.0
       camelcase: 6.3.0
       decamelize: 1.2.0
       js-tiktoken: 1.0.21
-      langsmith: 0.1.68(openai@4.104.0(ws@8.22.0)(zod@3.25.76))
+      langsmith: 0.1.68(openai@4.104.0(zod@3.25.76))
       mustache: 4.2.0
       p-queue: 6.6.2
       p-retry: 4.6.2
@@ -5149,47 +5045,16 @@ snapshots:
     transitivePeerDependencies:
       - openai
 
-  '@langchain/openai@0.2.11(ws@8.22.0)':
+  '@langchain/openai@0.2.11':
     dependencies:
-      '@langchain/core': 0.2.36(openai@4.104.0(ws@8.22.0)(zod@3.25.76))
+      '@langchain/core': 0.2.36(openai@4.104.0(zod@3.25.76))
       js-tiktoken: 1.0.21
-      openai: 4.104.0(ws@8.22.0)(zod@3.25.76)
+      openai: 4.104.0(zod@3.25.76)
       zod: 3.25.76
       zod-to-json-schema: 3.25.2(zod@3.25.76)
     transitivePeerDependencies:
       - encoding
       - ws
-
-  '@mdx-js/mdx@3.1.1':
-    dependencies:
-      '@types/estree': 1.0.9
-      '@types/estree-jsx': 1.0.5
-      '@types/hast': 3.0.5
-      '@types/mdx': 2.0.14
-      acorn: 8.19.0
-      collapse-white-space: 2.1.0
-      devlop: 1.1.0
-      estree-util-is-identifier-name: 3.0.0
-      estree-util-scope: 1.0.1
-      estree-walker: 3.0.3
-      hast-util-to-jsx-runtime: 2.3.6
-      markdown-extensions: 2.0.0
-      recma-build-jsx: 1.0.0
-      recma-jsx: 1.0.1(acorn@8.19.0)
-      recma-stringify: 1.0.0
-      rehype-recma: 1.0.0
-      remark-mdx: 3.1.1
-      remark-parse: 11.0.0
-      remark-rehype: 11.1.2
-      source-map: 0.7.6
-      unified: 11.0.5
-      unist-util-position-from-estree: 2.0.0
-      unist-util-stringify-position: 4.0.0
-      unist-util-visit: 5.1.0
-      vfile: 6.0.3
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
 
   '@mdx-js/mdx@3.1.1(supports-color@8.1.1)':
     dependencies:
@@ -5807,12 +5672,6 @@ snapshots:
 
   '@types/uuid@10.0.0': {}
 
-  '@types/whatwg-mimetype@3.0.2': {}
-
-  '@types/ws@8.18.2':
-    dependencies:
-      '@types/node': 22.20.5
-
   '@typescript-eslint/eslint-plugin@8.71.1(@typescript-eslint/parser@8.71.1(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@8.1.1)(typescript@5.9.3))(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@8.1.1)(typescript@5.9.3)':
     dependencies:
       '@eslint-community/regexpp': 4.12.2
@@ -6113,96 +5972,6 @@ snapshots:
       - uploadthing
       - yaml
 
-  astro@7.3.8(@astrojs/markdown-remark@7.3.2)(@types/node@22.20.5)(jiti@2.7.0)(sass@1.105.1)(yaml@2.9.1):
-    dependencies:
-      '@astrojs/compiler-rs': 0.5.1
-      '@astrojs/internal-helpers': 0.12.0
-      '@astrojs/markdown-satteri': 0.4.3
-      '@astrojs/telemetry': 3.3.3
-      '@capsizecss/unpack': 4.0.1
-      '@clack/prompts': 1.8.1
-      '@oslojs/encoding': 1.1.0
-      am-i-vibing: 0.5.0
-      aria-query: 5.3.2
-      axobject-query: 4.1.0
-      ci-info: 4.4.0
-      clsx: 2.1.1
-      common-ancestor-path: 2.0.0
-      cookie: 2.0.1
-      devalue: 5.9.4
-      diff: 9.0.0
-      dset: 3.1.4
-      es-module-lexer: 3.0.3
-      find-proc: 0.2.0
-      flattie: 1.1.1
-      fontace: 0.4.1
-      get-tsconfig: 5.0.0-beta.6
-      github-slugger: 2.0.0
-      html-escaper: 3.0.3
-      http-cache-semantics: 4.3.0
-      jsonc-parser: 3.3.1
-      magic-string: 1.4.3
-      magicast: 0.5.5
-      mrmime: 2.0.1
-      neotraverse: 1.0.1
-      obug: 3.0.0
-      p-limit: 7.3.3
-      p-queue: 9.3.4
-      package-manager-detector: 1.9.0
-      piccolore: 0.1.3
-      picomatch: 4.0.7
-      rolldown: 1.2.13
-      shiki: 4.5.0
-      smol-toml: 1.9.1
-      svgo: 4.1.0
-      tinyclip: 1.0.3
-      tinyexec: 1.3.1
-      tinyglobby: 0.2.17
-      ultrahtml: 1.7.0
-      unifont: 0.7.5
-      unstorage: 1.17.5
-      verkit: 0.5.0
-      vite: 8.3.4(@types/node@22.20.5)(jiti@2.7.0)(sass@1.105.1)(yaml@2.9.1)
-      vitefu: 1.1.3(vite@8.3.4(@types/node@22.20.5)(jiti@2.7.0)(sass@1.105.1)(yaml@2.9.1))
-      xxhash-wasm: 1.1.0
-      yargs-parser: 22.0.0
-      zod: 4.6.5
-    optionalDependencies:
-      '@astrojs/markdown-remark': 7.3.2
-      sharp: 0.35.5(@types/node@22.20.5)
-    transitivePeerDependencies:
-      - '@azure/app-configuration'
-      - '@azure/cosmos'
-      - '@azure/data-tables'
-      - '@azure/identity'
-      - '@azure/keyvault-secrets'
-      - '@azure/storage-blob'
-      - '@capacitor/preferences'
-      - '@deno/kv'
-      - '@netlify/blobs'
-      - '@planetscale/database'
-      - '@types/node'
-      - '@upstash/redis'
-      - '@vercel/blob'
-      - '@vercel/functions'
-      - '@vercel/kv'
-      - '@vitejs/devtools'
-      - aws4fetch
-      - db0
-      - esbuild
-      - idb-keyval
-      - ioredis
-      - jiti
-      - less
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - terser
-      - tsx
-      - uploadthing
-      - yaml
-
   async@3.2.6: {}
 
   asynckit@0.4.0: {}
@@ -6298,10 +6067,6 @@ snapshots:
       update-browserslist-db: 1.3.4(browserslist@4.29.3)
 
   buffer-crc32@1.0.0: {}
-
-  buffer-image-size@0.6.4:
-    dependencies:
-      '@types/node': 22.20.5
 
   buffer@6.0.3:
     dependencies:
@@ -6459,11 +6224,6 @@ snapshots:
 
   csstype@3.2.3: {}
 
-  debug@4.4.3:
-    dependencies:
-      ms: 2.1.3
-    optional: true
-
   debug@4.4.3(supports-color@7.2.0):
     dependencies:
       ms: 2.1.3
@@ -6554,8 +6314,6 @@ snapshots:
   entities@4.5.0: {}
 
   entities@6.0.1: {}
-
-  entities@7.0.1: {}
 
   es-define-property@1.0.1: {}
 
@@ -6898,19 +6656,6 @@ snapshots:
       ufo: 1.6.4
       uncrypto: 0.1.3
 
-  happy-dom@21.0.4:
-    dependencies:
-      '@types/node': 22.20.5
-      '@types/whatwg-mimetype': 3.0.2
-      '@types/ws': 8.18.2
-      buffer-image-size: 0.6.4
-      entities: 7.0.1
-      whatwg-mimetype: 3.0.0
-      ws: 8.22.0
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-
   has-flag@4.0.0: {}
 
   has-symbols@1.1.0: {}
@@ -6985,28 +6730,6 @@ snapshots:
       space-separated-tokens: 1.1.5
       zwitch: 1.0.5
 
-  hast-util-to-estree@3.1.3:
-    dependencies:
-      '@types/estree': 1.0.9
-      '@types/estree-jsx': 1.0.5
-      '@types/hast': 3.0.5
-      comma-separated-tokens: 2.0.3
-      devlop: 1.1.0
-      estree-util-attach-comments: 3.0.0
-      estree-util-is-identifier-name: 3.0.0
-      hast-util-whitespace: 3.0.0
-      mdast-util-mdx-expression: 2.0.1
-      mdast-util-mdx-jsx: 3.2.0
-      mdast-util-mdxjs-esm: 2.0.1
-      property-information: 7.2.0
-      space-separated-tokens: 2.0.2
-      style-to-js: 1.1.21
-      unist-util-position: 5.0.0
-      zwitch: 2.0.4
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
-
   hast-util-to-estree@3.1.3(supports-color@8.1.1):
     dependencies:
       '@types/estree': 1.0.9
@@ -7041,27 +6764,6 @@ snapshots:
       space-separated-tokens: 2.0.2
       stringify-entities: 4.0.4
       zwitch: 2.0.4
-
-  hast-util-to-jsx-runtime@2.3.6:
-    dependencies:
-      '@types/estree': 1.0.9
-      '@types/hast': 3.0.5
-      '@types/unist': 3.0.3
-      comma-separated-tokens: 2.0.3
-      devlop: 1.1.0
-      estree-util-is-identifier-name: 3.0.0
-      hast-util-whitespace: 3.0.0
-      mdast-util-mdx-expression: 2.0.1
-      mdast-util-mdx-jsx: 3.2.0
-      mdast-util-mdxjs-esm: 2.0.1
-      property-information: 7.2.0
-      space-separated-tokens: 2.0.2
-      style-to-js: 1.1.21
-      unist-util-position: 5.0.0
-      vfile-message: 4.0.3
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
 
   hast-util-to-jsx-runtime@2.3.6(supports-color@8.1.1):
     dependencies:
@@ -7242,7 +6944,7 @@ snapshots:
     dependencies:
       langfuse-core: 3.39.2
 
-  langsmith@0.1.68(openai@4.104.0(ws@8.22.0)(zod@3.25.76)):
+  langsmith@0.1.68(openai@4.104.0(zod@3.25.76)):
     dependencies:
       '@types/uuid': 10.0.0
       commander: 10.0.1
@@ -7251,7 +6953,7 @@ snapshots:
       semver: 7.8.5
       uuid: 10.0.0
     optionalDependencies:
-      openai: 4.104.0(ws@8.22.0)(zod@3.25.76)
+      openai: 4.104.0(zod@3.25.76)
 
   lazystream@1.0.1:
     dependencies:
@@ -7411,24 +7113,6 @@ snapshots:
       unist-util-is: 6.0.1
       unist-util-visit-parents: 6.0.2
 
-  mdast-util-from-markdown@2.1.0:
-    dependencies:
-      '@types/mdast': 4.0.4
-      '@types/unist': 3.0.3
-      decode-named-character-reference: 1.3.0
-      devlop: 1.1.0
-      mdast-util-to-string: 4.0.0
-      micromark: 4.0.3
-      micromark-util-decode-numeric-character-reference: 2.0.2
-      micromark-util-decode-string: 2.0.1
-      micromark-util-normalize-identifier: 2.0.1
-      micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.3
-      unist-util-stringify-position: 4.0.0
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
-
   mdast-util-from-markdown@2.1.0(supports-color@8.1.1):
     dependencies:
       '@types/mdast': 4.0.4
@@ -7465,17 +7149,6 @@ snapshots:
       mdast-util-find-and-replace: 3.0.3
       micromark-util-character: 2.1.1
 
-  mdast-util-gfm-footnote@2.1.0:
-    dependencies:
-      '@types/mdast': 4.0.4
-      devlop: 1.1.0
-      mdast-util-from-markdown: 2.1.0
-      mdast-util-to-markdown: 2.2.0
-      micromark-util-normalize-identifier: 2.0.1
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
-
   mdast-util-gfm-footnote@2.1.0(supports-color@8.1.1):
     dependencies:
       '@types/mdast': 4.0.4
@@ -7486,15 +7159,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  mdast-util-gfm-strikethrough@2.0.1:
-    dependencies:
-      '@types/mdast': 4.0.4
-      mdast-util-from-markdown: 2.1.0
-      mdast-util-to-markdown: 2.2.0
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
-
   mdast-util-gfm-strikethrough@2.0.1(supports-color@8.1.1):
     dependencies:
       '@types/mdast': 4.0.4
@@ -7502,17 +7166,6 @@ snapshots:
       mdast-util-to-markdown: 2.2.0
     transitivePeerDependencies:
       - supports-color
-
-  mdast-util-gfm-table@2.0.0:
-    dependencies:
-      '@types/mdast': 4.0.4
-      devlop: 1.1.0
-      markdown-table: 3.0.4
-      mdast-util-from-markdown: 2.1.0
-      mdast-util-to-markdown: 2.2.0
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
 
   mdast-util-gfm-table@2.0.0(supports-color@8.1.1):
     dependencies:
@@ -7524,16 +7177,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  mdast-util-gfm-task-list-item@2.0.0:
-    dependencies:
-      '@types/mdast': 4.0.4
-      devlop: 1.1.0
-      mdast-util-from-markdown: 2.1.0
-      mdast-util-to-markdown: 2.2.0
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
-
   mdast-util-gfm-task-list-item@2.0.0(supports-color@8.1.1):
     dependencies:
       '@types/mdast': 4.0.4
@@ -7542,19 +7185,6 @@ snapshots:
       mdast-util-to-markdown: 2.2.0
     transitivePeerDependencies:
       - supports-color
-
-  mdast-util-gfm@3.1.0:
-    dependencies:
-      mdast-util-from-markdown: 2.1.0
-      mdast-util-gfm-autolink-literal: 2.0.1
-      mdast-util-gfm-footnote: 2.1.0
-      mdast-util-gfm-strikethrough: 2.0.1
-      mdast-util-gfm-table: 2.0.0
-      mdast-util-gfm-task-list-item: 2.0.0
-      mdast-util-to-markdown: 2.2.0
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
 
   mdast-util-gfm@3.1.0(supports-color@8.1.1):
     dependencies:
@@ -7568,18 +7198,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  mdast-util-mdx-expression@2.0.1:
-    dependencies:
-      '@types/estree-jsx': 1.0.5
-      '@types/hast': 3.0.5
-      '@types/mdast': 4.0.4
-      devlop: 1.1.0
-      mdast-util-from-markdown: 2.1.0
-      mdast-util-to-markdown: 2.2.0
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
-
   mdast-util-mdx-expression@2.0.1(supports-color@8.1.1):
     dependencies:
       '@types/estree-jsx': 1.0.5
@@ -7590,24 +7208,6 @@ snapshots:
       mdast-util-to-markdown: 2.2.0
     transitivePeerDependencies:
       - supports-color
-
-  mdast-util-mdx-jsx@3.2.0:
-    dependencies:
-      '@types/estree-jsx': 1.0.5
-      '@types/hast': 3.0.5
-      '@types/mdast': 4.0.4
-      '@types/unist': 3.0.3
-      ccount: 2.0.1
-      devlop: 1.1.0
-      mdast-util-from-markdown: 2.1.0
-      mdast-util-to-markdown: 2.2.0
-      parse-entities: 4.0.2
-      stringify-entities: 4.0.4
-      unist-util-stringify-position: 4.0.0
-      vfile-message: 4.0.3
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
 
   mdast-util-mdx-jsx@3.2.0(supports-color@8.1.1):
     dependencies:
@@ -7626,17 +7226,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  mdast-util-mdx@3.0.0:
-    dependencies:
-      mdast-util-from-markdown: 2.1.0
-      mdast-util-mdx-expression: 2.0.1
-      mdast-util-mdx-jsx: 3.2.0
-      mdast-util-mdxjs-esm: 2.0.1
-      mdast-util-to-markdown: 2.2.0
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
-
   mdast-util-mdx@3.0.0(supports-color@8.1.1):
     dependencies:
       mdast-util-from-markdown: 2.1.0(supports-color@8.1.1)
@@ -7646,18 +7235,6 @@ snapshots:
       mdast-util-to-markdown: 2.2.0
     transitivePeerDependencies:
       - supports-color
-
-  mdast-util-mdxjs-esm@2.0.1:
-    dependencies:
-      '@types/estree-jsx': 1.0.5
-      '@types/hast': 3.0.5
-      '@types/mdast': 4.0.4
-      devlop: 1.1.0
-      mdast-util-from-markdown: 2.1.0
-      mdast-util-to-markdown: 2.2.0
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
 
   mdast-util-mdxjs-esm@2.0.1(supports-color@8.1.1):
     dependencies:
@@ -7967,30 +7544,6 @@ snapshots:
 
   micromark-util-types@2.0.3: {}
 
-  micromark@4.0.3:
-    dependencies:
-      '@types/debug': 4.1.13
-      debug: 4.4.3
-      decode-named-character-reference: 1.3.0
-      devlop: 1.1.0
-      micromark-core-commonmark: 2.0.4
-      micromark-factory-space: 2.1.0
-      micromark-util-character: 2.1.1
-      micromark-util-chunked: 2.0.1
-      micromark-util-combine-extensions: 2.0.1
-      micromark-util-decode-numeric-character-reference: 2.0.2
-      micromark-util-edit-map: 1.0.0
-      micromark-util-encode: 2.0.1
-      micromark-util-normalize-identifier: 2.0.1
-      micromark-util-resolve-all: 2.0.1
-      micromark-util-sanitize-uri: 2.0.1
-      micromark-util-subtokenize: 2.1.0
-      micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.3
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
-
   micromark@4.0.3(supports-color@8.1.1):
     dependencies:
       '@types/debug': 4.1.13
@@ -8110,7 +7663,7 @@ snapshots:
       regex: 6.1.0
       regex-recursion: 6.0.2
 
-  openai@4.104.0(ws@8.22.0)(zod@3.25.76):
+  openai@4.104.0(zod@3.25.76):
     dependencies:
       '@types/node': 18.19.130
       '@types/node-fetch': 2.6.13
@@ -8120,7 +7673,6 @@ snapshots:
       formdata-node: 4.4.1
       node-fetch: 2.7.0
     optionalDependencies:
-      ws: 8.22.0
       zod: 3.25.76
     transitivePeerDependencies:
       - encoding
@@ -8359,15 +7911,6 @@ snapshots:
       hast-util-raw: 9.1.0
       vfile: 6.0.3
 
-  rehype-recma@1.0.0:
-    dependencies:
-      '@types/estree': 1.0.9
-      '@types/hast': 3.0.5
-      hast-util-to-estree: 3.1.3
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
-
   rehype-recma@1.0.0(supports-color@8.1.1):
     dependencies:
       '@types/estree': 1.0.9
@@ -8382,18 +7925,6 @@ snapshots:
       hast-util-to-html: 9.0.5
       unified: 11.0.5
 
-  remark-gfm@4.0.1:
-    dependencies:
-      '@types/mdast': 4.0.4
-      mdast-util-gfm: 3.1.0
-      micromark-extension-gfm: 3.0.0
-      remark-parse: 11.0.0
-      remark-stringify: 11.0.0
-      unified: 11.0.5
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
-
   remark-gfm@4.0.1(supports-color@8.1.1):
     dependencies:
       '@types/mdast': 4.0.4
@@ -8405,30 +7936,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  remark-mdx@3.1.1:
-    dependencies:
-      mdast-util-mdx: 3.0.0
-      micromark-extension-mdxjs: 3.0.0
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
-
   remark-mdx@3.1.1(supports-color@8.1.1):
     dependencies:
       mdast-util-mdx: 3.0.0(supports-color@8.1.1)
       micromark-extension-mdxjs: 3.0.0
     transitivePeerDependencies:
       - supports-color
-
-  remark-parse@11.0.0:
-    dependencies:
-      '@types/mdast': 4.0.4
-      mdast-util-from-markdown: 2.1.0
-      micromark-util-types: 2.0.3
-      unified: 11.0.5
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
 
   remark-parse@11.0.0(supports-color@8.1.1):
     dependencies:
@@ -9068,7 +8581,7 @@ snapshots:
     optionalDependencies:
       vite: 8.3.4(@types/node@22.20.5)(jiti@2.7.0)(sass@1.105.1)(yaml@2.9.1)
 
-  vitest@3.2.7(@types/debug@4.1.13)(@types/node@22.20.5)(happy-dom@21.0.4)(jiti@2.7.0)(lightningcss@1.33.0)(sass@1.105.1)(supports-color@7.2.0)(yaml@2.9.1):
+  vitest@3.2.7(@types/debug@4.1.13)(@types/node@22.20.5)(jiti@2.7.0)(lightningcss@1.33.0)(sass@1.105.1)(supports-color@7.2.0)(yaml@2.9.1):
     dependencies:
       '@types/chai': 5.2.3
       '@vitest/expect': 3.2.7
@@ -9096,7 +8609,6 @@ snapshots:
     optionalDependencies:
       '@types/debug': 4.1.13
       '@types/node': 22.20.5
-      happy-dom: 21.0.4
     transitivePeerDependencies:
       - jiti
       - less
@@ -9119,8 +8631,6 @@ snapshots:
 
   webidl-conversions@3.0.1: {}
 
-  whatwg-mimetype@3.0.0: {}
-
   whatwg-url@5.0.0:
     dependencies:
       tr46: 0.0.3
@@ -9136,8 +8646,6 @@ snapshots:
       stackback: 0.0.2
 
   word-wrap@1.2.5: {}
-
-  ws@8.22.0: {}
 
   xxhash-wasm@1.1.0: {}
 
