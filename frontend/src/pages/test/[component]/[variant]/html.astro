@@ -13,7 +13,7 @@ export function getStaticPaths() {
         const [, component, , file] = rest.split("/");
         const variantName = file.replace(/\.html$/, "");
         return { params: { component, variant: variantName }, props: { html } };
-    }).filter((p) => !p.params.variant.endsWith(".web-components"));
+    });
 }
 
 const { html } = Astro.props;
