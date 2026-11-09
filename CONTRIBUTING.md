@@ -52,20 +52,20 @@ A component is spread across these places:
 
 - `frontend/src/content/components/<component>/` — docs (`index.mdx`) and `examples/`
 - `packages/frontend` — the component's final CSS and JS
-- `packages/{astro,react,svelte,solid,web-components}` — the framework wrappers
+- `packages/{react,svelte,solid}` — the framework wrappers
 - `tests-unit/src/component-tests/<component>/` — conformance, variant and HTML tests
 - `tests-e2e/tests/<component>/` — behaviour and accessibility specs
 
 ## Adding a component
 
 1. Check it's needed. Make sure it isn't already in the library. If another government department has designed it, use that as a basis.
-2. Write the spec first. Author the example files in `frontend/src/content/components/<component>/examples/`, one per framework: `default.html`, `default.astro`, `default.react.tsx`, `default.svelte`, `default.solid.tsx`, `default.web-components.html`. Then write the tests that apply (see [Tests reference](#tests-reference)), pointing them at these examples. Run them and confirm they fail.
+2. Write the spec first. Author the example files in `frontend/src/content/components/<component>/examples/`, one per framework: `default.html`, `default.react.tsx`, `default.svelte`, `default.solid.tsx`. Then write the tests that apply (see [Tests reference](#tests-reference)), pointing them at these examples. Run them and confirm they fail.
 3. Build the central CSS and JS in `packages/frontend`.
-4. Build the wrappers in `packages/{astro,react,svelte,solid,web-components}`.
+4. Build the wrappers in `packages/{react,svelte,solid}`.
 5. Write the docs page as `index.mdx` with `name` and `status` frontmatter. Cover what the component is, when to use it and when not to. Render each example with `<Example />` (no import needed).
 6. Run `make run_all_tests` and confirm it passes across all frameworks and browsers.
 
-The plain HTML and Astro test pages are generated from your examples. For interactive components, add the React, Solid and Svelte test pages by hand under `frontend/src/pages/test/`. The [modal component](/frontend/src/content/components/modal/) is a full worked example.
+The plain HTML test pages are generated from your examples. For interactive components, add the React, Solid and Svelte test pages by hand under `frontend/src/pages/test/`. The [modal component](/frontend/src/content/components/modal/) is a full worked example.
 
 ## Modifying a component
 
@@ -146,9 +146,9 @@ Name each spec file `*.a11y.spec.ts`, `*.behaviour.spec.ts` or `*.snapshots.spec
 
 #### Test pages
 
-Each test runs against one page per framework: plain HTML, Astro, React, Solid and Svelte. They live at `/test/<component>/<variant>/<framework>`.
+Each test runs against one page per framework: plain HTML, React, Solid and Svelte. They live at `/test/<component>/<variant>/<framework>`.
 
-- The HTML and Astro pages are generated from your examples (see [Adding a component](#adding-a-component)).
+- The HTML pages are generated from your examples (see [Adding a component](#adding-a-component)).
 - The React, Solid and Svelte pages are written by hand as `.astro` files under `frontend/src/pages/test/<component>/[variant]/`.
 
 Then write a `*-pages.ts` helper in `tests-e2e/tests/<component>/`. It lists the pages to test and holds any shared actions the specs reuse:
@@ -213,10 +213,6 @@ This drives the component on each framework's test page and checks it behaves th
       </TableBody>
   </Table>
   ```
-- Web components replace themselves with GOV.UK markup when they load ([decision 0013](/docs/architecture/decisions/0013-web-components-replace-themselves-in-govuk-markup.md)), except reactive non-GOV.UK components, which keep their `iai-*` tag so they can update ([decision 0014](/docs/architecture/decisions/0014-reactive-non-govuk-web-components-keep-their-own-tag.md)). The [chart component](/packages/web-components/src/chart/Chart.ts) is an example. For these:
-    - add the BEM classes to the `iai-*` tag itself and render the same content inside it as the HTML example
-    - add a `display` rule for the tag in its SCSS, because custom elements are inline by default
-    - add the component to `KEEPS_HOST` in `tests-unit/src/match-iai-expected-html-helpers/expected.ts`, so its web component examples are compared with the HTML examples without the outer tag name
 
 ## Releases
 
