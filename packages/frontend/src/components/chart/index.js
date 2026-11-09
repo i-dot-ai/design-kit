@@ -132,12 +132,16 @@ const lineFor = (th, i) => {
     return LINE_STYLES[style in LINE_STYLES ? style : DEFAULT_LINE_ORDER[i % DEFAULT_LINE_ORDER.length]];
 };
 
-function readTable(table, variant) {
+function readTable(table, variant, showNullValuesAsZero) {
     const headers = Array.from(table.querySelectorAll("thead th")).slice(1);
     const rows = Array.from(table.querySelectorAll("tbody tr"));
     const labels = rows.map((row) => row.cells[0].textContent.trim());
     // A data-value attribute beats the text, so cells can show a value the text cannot be read back from.
-    const column = (i) => rows.map((row) => parseValue(row.cells[i + 1]?.dataset.value ?? row.cells[i + 1]?.textContent ?? ""));
+    const column = (i) =>
+        rows.map((row) => {
+            const value = parseValue(row.cells[i + 1]?.dataset.value ?? row.cells[i + 1]?.textContent ?? "");
+            return showNullValuesAsZero && value == null ? 0 : value;
+        });
 
     if (PER_ROW.includes(variant)) {
         return {
@@ -306,23 +310,31 @@ function sliceLabels(font, formatValue) {
  * Draw a chart from its table. Idempotent: returns the existing chart if
  * already drawn. Call `.destroy()` on the result before redrawing.
  * @param {HTMLElement} el
- * @param {{ format?: (value: number) => string }} [options] - `format` replaces
+ * @param {{ format?: (value: number) => string, showNullValuesAsZero?: boolean }} [options] - `format` replaces
  * the default en-GB number formatting wherever values are shown. Without it,
  * the chart's `data-iai-chart-format` Intl.NumberFormat options are used.
+ * `showNullValuesAsZero` plots `null` values as 0, keeping a line unbroken; the table still shows –.
  * @returns {Chart | undefined}
  */
-export function initChart(el, { format: formatValue } = {}) {
+export function initChart(el, { format: formatValue, showNullValuesAsZero } = {}) {
     if (!el) return undefined;
     if (el.iaiChart) {
-        // initAllCharts may have drawn it first without the caller's format; redraw with it.
-        if (!formatValue || el.iaiChart.$iaiFormat === formatValue) return el.iaiChart;
+        // initAllCharts may have drawn it first without the caller's options; redraw with them.
+        if (
+            (!formatValue || el.iaiChart.$iaiFormat === formatValue) &&
+            el.iaiChart.$iaiShowNulls === !!showNullValuesAsZero
+        )
+            return el.iaiChart;
         el.iaiChart.destroy();
     }
     const requestedFormat = formatValue;
+    const requestedShowNulls = showNullValuesAsZero;
     const table = el.querySelector("table");
     const variant = Object.keys(TYPES).find((t) => el.classList.contains(`${MODULE}--${t}`));
     if (!table || !variant) return undefined;
     formatValue ??= formatFromMarkup(el);
+    // Plain HTML and Astro set the flag as an empty attribute instead of an option.
+    showNullValuesAsZero ??= el.dataset.iaiChartShowNullValuesAsZero != null;
 
     const container = document.createElement("div");
     container.className = "iai-chart__canvas";
@@ -344,7 +356,7 @@ export function initChart(el, { format: formatValue } = {}) {
     // Line samples (not boxes) in the legend so dashed and dotted series are recognisable.
     const lineLegend = !perRow && TYPES[variant] !== "bar";
     const labelled = variant === "pie" || variant === "doughnut";
-    const data = readTable(table, variant);
+    const data = readTable(table, variant, showNullValuesAsZero);
     const legendItems = perRow ? data.labels.length : data.datasets.length;
     const chart = new Chart(canvas, {
         type: TYPES[variant],
@@ -412,6 +424,7 @@ export function initChart(el, { format: formatValue } = {}) {
     });
     el.iaiChart = chart;
     chart.$iaiFormat = requestedFormat;
+    chart.$iaiShowNulls = !!requestedShowNulls;
     return chart;
 }
 

@@ -29,9 +29,11 @@ interface Props extends Omit<HTMLAttributes<"div">, "title"> {
      * tooltips and in value labels. For example `{ style: "unit", unit: "minute" }`.
      */
     format?: Intl.NumberFormatOptions;
+    /** Plots `null` values as 0, keeping a line unbroken; the table still shows –. Intended for line and area charts. */
+    showNullValuesAsZero?: boolean;
 }
 
-const { variant, title, description, headingLevel = 3, data, format, class: className, ...rest } = Astro.props;
+const { variant, title, description, headingLevel = 3, data, format, showNullValuesAsZero, class: className, ...rest } = Astro.props;
 const Heading = `h${headingLevel}`;
 
 const classes = ["iai-chart", `iai-chart--${variant}`, className ?? ""].filter(Boolean).join(" ");
@@ -40,7 +42,13 @@ const firstColour = data.datasets[0]?.colour;
 const sliceColours = Array.isArray(firstColour) ? firstColour : [];
 ---
 
-<div class={classes} data-module="iai-chart" data-iai-chart-format={format ? JSON.stringify(format) : undefined} {...rest}>
+<div
+    class={classes}
+    data-module="iai-chart"
+    data-iai-chart-format={format ? JSON.stringify(format) : undefined}
+    data-iai-chart-show-null-values-as-zero={showNullValuesAsZero ? "" : undefined}
+    {...rest}
+>
     <Heading class="govuk-heading-m">{title}</Heading>
     {description && <p class="govuk-body iai-chart__description">{description}</p>}
     <Details>

@@ -18,10 +18,11 @@ type ChartInstance = ReturnType<typeof initChart>;
  * attribute, or with a function set as the `format` property, which wins.
  */
 export class IaiChart extends HTMLElement {
-    static observedAttributes = ["variant", "title", "description", "heading-level", "format"];
+    static observedAttributes = ["variant", "title", "description", "heading-level", "format", "show-null-values-as-zero"];
 
     #data: ChartData | undefined;
     #format: ((value: number) => string) | undefined;
+    #showNulls: boolean | undefined;
     #title = "";
     #chart: ChartInstance;
 
@@ -44,9 +45,19 @@ export class IaiChart extends HTMLElement {
         if (this.isConnected) this.#render();
     }
 
+    /** Plots `null` values as 0, keeping a line unbroken; the table still shows "–". Wins over the `show-null-values-as-zero` attribute when set. */
+    get showNullValuesAsZero(): boolean {
+        return this.#showNulls ?? this.hasAttribute("show-null-values-as-zero");
+    }
+
+    set showNullValuesAsZero(value: boolean | undefined) {
+        this.#showNulls = value;
+        if (this.isConnected) this.#render();
+    }
+
     connectedCallback() {
         // A page script can set these before the element is defined, which hides the setters; take them over.
-        const early = this as { data?: ChartData; format?: (value: number) => string };
+        const early = this as { data?: ChartData; format?: (value: number) => string; showNullValuesAsZero?: boolean };
         if (Object.hasOwn(this, "data")) {
             const data = early.data;
             delete early.data;
@@ -56,6 +67,11 @@ export class IaiChart extends HTMLElement {
             const format = early.format;
             delete early.format;
             this.#format = format;
+        }
+        if (Object.hasOwn(this, "showNullValuesAsZero")) {
+            const showNullValuesAsZero = early.showNullValuesAsZero;
+            delete early.showNullValuesAsZero;
+            this.#showNulls = showNullValuesAsZero;
         }
         this.#render();
     }
@@ -122,7 +138,10 @@ export class IaiChart extends HTMLElement {
         );
         // Charts on the page when initAllIAIDesignSystem() runs are drawn by it; initChart returns
         // that chart instead of drawing a second one, or redraws it if a format property is set.
-        this.#chart = initChart(this, { format: this.#format });
+        this.#chart = initChart(this, {
+            format: this.#format,
+            showNullValuesAsZero: this.#showNulls ?? this.hasAttribute("show-null-values-as-zero"),
+        });
     }
 
     // Intl.NumberFormat options from the format attribute, checked once here so a bad value logs one error

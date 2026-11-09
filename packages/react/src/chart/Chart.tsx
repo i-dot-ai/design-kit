@@ -24,10 +24,12 @@ type ChartProps = Omit<ComponentPropsWithoutRef<"div">, "children" | "title"> & 
     data: ChartData;
     /** Formats values in the table, on the axes, in tooltips and in value labels. Defaults to en-GB number formatting. */
     format?: (value: number) => string;
+    /** Plots `null` values as 0, keeping a line unbroken; the table still shows –. Intended for line and area charts. */
+    showNullValuesAsZero?: boolean;
     class?: string;
 };
 
-export default function Chart({ variant, title, description, headingLevel = 3, data, format, class: className, ...rest }: ChartProps) {
+export default function Chart({ variant, title, description, headingLevel = 3, data, format, showNullValuesAsZero, class: className, ...rest }: ChartProps) {
     const ref = useRef<HTMLDivElement>(null);
     const Heading = `h${headingLevel}` as const;
     const classes = ["iai-chart", `iai-chart--${variant}`, className ?? ""].filter(Boolean).join(" ");
@@ -42,9 +44,11 @@ export default function Chart({ variant, title, description, headingLevel = 3, d
     formatRef.current = format;
 
     useEffect(() => {
-        const chart = ref.current ? initChart(ref.current, { format: formatRef.current }) : undefined;
+        const chart = ref.current
+            ? initChart(ref.current, { format: formatRef.current, showNullValuesAsZero })
+            : undefined;
         return () => chart?.destroy();
-    }, [key, formatKey, variant, title, description, headingLevel]);
+    }, [key, formatKey, variant, title, description, headingLevel, showNullValuesAsZero]);
 
     return (
         <div ref={ref} className={classes} data-module="iai-chart" {...rest}>

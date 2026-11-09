@@ -1,5 +1,6 @@
 import { describe, it, expect, afterEach } from "vitest";
 import "@i-dot-ai-npm/component-library-web-components";
+import { initChart } from "@i-dot-ai-npm/component-library-frontend";
 import { KEEPS_HOST, renderedShapeIgnoringHost } from "../../../match-iai-expected-html-helpers/expected";
 import pieHtml from "@content/components/chart/examples/pie.html?raw";
 import doughnutHtml from "@content/components/chart/examples/doughnut.html?raw";
@@ -102,9 +103,10 @@ describe("Chart web component", () => {
     });
 
     it("takes data and format set before the element is defined", () => {
-        const el = document.createElement("iai-chart-early") as HTMLElement & { data?: unknown; format?: (v: number) => string };
-        el.data = { heading: "Month", labels: ["Jan"], datasets: [{ label: "2026", data: [900] }] };
+        const el = document.createElement("iai-chart-early") as HTMLElement & { data?: unknown; format?: (v: number) => string; showNullValuesAsZero?: boolean; iaiChart?: { data: { datasets: { data: unknown[] }[] } } };
+        el.data = { heading: "Month", labels: ["Jan", "Feb"], datasets: [{ label: "2026", data: [900, null] }] };
         el.format = (v) => `${v}s`;
+        el.showNullValuesAsZero = true;
         el.setAttribute("variant", "line");
         el.setAttribute("title", "t");
         document.body.append(el);
@@ -112,7 +114,9 @@ describe("Chart web component", () => {
         class Early extends (customElements.get("iai-chart") as CustomElementConstructor) {}
         customElements.define("iai-chart-early", Early);
         expect(el.querySelector("tbody td")?.textContent).toBe("900s");
+        expect(el.iaiChart?.data.datasets[0].data).toEqual([900, 0]);
         expect(Object.hasOwn(el, "data")).toBe(false);
+        expect(Object.hasOwn(el, "showNullValuesAsZero")).toBe(false);
     });
 
     it("logs a clear error and renders nothing for invalid JSON", () => {
@@ -126,5 +130,53 @@ describe("Chart web component", () => {
         } finally {
             console.error = original;
         }
+    });
+
+    function build() {
+        const el = document.createElement("div");
+        el.className = "iai-chart iai-chart--line";
+        el.innerHTML = "<h3>t</h3><table><thead><tr><th>Month</th><th>2026</th></tr></thead><tbody><tr><th>Jan</th><td>900</td></tr><tr><th>Feb</th><td>–</td></tr></tbody></table>";
+        document.body.append(el);
+        return el;
+    }
+
+    it("plots nulls as 0 with showNullValuesAsZero, keeping – in the table", () => {
+        const gaps = initChart(build());
+        const withZeros = build();
+        const zeroed = initChart(withZeros, { showNullValuesAsZero: true });
+        expect(gaps?.data.datasets[0].data as unknown[]).toEqual([900, null]);
+        expect(zeroed?.data.datasets[0].data as unknown[]).toEqual([900, 0]);
+        expect(withZeros.querySelector("tbody tr:last-child td")?.textContent).toBe("–");
+    });
+
+    it("plots nulls as 0 from the data attribute and stays idempotent across redraws", () => {
+        const el = build();
+        el.setAttribute("data-iai-chart-show-null-values-as-zero", "");
+        const first = initChart(el);
+        expect(first?.data.datasets[0].data as unknown[]).toEqual([900, 0]);
+        expect(initChart(el)).toBe(first);
+    });
+
+    it("plots nulls as 0 on <iai-chart> from the attribute or property", () => {
+        const data = { heading: "Month", labels: ["Jan", "Feb"], datasets: [{ label: "2026", data: [900, null] }] };
+        const byAttribute = mount(`<iai-chart variant="line" title="t" show-null-values-as-zero></iai-chart>`) as HTMLElement & { data: unknown; showNullValuesAsZero: boolean; iaiChart?: { data: { datasets: { data: unknown[] }[] } } };
+        byAttribute.data = data;
+        expect(byAttribute.showNullValuesAsZero).toBe(true);
+        const byProperty = mount(`<iai-chart variant="line" title="t"></iai-chart>`) as HTMLElement & { data: unknown; showNullValuesAsZero: boolean; iaiChart?: { data: { datasets: { data: unknown[] }[] } } };
+        byProperty.showNullValuesAsZero = true;
+        byProperty.data = data;
+        for (const el of [byAttribute, byProperty]) {
+            expect(el.iaiChart?.data.datasets[0].data).toEqual([900, 0]);
+            expect(el.querySelector("tbody tr:last-child td")?.textContent).toBe("–");
+        }
+    });
+
+    it("lets the property win over the show-null-values-as-zero attribute", () => {
+        const el = mount(`<iai-chart variant="line" title="t" show-null-values-as-zero></iai-chart>`) as HTMLElement & { data: unknown; showNullValuesAsZero: boolean; iaiChart?: { data: { datasets: { data: unknown[] }[] } } };
+        el.showNullValuesAsZero = false;
+        el.data = { heading: "Month", labels: ["Jan", "Feb"], datasets: [{ label: "2026", data: [900, null] }] };
+        expect(el.iaiChart?.data.datasets[0].data).toEqual([900, null]);
+        el.showNullValuesAsZero = true;
+        expect(el.iaiChart?.data.datasets[0].data).toEqual([900, 0]);
     });
 });

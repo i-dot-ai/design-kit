@@ -44,7 +44,7 @@ export type ChartData = {
         colour?: ChartColour | ChartColour[];
         /** Line and area charts only. If not set, series follow the order solid, dashed, dotted. */
         line?: "solid" | "dashed" | "dotted";
-        /** One value per label. `null` leaves a gap. */
+        /** One value per label. `null` leaves a gap (plotted as 0 with `showNullValuesAsZero`). */
         data: (number | null)[];
     }[];
 };
@@ -60,6 +60,8 @@ export type InitChartOptions = {
      * `data-iai-chart-format` Intl.NumberFormat options, then en-GB number formatting.
      */
     format?: (value: number) => string;
+    /** Plots `null` values as 0, keeping a line unbroken; the table still shows "–". Intended for line and area charts. */
+    showNullValuesAsZero?: boolean;
 };
 
 /**

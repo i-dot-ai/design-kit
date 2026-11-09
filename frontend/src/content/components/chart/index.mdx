@@ -137,6 +137,7 @@ Every chart includes its data as a table, under "Show data".
 | `headingLevel` | `1` to `6` | No | The title's heading level. Defaults to `3`. In web components, the `heading-level` attribute. |
 | `data` | object | Yes | The chart's data. See below. In web components, JSON in a `<script type="application/json">` inside the element. |
 | `format` | function, or `Intl.NumberFormat` options | No | Formats values in the table, on the axes, in tooltips and in value labels. In React, Svelte and Solid, a function that takes a value and returns text. In Astro, `Intl.NumberFormat` options. In web components, `Intl.NumberFormat` options as JSON in the `format` attribute, or a function set as the `format` property, which takes priority. |
+| `showNullValuesAsZero` | boolean | No | Plots `null` values as 0 so a line stays unbroken instead of leaving gaps. The data table still shows `–` for those values. Intended for line and area charts. In Astro and plain HTML, an empty `data-iai-chart-show-null-values-as-zero` attribute. In web components, the same attribute or a `showNullValuesAsZero` property, which takes priority when set. |
 
 ### `data`
 
@@ -168,5 +169,6 @@ In plain HTML, set the same options on the markup:
 | Slice colour | An attribute on the row header | `<th scope="row" data-iai-chart-colour="blue">` |
 | Line style | An attribute on the column header | `<th data-iai-chart-line="dashed">` |
 | Value format | `Intl.NumberFormat` options as JSON, on the outer `div` | `data-iai-chart-format='{"style":"unit","unit":"minute"}'` |
+| Null values as zero | An empty attribute on the outer `div` | `data-iai-chart-show-null-values-as-zero` |
 | Values | The table cells, as numbers | `<td>1,240</td>`. Use `–` or leave empty for a gap. If the text is not the number, add the number in a `data-value` attribute, for example `<td data-value="12.4">12.4 mins</td>`. |
 | Maximum width | The `--iai-chart-max-width` CSS variable, on the chart or a container, for pie and doughnut charts. Use `none` to remove the limit | `style="--iai-chart-max-width: 400px"` |
