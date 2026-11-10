@@ -13,6 +13,8 @@ export default function FileUpload(props: FileUploadProps) {
         ["govuk-file-upload", local.class ?? ""].filter(Boolean).join(" ");
 
     return (
-        <input class={classes()} type="file" {...rest} />
+        <div class="govuk-file-upload-wrapper" data-module="govuk-file-upload">
+            <input class={classes()} type="file" {...rest} />
+        </div>
     );
 }

@@ -8,6 +8,7 @@ export type FileUploadFieldData = {
     hint?: string;
     error?: string;
     describedBy?: string;
+    multiple?: boolean;
     expectedHtml: string;
 };
 
@@ -18,22 +19,31 @@ type FileUploadOptions = {
     hint?: { text?: string; html?: string };
     errorMessage?: { text?: string; html?: string };
     javascript?: boolean;
+    multiple?: boolean;
+    wrapperClasses?: string;
+    wrapperAttributes?: Record<string, string>;
+    chooseFilesButtonText?: string;
 };
 
 /**
- * Core file-upload fixtures only. The `enhanced` (JavaScript drag-and-drop) and
- * page-heading variants need markup our components do not expose, so they are
- * excluded.
+ * The components always render the enhanced markup (`govuk-file-upload-wrapper`
+ * with `data-module="govuk-file-upload"`), so only the `enhanced` fixtures can
+ * match. Variants needing markup our components do not expose — wrapper
+ * classes/attributes, translations, page-heading labels, HTML hints/errors —
+ * are excluded.
  */
 export function fileUploadFixtures(): FileUploadFieldData[] {
     return loadFixtures("file-upload")
         .filter((fixture) => {
             const options = fixture.options as FileUploadOptions;
             return (
-                !options.javascript &&
+                options.javascript &&
                 !options.label?.isPageHeading &&
                 options.hint?.html === undefined &&
-                options.errorMessage?.html === undefined
+                options.errorMessage?.html === undefined &&
+                options.wrapperClasses === undefined &&
+                options.wrapperAttributes === undefined &&
+                options.chooseFilesButtonText === undefined
             );
         })
         .map((fixture) => {
@@ -52,6 +62,7 @@ export function fileUploadFixtures(): FileUploadFieldData[] {
                 hint: options.hint?.text,
                 error: options.errorMessage?.text,
                 describedBy: describedByIds.length ? describedByIds.join(" ") : undefined,
+                multiple: options.multiple === true,
                 expectedHtml: fixture.html,
             };
         });

@@ -8,6 +8,8 @@ export default function FileUpload({ class: className, ...rest }: FileUploadProp
     const classes = ["govuk-file-upload", className ?? ""].filter(Boolean).join(" ");
 
     return (
-        <input className={classes} type="file" {...rest} />
+        <div className="govuk-file-upload-wrapper" data-module="govuk-file-upload">
+            <input className={classes} type="file" {...rest} />
+        </div>
     );
 }
