@@ -1,131 +1,58 @@
 ---
 title: Design a prototype
-description: Use the i.AI prototype skill to design and build prototypes with AI assistance.
+description: Use AI to design prototypes that follow the i.AI Design Kit guidance.
 ---
 
-Use the i.AI Design Kit when you design a prototype to make sure it follows best practice. To do this you can either:
+Use the Design Kit when you design a prototype to make sure it follows best
+practice. To do this you can either:
 
-- point your coding agent to the [design-kit-repo](https://github.com/i-dot-ai/design-kit/tree/main/frontend/src/content)
-- use the Design Kit Prototype skill
+- point your coding agent to the
+  [design kit content](https://github.com/i-dot-ai/design-kit/tree/main/frontend/src/content)
+- use the community [Design Kit skills](/get-started/use-the-design-kit-skills)
 
-The Design Kit Prototype skill reads this site and creates a prototype as a single HTML file. You can use the skill with:
+## Prototype as a single HTML page
 
-- [Claude in your browser](#use-the-skill-with-claude-in-your-browser)
-- [your desktop](#use-the-skill-on-your-desktop)
-- the [GOV.UK Prototype Kit](#use-the-skill-with-the-govuk-prototype-kit)
+The `design-kit-html-page` skill builds a prototype as a single self-contained
+HTML file, which you can open in your browser and share. It uses the guidance
+from the `read-design-kit` skill, so install both.
 
-## Use the skill with Claude in your browser
+1. [Install the skills in OpenCode](/get-started/use-the-design-kit-skills).
+2. Start a new OpenCode conversation and mention both skills in your message
+   with <code class="app-code">@read-design-kit</code> and
+   <code class="app-code">@design-kit-html-page</code>, for example:
 
-To add the skill to Claude:
+   <CodeBlock collection="get-started" component="design-a-prototype" code="./examples/skill-command.sh" />
 
-1. <a
-    class="govuk-link"
-    href="/downloads/design-kit-prototype-skill.zip"
-    download="design-kit-prototype-skill.zip">Download the skill file</a>.
-2. Go to [Claude.ai](https://claude.ai).
-3. In the sidebar, select **Customize**.
-4. Select **+ Add**.
-5. Select **Upload skill**.
-6. Select the file you downloaded.
-7. Select **Save**.
+3. The agent reads the latest guidance from this site and builds the prototype
+   as a single HTML file. Open it in your browser to view it.
 
-<video
-  src="/images/add-skill-claude.webm"
-  aria-label="Screen recording of uploading the skill in Claude.ai: opening Customize, selecting Add, then Upload skill"
-  controls
-  autoplay
-  muted
-  loop
-  playsinline
-  style="width: 100%; height: auto"
->
-  Your browser does not support embedded videos.
-</video>
+Make one change at a time and save each version of the file so you can compare
+them. Find out how we used this approach to rebuild Parlex as a clickable
+prototype in [in practice](/in-practice/parlex).
 
-<div style="margin-top: 2rem"></div>
+## Use the Design Kit guidance in the GOV.UK Prototype Kit
 
-### Use the skill
+Use this if you work in the
+[GOV.UK Prototype Kit](https://prototype-kit.service.gov.uk/docs/) and want AI
+to create pages that look like GOV.UK. Use it for design and user research.
 
-To use the skill, open a new chat and type:
+To do this you need to have the Prototype Kit installed and OpenCode set up in
+your IDE. If you have not set up the kit yet, follow the
+[getting started guide](https://prototype-kit.service.gov.uk/docs/install/introduction)
+on the Prototype Kit site.
 
-<CodeBlock collection="get-started" component="design-a-prototype" code="./examples/skill-command.sh" />
+1. [Install the `read-design-kit` skill in OpenCode](/get-started/use-the-design-kit-skills).
+   A global install makes it available in your prototype project too.
+2. Start a new OpenCode conversation in your IDE, mention the skill in your
+   message with <code class="app-code">@read-design-kit</code> and ask for the
+   pages you need, for example:
 
-### Edit the skill
+   <CodeBlock collection="get-started" component="design-a-prototype" code="./examples/prototype-kit-command.sh" />
 
-To edit the skill:
+3. Preview your pages in your browser using the kit's local server. Open a
+   terminal in your project folder and run:
 
-1. Go to [Claude.ai](https://claude.ai).
-2. In the sidebar, select **Customize**.
-3. Select the **Yours** tab.
-4. Under Created by you, select **design-kit-prototype**.
-5. Select the **Contents** tab.
-6. Select **Edit**.
-7. Select **Save**.
+   <CodeBlock collection="get-started" component="design-a-prototype" code="./examples/npm-run-dev.sh" />
 
-If you think others would benefit from your changes, raise a pull request on GitHub and we will review them.
-
-
-## Use the skill on your desktop
-
-Use this approach if you're working with a coding agent like Claude Code or OpenCode. You can run these in:
-- an IDE such as VS Code or Cursor
-- your terminal directly
-
-Find how to [set up your coding agent using AI Gateway](https://llm-gateway-console.i.ai.gov.uk/tooling).
-
-### Add the skill
-
-1. Download the skill from the [i.AI skills repository](https://github.com/i-dot-ai/skills-and-projects/tree/main/skills).
-2. Ask the agent how to install the skill.
-
-### Use the skill
-
-To use the skill, open a new chat and type:
-
-<CodeBlock collection="get-started" component="design-a-prototype" code="./examples/skill-command.sh" />
-
-<br />
-
-## Use the skill with the GOV.UK Prototype Kit
-
-Use this if you work in the [GOV.UK Prototype Kit](https://prototype-kit.service.gov.uk/docs/) and want to use AI to create pages which look like GOV.UK. Use it for design and user research.
-
-### Before you start
-
-You need to have the GOV.UK Prototype Kit installed and running. If you have not set it up yet, follow the [getting started guide](https://prototype-kit.service.gov.uk/docs/install/introduction) on the Prototype Kit site.
-
-You also need Claude Code or OpenCode set up in your IDE.
-
-### Add the skill
-
-1. <a
-    class="govuk-link"
-    href="/downloads/design-kit-prototype-skill.zip"
-    download="design-kit-prototype-skill.zip">Download the skill file</a>.
-2. Unzip the file. You will get a design-kit-prototype folder containing a SKILL.md file.
-3. Open your prototype's root folder in your IDE. This is the folder you created with the Prototype Kit, the one containing package.json, app and node_modules.
-4. Open your IDE's terminal. The prompt should show your prototype's name. If it doesn't, use cd to move into your prototype's root folder.
-5. Create the skills folder and open it in Finder.
-
-   For Claude Code, run:
-
-   <CodeBlock collection="get-started" component="design-a-prototype" code="./examples/claude-skills-folder.sh" />
-
-   For OpenCode, run:
-
-   <CodeBlock collection="get-started" component="design-a-prototype" code="./examples/opencode-skills-folder.sh" />
-
-   The command will not print anything in the terminal, but a Finder window will open. The folder is hidden because its name starts with a dot, so you won't see it in your IDE's file list or in Finder.
-
-6. Copy the unzipped design-kit-prototype folder into the Finder window(s). 
-7. Start a new Claude Code or OpenCode conversation in your IDE. 
-
-### Use the skill
-
-Type <code class="app-code">/design-kit-prototype</code> to trigger the skill. The skill will generate pages inside your prototype kit project, which you can preview in your browser using the kit's local server.
-
-To run the local server, open a terminal in your project folder and run:
-
-<CodeBlock collection="get-started" component="design-a-prototype" code="./examples/npm-run-dev.sh" /> 
-
-Then go to [http://localhost:3000](http://localhost:3000) in your browser to preview your prototype.
+Then go to [http://localhost:3000](http://localhost:3000) in your browser to
+preview your prototype.
