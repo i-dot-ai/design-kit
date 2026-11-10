@@ -21,6 +21,7 @@ export function renderFileUpload(field: FileUploadFieldData): ReactNode {
                 name={field.inputName}
                 class={field.error ? "govuk-file-upload--error" : undefined}
                 aria-describedby={field.describedBy}
+                multiple={field.multiple}
             />
         </FormGroup>
     );

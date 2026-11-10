@@ -23,5 +23,6 @@
         name={field.inputName}
         class={field.error ? "govuk-file-upload--error" : ""}
         aria-describedby={field.describedBy}
+        multiple={field.multiple}
     />
 </FormGroup>

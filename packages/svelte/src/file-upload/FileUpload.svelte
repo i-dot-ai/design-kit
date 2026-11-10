@@ -12,4 +12,6 @@
     );
 </script>
 
-<input class={classes} type="file" {...rest} />
+<div class="govuk-file-upload-wrapper" data-module="govuk-file-upload">
+    <input class={classes} type="file" {...rest} />
+</div>
