@@ -34,8 +34,7 @@ pnpm lint      # run ESLint
 - `src/layouts/` — page layouts for each section of the site.
 - `src/components/docs/` — components used to render the documentation.
 - `src/components/in-practice/` — the timeline, before and after, and live prototype components used in In practice stories.
-- `scripts/` — build tooling (component page and example generation, skill packaging).
-- `.agents/skills/` — AI-agent skills published with the site.
+- `scripts/` — build tooling (component page and example generation).
 
 See the repository [README](../README.md) and [CONTRIBUTING](../CONTRIBUTING.md)
 for the wider project and the component authoring workflow.
