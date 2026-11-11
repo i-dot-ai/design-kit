@@ -34,7 +34,7 @@ const govukClasses = {
   tr: 'govuk-table__row',
   th: 'govuk-table__header',
   td: 'govuk-table__cell',
-  code: 'iai-code-text',
+  code: 'app-code',
   img: 'iai-docs-image',
 };
 
