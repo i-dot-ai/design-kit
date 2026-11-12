@@ -3,6 +3,7 @@ import type { ComponentType } from "react";
 import { renderReact } from "../../../render/react";
 import { renderedShape } from "../../../match-iai-expected-html-helpers/expected";
 import Line from "@content/components/chart/examples/line.react";
+import LineGrid from "@content/components/chart/examples/line-grid.react";
 import LineFormat from "@content/components/chart/examples/line-format-function.react";
 import LineColour from "@content/components/chart/examples/line-colour.react";
 import LineStyle from "@content/components/chart/examples/line-style.react";
@@ -13,6 +14,7 @@ import BarDescription from "@content/components/chart/examples/bar-description.r
 import Pie from "@content/components/chart/examples/pie.react";
 import Doughnut from "@content/components/chart/examples/doughnut.react";
 import lineHtml from "@content/components/chart/examples/line.html?raw";
+import lineGridHtml from "@content/components/chart/examples/line-grid.html?raw";
 import lineFormatHtml from "@content/components/chart/examples/line-format-function.html?raw";
 import lineColourHtml from "@content/components/chart/examples/line-colour.html?raw";
 import lineStyleHtml from "@content/components/chart/examples/line-style.html?raw";
@@ -25,6 +27,7 @@ import doughnutHtml from "@content/components/chart/examples/doughnut.html?raw";
 
 const cases: [string, ComponentType<Record<string, unknown>>, string][] = [
     ["line", Line, lineHtml],
+    ["line-grid", LineGrid, lineGridHtml],
     ["line-format-function", LineFormat, lineFormatHtml],
     ["line-colour", LineColour, lineColourHtml],
     ["line-style", LineStyle, lineStyleHtml],

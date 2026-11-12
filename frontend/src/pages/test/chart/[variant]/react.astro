@@ -2,6 +2,7 @@
 // test/chart/[variant]/react.astro
 import Layout from "@layouts/TestLayout.astro";
 import Line from "../../../../content/components/chart/examples/line.react.tsx";
+import LineGrid from "../../../../content/components/chart/examples/line-grid.react.tsx";
 import LineFormat from "../../../../content/components/chart/examples/line-format-function.react.tsx";
 import Area from "../../../../content/components/chart/examples/area.react.tsx";
 import Bar from "../../../../content/components/chart/examples/bar.react.tsx";
@@ -10,7 +11,7 @@ import Pie from "../../../../content/components/chart/examples/pie.react.tsx";
 import Doughnut from "../../../../content/components/chart/examples/doughnut.react.tsx";
 
 export function getStaticPaths() {
-    return ["line", "line-format-function", "area", "bar", "horizontal-bar", "pie", "doughnut"].map((variant) => ({
+    return ["line", "line-grid", "line-format-function", "area", "bar", "horizontal-bar", "pie", "doughnut"].map((variant) => ({
         params: { variant },
     }));
 }
@@ -20,6 +21,7 @@ const { variant } = Astro.params;
 
 <Layout>
     {variant === "line" && <Line client:load />}
+    {variant === "line-grid" && <LineGrid client:load />}
     {variant === "line-format-function" && <LineFormat client:load />}
     {variant === "area" && <Area client:load />}
     {variant === "bar" && <Bar client:load />}

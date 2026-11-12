@@ -31,6 +31,9 @@ export type ChartColour =
 
 export type ChartVariant = "line" | "area" | "bar" | "horizontal-bar" | "pie" | "doughnut";
 
+/** Which grid lines a chart draws. `horizontal` and `vertical` name the lines themselves, not the axes. */
+export type ChartGridLines = "horizontal" | "vertical" | "both" | "none";
+
 export type ChartHeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 /** Chart data, shaped like Chart.js's `data`. */
@@ -62,6 +65,8 @@ export type InitChartOptions = {
     format?: (value: number) => string;
     /** Plots `null` values as 0, keeping a line unbroken; the table still shows "–". Intended for line and area charts. */
     showNullValuesAsZero?: boolean;
+    /** Which grid lines to draw. Defaults to the lines along the value axis: horizontal on line, area and bar charts, vertical on horizontal-bar. */
+    gridLines?: ChartGridLines;
 };
 
 /**

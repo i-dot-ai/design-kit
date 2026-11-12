@@ -4,7 +4,7 @@ import { createEffect, For, onCleanup, Show, splitProps } from "solid-js";
 import { Dynamic } from "solid-js/web";
 import type { JSX } from "solid-js";
 import { initChart, formatChartValue } from "@i-dot-ai-npm/component-library-frontend";
-import type { ChartData, ChartHeadingLevel, ChartVariant } from "@i-dot-ai-npm/component-library-frontend";
+import type { ChartData, ChartGridLines, ChartHeadingLevel, ChartVariant } from "@i-dot-ai-npm/component-library-frontend";
 import Details from "../details/Details";
 import DetailsSummary from "../details/DetailsSummary";
 import DetailsText from "../details/DetailsText";
@@ -29,11 +29,13 @@ type ChartProps = Omit<JSX.IntrinsicElements["div"], "children" | "title"> & {
     format?: (value: number) => string;
     /** Plots `null` values as 0, keeping a line unbroken; the table still shows –. Intended for line and area charts. */
     showNullValuesAsZero?: boolean;
+    /** Which grid lines to draw. Defaults to the lines along the value axis: horizontal on line, area and bar charts, vertical on horizontal-bar. */
+    gridLines?: ChartGridLines;
     class?: string;
 };
 
 export default function Chart(props: ChartProps) {
-    const [local, rest] = splitProps(props, ["variant", "title", "description", "headingLevel", "data", "format", "showNullValuesAsZero", "class"]);
+    const [local, rest] = splitProps(props, ["variant", "title", "description", "headingLevel", "data", "format", "showNullValuesAsZero", "gridLines", "class"]);
     let el: HTMLDivElement | undefined;
 
     const classes = () =>
@@ -50,11 +52,12 @@ export default function Chart(props: ChartProps) {
         // Read before the delay below, which Solid does not track, so a new format redraws the chart.
         const format = local.format;
         const showNulls = local.showNullValuesAsZero;
+        const gridLines = local.gridLines;
         let chart: ReturnType<typeof initChart>;
         let cancelled = false;
         // Draw after Solid has updated the table.
         queueMicrotask(() => {
-            if (!cancelled && el) chart = initChart(el, { format, showNullValuesAsZero: showNulls });
+            if (!cancelled && el) chart = initChart(el, { format, showNullValuesAsZero: showNulls, gridLines });
         });
         onCleanup(() => {
             cancelled = true;
@@ -63,7 +66,7 @@ export default function Chart(props: ChartProps) {
     });
 
     return (
-        <div ref={el} class={classes()} data-module="iai-chart" {...rest}>
+        <div ref={el} class={classes()} data-module="iai-chart" data-iai-chart-grid-lines={local.gridLines} {...rest}>
             <Dynamic component={`h${local.headingLevel ?? 3}`} class="govuk-heading-m">
                 {local.title}
             </Dynamic>

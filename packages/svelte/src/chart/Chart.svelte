@@ -2,7 +2,7 @@
     import { tick } from "svelte";
     import type { HTMLAttributes } from "svelte/elements";
     import { initChart, formatChartValue } from "@i-dot-ai-npm/component-library-frontend";
-    import type { ChartData, ChartHeadingLevel, ChartVariant } from "@i-dot-ai-npm/component-library-frontend";
+    import type { ChartData, ChartGridLines, ChartHeadingLevel, ChartVariant } from "@i-dot-ai-npm/component-library-frontend";
     import Details from "../details/Details.svelte";
     import DetailsSummary from "../details/DetailsSummary.svelte";
     import DetailsText from "../details/DetailsText.svelte";
@@ -27,10 +27,12 @@
         format?: (value: number) => string;
         /** Plots `null` values as 0, keeping a line unbroken; the table still shows –. Intended for line and area charts. */
         showNullValuesAsZero?: boolean;
+        /** Which grid lines to draw. Defaults to the lines along the value axis: horizontal on line, area and bar charts, vertical on horizontal-bar. */
+        gridLines?: ChartGridLines;
         class?: string;
     };
 
-    let { variant, title, description, headingLevel = 3, data, format, showNullValuesAsZero, class: className = "", ...rest }: Props = $props();
+    let { variant, title, description, headingLevel = 3, data, format, showNullValuesAsZero, gridLines, class: className = "", ...rest }: Props = $props();
 
     let el = $state<HTMLDivElement>();
 
@@ -44,11 +46,12 @@
         // Read before the delay below, which Svelte does not track, so a new format redraws the chart.
         const formatValue = format;
         const showNulls = showNullValuesAsZero;
+        const gridLinesValue = gridLines;
         let chart: ReturnType<typeof initChart>;
         let cancelled = false;
         // Draw after Svelte has updated the table.
         tick().then(() => {
-            if (!cancelled && el) chart = initChart(el, { format: formatValue, showNullValuesAsZero: showNulls });
+            if (!cancelled && el) chart = initChart(el, { format: formatValue, showNullValuesAsZero: showNulls, gridLines: gridLinesValue });
         });
         return () => {
             cancelled = true;
@@ -57,7 +60,7 @@
     });
 </script>
 
-<div bind:this={el} class={classes} data-module="iai-chart" {...rest}>
+<div bind:this={el} class={classes} data-module="iai-chart" data-iai-chart-grid-lines={gridLines} {...rest}>
     <svelte:element this={`h${headingLevel}`} class="govuk-heading-m">{title}</svelte:element>
     {#if description}
         <p class="govuk-body iai-chart__description">{description}</p>
