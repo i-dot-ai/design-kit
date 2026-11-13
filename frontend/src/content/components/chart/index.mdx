@@ -103,6 +103,8 @@ Formatting works differently in HTML. It takes [`Intl.NumberFormat` options](htt
 
 Line, area and bar charts show only horizontal grid lines by default, and horizontal bar charts only vertical ones: the grid lines follow the value axis.
 
+This is based on [guidance from the ONS on grid lines](https://service-manual.ons.gov.uk/data-visualisation/guidance/axes-and-gridlines#gridlines). which states that grid lines should not be used on time or for discrete categories. It is assumed that line graphs will have time values on the x axis and bar charts will have discrete categories. If this is not the case, you should update the grid lines to be on the relevant axis.
+
 Set `gridLines` to draw different lines. `horizontal` and `vertical` name the lines themselves, not the axes. In plain HTML, set `data-iai-chart-grid-lines` on the chart instead. The option is ignored on pie and doughnut charts. See the [component options](#component-options).
 
 <Example component="chart" optionsHref="#component-options" html="./examples/line-grid.html" react="./examples/line-grid.react.tsx" svelte="./examples/line-grid.svelte" solid="./examples/line-grid.solid.tsx" />
