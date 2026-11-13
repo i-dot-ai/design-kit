@@ -90,6 +90,8 @@ const LINE_COLOUR = CHART_COLOURS["black-tint-80"];
 const LINE_STYLES = { solid: undefined, dashed: [8, 4], dotted: [2, 3] };
 // The line style order, used for series without a line style.
 const DEFAULT_LINE_ORDER = ["solid", "dashed", "dotted"];
+// Values for the gridLines option and data-iai-chart-grid-lines attribute.
+const GRID_LINES = ["horizontal", "vertical", "both", "none"];
 
 // Two decimal places at most, unless the options set their own (merging both can be out of range and throw)
 // or are a currency, which has its own number of decimals.
@@ -175,19 +177,22 @@ function readTable(table, variant, showNullValuesAsZero) {
     };
 }
 
-function scalesFor(variant, font, formatValue) {
-    const grid = { color: LINE_COLOUR };
+function scalesFor(variant, font, formatValue, gridLines) {
     const ticks = { color: LABEL_COLOUR, font, callback: (value) => formatValue(Number(value)) };
+    // `horizontal` and `vertical` name the lines themselves, not the axes; the default is the lines along the value axis.
+    gridLines ??= variant === "horizontal-bar" ? "vertical" : "horizontal";
+    const xGrid = { color: LINE_COLOUR, display: gridLines === "vertical" || gridLines === "both" };
+    const yGrid = { color: LINE_COLOUR, display: gridLines === "horizontal" || gridLines === "both" };
     if (variant === "pie" || variant === "doughnut") return {};
     if (variant === "horizontal-bar") {
         return {
-            x: { beginAtZero: true, grid, ticks },
-            y: { grid, ticks: { color: LABEL_COLOUR, font } },
+            x: { beginAtZero: true, grid: xGrid, ticks },
+            y: { grid: yGrid, ticks: { color: LABEL_COLOUR, font } },
         };
     }
     return {
-        x: { grid, ticks: { color: LABEL_COLOUR, font } },
-        y: { beginAtZero: true, grid, ticks },
+        x: { grid: xGrid, ticks: { color: LABEL_COLOUR, font } },
+        y: { beginAtZero: true, grid: yGrid, ticks },
     };
 }
 
@@ -310,19 +315,28 @@ function sliceLabels(font, formatValue) {
  * Draw a chart from its table. Idempotent: returns the existing chart if
  * already drawn. Call `.destroy()` on the result before redrawing.
  * @param {HTMLElement} el
- * @param {{ format?: (value: number) => string, showNullValuesAsZero?: boolean }} [options] - `format` replaces
+ * @param {{ format?: (value: number) => string, showNullValuesAsZero?: boolean, gridLines?: string }} [options] - `format` replaces
  * the default en-GB number formatting wherever values are shown. Without it,
  * the chart's `data-iai-chart-format` Intl.NumberFormat options are used.
  * `showNullValuesAsZero` plots `null` values as 0, keeping a line unbroken; the table still shows –.
+ * `gridLines` names the grid lines to draw: "horizontal", "vertical", "both" or "none". Without it they
+ * follow the value axis: horizontal on line, area and bar charts, vertical on horizontal-bar charts.
  * @returns {Chart | undefined}
  */
-export function initChart(el, { format: formatValue, showNullValuesAsZero } = {}) {
+export function initChart(el, { format: formatValue, showNullValuesAsZero, gridLines } = {}) {
     if (!el) return undefined;
+    // Plain HTML sets the option as a data attribute instead.
+    gridLines ??= el.dataset.iaiChartGridLines;
+    if (gridLines != null && !GRID_LINES.includes(gridLines)) {
+        console.error(`iai-chart: data-iai-chart-grid-lines must be one of ${GRID_LINES.join(", ")}.`, gridLines);
+        gridLines = undefined;
+    }
     if (el.iaiChart) {
         // initAllCharts may have drawn it first without the caller's options; redraw with them.
         if (
             (!formatValue || el.iaiChart.$iaiFormat === formatValue) &&
-            el.iaiChart.$iaiShowNulls === !!showNullValuesAsZero
+            el.iaiChart.$iaiShowNulls === !!showNullValuesAsZero &&
+            (!gridLines || el.iaiChart.$iaiGridLines === gridLines)
         )
             return el.iaiChart;
         el.iaiChart.destroy();
@@ -374,7 +388,7 @@ export function initChart(el, { format: formatValue, showNullValuesAsZero } = {}
                           ? { left: c.$iaiSliceLabelRoom, right: c.$iaiSliceLabelRoom, top: font.size * 2, bottom: font.size * 2 }
                           : 0,
             },
-            scales: scalesFor(variant, font, formatValue),
+            scales: scalesFor(variant, font, formatValue, gridLines),
             plugins: {
                 legend: {
                     display: legendItems > 1,
@@ -425,6 +439,7 @@ export function initChart(el, { format: formatValue, showNullValuesAsZero } = {}
     el.iaiChart = chart;
     chart.$iaiFormat = requestedFormat;
     chart.$iaiShowNulls = !!requestedShowNulls;
+    chart.$iaiGridLines = gridLines;
     return chart;
 }
 

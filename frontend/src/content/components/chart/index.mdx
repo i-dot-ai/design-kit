@@ -18,6 +18,7 @@ This component is a wrapper around [Chart.js](https://www.chartjs.org/). This ha
 - [Changing the line style](#changing-the-line-style)
 - [Adding a description](#adding-a-description)
 - [Formatting values](#formatting-values)
+- [Changing the grid lines](#changing-the-grid-lines)
 - [Changing the size](#changing-the-size)
 - [Accessibility](#accessibility)
 - [Component options](#component-options)
@@ -98,6 +99,16 @@ By default, values are shown as en-GB numbers. Set `format` to show them another
 
 Formatting works differently in HTML. It takes [`Intl.NumberFormat` options](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#options), which can only show one unit, such as "62.1 mins", not "1h 2m 3s". This is why the HTML examples give their values in minutes. React, Svelte and Solid take a function, so they can show any format. If you need a format that `Intl.NumberFormat` cannot show, use one of the framework components.
 
+## Changing the grid lines
+
+Line, area and bar charts show only horizontal grid lines by default, and horizontal bar charts only vertical ones: the grid lines follow the value axis.
+
+This is based on [guidance from the ONS on grid lines](https://service-manual.ons.gov.uk/data-visualisation/guidance/axes-and-gridlines#gridlines). which states that grid lines should not be used on time or for discrete categories. It is assumed that line graphs will have time values on the x axis and bar charts will have discrete categories. If this is not the case, you should update the grid lines to be on the relevant axis.
+
+Set `gridLines` to draw different lines. `horizontal` and `vertical` name the lines themselves, not the axes. In plain HTML, set `data-iai-chart-grid-lines` on the chart instead. The option is ignored on pie and doughnut charts. See the [component options](#component-options).
+
+<Example component="chart" optionsHref="#component-options" html="./examples/line-grid.html" react="./examples/line-grid.react.tsx" svelte="./examples/line-grid.svelte" solid="./examples/line-grid.solid.tsx" />
+
 ## Changing the size
 
 Line, area, bar and horizontal bar charts fill the width of their container. Pie and doughnut charts are square, so they stop at 600px wide. You can change this maximum width, or remove it. See the [component options](#component-options).
@@ -138,6 +149,7 @@ Every chart includes its data as a table, under "Show data".
 | `data` | object | Yes | The chart's data. See below. |
 | `format` | function, or `Intl.NumberFormat` options | No | Formats values in the table, on the axes, in tooltips and in value labels. In React, Svelte and Solid, a function that takes a value and returns text. In HTML, `Intl.NumberFormat` options. |
 | `showNullValuesAsZero` | boolean | No | Plots `null` values as 0 so a line stays unbroken instead of leaving gaps. The data table still shows `–` for those values. Intended for line and area charts. In plain HTML, an empty `data-iai-chart-show-null-values-as-zero` attribute. |
+| `gridLines` | `"horizontal"`, `"vertical"`, `"both"` or `"none"` | No | Which grid lines to draw. `horizontal` and `vertical` name the lines themselves, not the axes. Defaults to the lines along the value axis: horizontal on line, area and bar charts, vertical on horizontal-bar. Ignored on pie and doughnut charts. In plain HTML, a `data-iai-chart-grid-lines` attribute. |
 
 ### `data`
 
@@ -170,5 +182,6 @@ In plain HTML, set the same options on the markup:
 | Line style | An attribute on the column header | `<th data-iai-chart-line="dashed">` |
 | Value format | `Intl.NumberFormat` options as JSON, on the outer `div` | `data-iai-chart-format='{"style":"unit","unit":"minute"}'` |
 | Null values as zero | An empty attribute on the outer `div` | `data-iai-chart-show-null-values-as-zero` |
+| Grid lines | An attribute on the outer `div` | `data-iai-chart-grid-lines="both"` |
 | Values | The table cells, as numbers | `<td>1,240</td>`. Use `–` or leave empty for a gap. If the text is not the number, add the number in a `data-value` attribute, for example `<td data-value="12.4">12.4 mins</td>`. |
 | Maximum width | The `--iai-chart-max-width` CSS variable, on the chart or a container, for pie and doughnut charts. Use `none` to remove the limit | `style="--iai-chart-max-width: 400px"` |

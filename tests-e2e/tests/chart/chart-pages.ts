@@ -2,6 +2,7 @@ import { expect, type Page } from "@playwright/test";
 
 const VARIANTS = [
     { variant: "line", type: "line", title: "Applications received by month" },
+    { variant: "line-grid", type: "line", title: "Applications received by month" },
     { variant: "bar", type: "bar", title: "Applications received by region" },
     { variant: "horizontal-bar", type: "bar", title: "Applications received by region in 2026" },
     { variant: "pie", type: "pie", title: "How applications were submitted" },
@@ -29,7 +30,11 @@ type ChartData = {
 
 export async function readChart(page: Page) {
     return page.locator(".iai-chart").evaluate((el) => {
-        const chart = (el as HTMLElement & { iaiChart: { config: { type: string }; data: ChartData; scales: Record<string, unknown> } }).iaiChart;
-        return { type: chart.config.type, data: chart.data, scales: Object.keys(chart.scales) };
+        const chart = (el as HTMLElement & {
+            iaiChart: { config: { type: string }; data: ChartData; scales: Record<string, { options: { grid: { display: boolean } } }> };
+        }).iaiChart;
+        // Pie and doughnut charts draw no axes, so the grid is null there.
+        const grid = (axis: string) => (chart.scales[axis] ? chart.scales[axis].options.grid.display : null);
+        return { type: chart.config.type, data: chart.data, scales: Object.keys(chart.scales), grid: { x: grid("x"), y: grid("y") } };
     });
 }

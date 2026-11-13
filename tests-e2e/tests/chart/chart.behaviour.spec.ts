@@ -146,6 +146,31 @@ for (const target of pagesFor("horizontal-bar")) {
     });
 }
 
+for (const target of [...pagesFor("line"), ...pagesFor("area"), ...pagesFor("bar")]) {
+    test(`${target.variant}: draws only horizontal grid lines by default (${target.framework})`, async ({ page }) => {
+        await page.goto(target.path);
+        await waitForChart(page);
+        expect((await readChart(page)).grid).toEqual({ x: false, y: true });
+    });
+}
+
+for (const target of pagesFor("horizontal-bar")) {
+    test(`horizontal bar: draws only vertical grid lines by default (${target.framework})`, async ({ page }) => {
+        await page.goto(target.path);
+        await waitForChart(page);
+        expect((await readChart(page)).grid).toEqual({ x: true, y: false });
+    });
+}
+
+// line-grid examples set gridLines="both" (data-iai-chart-grid-lines in HTML), overriding the defaults.
+for (const target of pagesFor("line-grid")) {
+    test(`line grid: gridLines "both" restores both directions (${target.framework})`, async ({ page }) => {
+        await page.goto(target.path);
+        await waitForChart(page);
+        expect((await readChart(page)).grid).toEqual({ x: true, y: true });
+    });
+}
+
 for (const variant of ["pie", "doughnut"]) {
     test(`${variant}: labels slices directly and hides the legend, falling back to it when narrow`, async ({ page }) => {
         const legendShown = () =>
