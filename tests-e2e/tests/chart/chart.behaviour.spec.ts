@@ -176,6 +176,12 @@ for (const target of [...pagesFor("line"), ...pagesFor("area"), ...pagesFor("bar
         await waitForChart(page);
         expect((await readChart(page)).grid).toEqual({ x: false, y: true });
     });
+    test(`${target.variant}: tick marks follow ONS defaults (${target.framework})`, async ({ page }) => {
+        await page.goto(target.path);
+        await waitForChart(page);
+        const timeAxis = target.variant === "line" || target.variant === "area";
+        expect((await readChart(page)).ticks).toEqual(timeAxis ? { x: true, y: false } : { x: false, y: false });
+    });
 }
 
 for (const target of pagesFor("horizontal-bar")) {

@@ -87,7 +87,10 @@ export const CHART_COLOURS = {
 // The categorical order, used for series without a colour.
 const DEFAULT_ORDER = ["blue", "blue-shade-50", "magenta", "purple-tint-25", "teal-tint-25", "orange-tint-25"];
 const LABEL_COLOUR = CHART_COLOURS.black;
-const LINE_COLOUR = CHART_COLOURS["black-tint-80"];
+// ONS chart lines: light gridlines with a stronger zero line.
+// shortcut: these greys are ONS-specified, not exact tints of "black" — switch to palette tokens if the palette gains matching steps.
+const GRID_COLOUR = "#d9d9d9";
+const ZERO_LINE_COLOUR = "#b3b3b3";
 const LINE_STYLES = { solid: undefined, dashed: [8, 4], dotted: [2, 3] };
 // The line style order, used for series without a line style.
 const DEFAULT_LINE_ORDER = ["solid", "dashed", "dotted"];
@@ -179,11 +182,25 @@ function readTable(table, variant, showNullValuesAsZero) {
 }
 
 function scalesFor(variant, font, formatValue, gridLines) {
-    const ticks = { color: LABEL_COLOUR, font, callback: (value) => formatValue(Number(value)) };
+    // ONS allows 6–10 value-axis gridlines; we favour the lower half — fewer, rounder lines.
+    const ticks = { color: LABEL_COLOUR, font, callback: (value) => formatValue(Number(value)), maxTicksLimit: 8 };
     // `horizontal` and `vertical` name the lines themselves, not the axes; the default is the lines along the value axis.
     gridLines ??= variant === "horizontal-bar" ? "vertical" : "horizontal";
-    const xGrid = { color: LINE_COLOUR, display: gridLines === "vertical" || gridLines === "both" };
-    const yGrid = { color: LINE_COLOUR, display: gridLines === "horizontal" || gridLines === "both" };
+    // Category ticks hold their index as the value, so tick 0 there is the first category, not zero.
+    const zeroLine = (c) => c.tick && c.scale.type !== "category" && c.tick.value === 0;
+    const grid = {
+        color: (c) => (zeroLine(c) ? ZERO_LINE_COLOUR : GRID_COLOUR),
+        lineWidth: (c) => (zeroLine(c) ? 1.5 : 1),
+    };
+    // ONS: tick marks belong on the time axis (line/area x, assumed to be time) and on no other axis.
+    const timeAxis = variant === "line" || variant === "area";
+    const vertical = gridLines === "vertical" || gridLines === "both";
+    const horizontal = gridLines === "horizontal" || gridLines === "both";
+    // `drawOnChartArea` decouples ticks from grid lines, so the time axis gets ticks without lines.
+    const xGrid = timeAxis
+        ? { ...grid, display: true, drawOnChartArea: vertical, drawTicks: true }
+        : { ...grid, display: vertical, drawTicks: false };
+    const yGrid = { ...grid, display: horizontal, drawTicks: false };
     if (variant === "pie" || variant === "doughnut") return {};
     if (variant === "horizontal-bar") {
         return {

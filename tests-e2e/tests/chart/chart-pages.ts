@@ -32,10 +32,11 @@ type ChartData = {
 export async function readChart(page: Page) {
     return page.locator(".iai-chart").evaluate((el) => {
         const chart = (el as HTMLElement & {
-            iaiChart: { config: { type: string }; data: ChartData; scales: Record<string, { options: { grid: { display: boolean } } }> };
+            iaiChart: { config: { type: string }; data: ChartData; scales: Record<string, { options: { grid: { display: boolean; drawOnChartArea: boolean; drawTicks: boolean } } }> };
         }).iaiChart;
         // Pie and doughnut charts draw no axes, so the grid is null there.
-        const grid = (axis: string) => (chart.scales[axis] ? chart.scales[axis].options.grid.display : null);
-        return { type: chart.config.type, data: chart.data, scales: Object.keys(chart.scales), grid: { x: grid("x"), y: grid("y") } };
+        const grid = (axis: string) => (chart.scales[axis] ? chart.scales[axis].options.grid.drawOnChartArea : null);
+        const ticks = (axis: string) => (chart.scales[axis] ? chart.scales[axis].options.grid.drawTicks && chart.scales[axis].options.grid.display : null);
+        return { type: chart.config.type, data: chart.data, scales: Object.keys(chart.scales), grid: { x: grid("x"), y: grid("y") }, ticks: { x: ticks("x"), y: ticks("y") } };
     });
 }
