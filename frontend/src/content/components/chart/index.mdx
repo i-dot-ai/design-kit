@@ -10,6 +10,7 @@ This component is a wrapper around [Chart.js](https://www.chartjs.org/). This ha
 - [When not to use this component](#when-not-to-use-this-component)
 - [Line](#line)
 - [Bar](#bar)
+- [Stacked bar](#stacked-bar)
 - [Horizontal bar](#horizontal-bar)
 - [Pie](#pie)
 - [Doughnut](#doughnut)
@@ -45,6 +46,12 @@ A line chart shows how values change over an ordered range, such as time. The da
 A bar chart compares values across separate categories, such as regions. Bars always start at zero.
 
 <Example component="chart" optionsHref="#component-options" html="./examples/bar.html" react="./examples/bar.react.tsx" svelte="./examples/bar.svelte" solid="./examples/bar.solid.tsx" />
+
+## Stacked bar
+
+A stacked bar chart compares totals across categories while also showing how each total breaks down into parts, such as a region's applications split by channel. The tooltip shows each part and the stack's total. Keep it to a handful of series so the stacks stay readable; if the parts themselves matter more than the totals, use a line or grouped bar chart instead.
+
+<Example component="chart" optionsHref="#component-options" html="./examples/stacked-bar.html" react="./examples/stacked-bar.react.tsx" svelte="./examples/stacked-bar.svelte" solid="./examples/stacked-bar.solid.tsx" />
 
 ## Horizontal bar
 
@@ -131,7 +138,7 @@ Every chart includes its data as a table, under "Show data".
 
 | Option | Type | Required | Description |
 | --- | --- | --- | --- |
-| `variant` | `"line"`, `"area"`, `"bar"`, `"horizontal-bar"`, `"pie"` or `"doughnut"` | Yes | The type of chart. |
+| `variant` | `"line"`, `"area"`, `"bar"`, `"stacked-bar"`, `"horizontal-bar"`, `"pie"` or `"doughnut"` | Yes | The type of chart. |
 | `title` | text | Yes | Shown as the heading and the table caption. Screen readers read it as the chart's name. |
 | `description` | text | No | A short summary of what the chart shows. Shown under the title, and screen readers read it with the chart. |
 | `headingLevel` | `1` to `6` | No | The title's heading level. Defaults to `3`. |

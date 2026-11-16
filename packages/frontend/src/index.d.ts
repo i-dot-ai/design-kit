@@ -29,7 +29,7 @@ export type ChartColour =
     | "orange" | "orange-tint-25" | "orange-tint-50" | "orange-tint-80" | "orange-shade-25" | "orange-shade-50"
     | "black" | "black-tint-25" | "black-tint-50" | "black-tint-80";
 
-export type ChartVariant = "line" | "area" | "bar" | "horizontal-bar" | "pie" | "doughnut";
+export type ChartVariant = "line" | "area" | "bar" | "stacked-bar" | "horizontal-bar" | "pie" | "doughnut";
 
 export type ChartHeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 

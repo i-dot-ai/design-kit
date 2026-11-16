@@ -5,12 +5,13 @@ import Line from "../../../../content/components/chart/examples/line.svelte";
 import LineFormat from "../../../../content/components/chart/examples/line-format-function.svelte";
 import Area from "../../../../content/components/chart/examples/area.svelte";
 import Bar from "../../../../content/components/chart/examples/bar.svelte";
+import StackedBar from "../../../../content/components/chart/examples/stacked-bar.svelte";
 import HorizontalBar from "../../../../content/components/chart/examples/horizontal-bar.svelte";
 import Pie from "../../../../content/components/chart/examples/pie.svelte";
 import Doughnut from "../../../../content/components/chart/examples/doughnut.svelte";
 
 export function getStaticPaths() {
-    return ["line", "line-format-function", "area", "bar", "horizontal-bar", "pie", "doughnut"].map((variant) => ({
+    return ["line", "line-format-function", "area", "bar", "stacked-bar", "horizontal-bar", "pie", "doughnut"].map((variant) => ({
         params: { variant },
     }));
 }
@@ -23,6 +24,7 @@ const { variant } = Astro.params;
     {variant === "line-format-function" && <LineFormat client:load />}
     {variant === "area" && <Area client:load />}
     {variant === "bar" && <Bar client:load />}
+    {variant === "stacked-bar" && <StackedBar client:load />}
     {variant === "horizontal-bar" && <HorizontalBar client:load />}
     {variant === "pie" && <Pie client:load />}
     {variant === "doughnut" && <Doughnut client:load />}

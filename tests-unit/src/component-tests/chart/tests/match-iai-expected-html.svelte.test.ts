@@ -7,6 +7,7 @@ import LineColour from "@content/components/chart/examples/line-colour.svelte";
 import LineStyle from "@content/components/chart/examples/line-style.svelte";
 import Area from "@content/components/chart/examples/area.svelte";
 import Bar from "@content/components/chart/examples/bar.svelte";
+import StackedBar from "@content/components/chart/examples/stacked-bar.svelte";
 import HorizontalBar from "@content/components/chart/examples/horizontal-bar.svelte";
 import BarDescription from "@content/components/chart/examples/bar-description.svelte";
 import Pie from "@content/components/chart/examples/pie.svelte";
@@ -17,6 +18,7 @@ import lineColourHtml from "@content/components/chart/examples/line-colour.html?
 import lineStyleHtml from "@content/components/chart/examples/line-style.html?raw";
 import areaHtml from "@content/components/chart/examples/area.html?raw";
 import barHtml from "@content/components/chart/examples/bar.html?raw";
+import stackedBarHtml from "@content/components/chart/examples/stacked-bar.html?raw";
 import horizontalBarHtml from "@content/components/chart/examples/horizontal-bar.html?raw";
 import barDescriptionHtml from "@content/components/chart/examples/bar-description.html?raw";
 import pieHtml from "@content/components/chart/examples/pie.html?raw";
@@ -29,6 +31,7 @@ const cases: [string, never, string][] = [
     ["line-style", LineStyle, lineStyleHtml],
     ["area", Area, areaHtml],
     ["bar", Bar, barHtml],
+    ["stacked-bar", StackedBar, stackedBarHtml],
     ["horizontal-bar", HorizontalBar, horizontalBarHtml],
     ["bar-description", BarDescription, barDescriptionHtml],
     ["pie", Pie, pieHtml],

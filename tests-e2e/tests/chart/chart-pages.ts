@@ -3,6 +3,7 @@ import { expect, type Page } from "@playwright/test";
 const VARIANTS = [
     { variant: "line", type: "line", title: "Applications received by month" },
     { variant: "bar", type: "bar", title: "Applications received by region" },
+    { variant: "stacked-bar", type: "bar", title: "Applications received by region and channel" },
     { variant: "horizontal-bar", type: "bar", title: "Applications received by region in 2026" },
     { variant: "pie", type: "pie", title: "How applications were submitted" },
     { variant: "doughnut", type: "doughnut", title: "Application outcomes" },
