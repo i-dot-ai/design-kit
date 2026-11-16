@@ -29,7 +29,7 @@ export type ChartColour =
     | "orange" | "orange-tint-25" | "orange-tint-50" | "orange-tint-80" | "orange-shade-25" | "orange-shade-50"
     | "black" | "black-tint-25" | "black-tint-50" | "black-tint-80";
 
-export type ChartVariant = "line" | "area" | "bar" | "horizontal-bar" | "pie" | "doughnut";
+export type ChartVariant = "line" | "area" | "bar" | "stacked-bar" | "horizontal-bar" | "pie" | "doughnut";
 
 /** Which grid lines a chart draws. `horizontal` and `vertical` name the lines themselves, not the axes. */
 export type ChartGridLines = "horizontal" | "vertical" | "both" | "none";

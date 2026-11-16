@@ -1,0 +1,57 @@
+---
+title: Use the Design Kit skills
+description: Install the community AI agent skills that follow the i.AI Design Kit guidance in OpenCode.
+---
+
+> This page is temporary. We are writing a dedicated i.AI section on skills, and these instructions will move there.
+
+Agent skills for the Design Kit are community assets, kept in the
+[i.AI skills repository](https://github.com/i-dot-ai/skills-and-projects/tree/main/skills)
+. You install them in your coding agent, and they
+pull the latest guidance from this site.
+
+## @read-design-kit
+
+The basis skill is
+[@read-design-kit](https://github.com/i-dot-ai/skills-and-projects/tree/main/skills/read-design-kit).
+It fetches the latest Design Kit guidance and can be used on its own for any
+job that needs the guidance.
+
+![screenshot showing the @read-design-kit skill in an opencode terminal with instructions to migrate a repo](/images/Screenshot-opencode-read-design-kit.webp)
+
+## Task and output skills
+
+Use `@read-design-kit`, in conjunction with more specific task and output skills,
+which we predict will be more specific to you. Here are some examples that may 
+be useful to start with for your workflow:
+
+| Skill | What it does |
+| --- | --- |
+| [`@design-kit-html-page`](https://github.com/i-dot-ai/skills-and-projects/tree/main/skills/design-kit-html-page) | Builds a prototype as a single HTML file, using the guidance from `read-design-kit` |
+
+
+## Install a skill in OpenCode
+
+1. Clone the skills repository:
+
+   <CodeBlock collection="get-started" component="use-the-design-kit-skills" code="./examples/clone-skills.sh" />
+
+2. Copy the skill folders you want into OpenCode's global skills folder, so
+   they are available in any project:
+
+   <CodeBlock collection="get-started" component="use-the-design-kit-skills" code="./examples/copy-skills.sh" />
+
+3. Start a new OpenCode conversation and mention the skill in your message with
+   `@read-design-kit`, followed by what you need.
+   The agent fetches the latest guidance before starting the job.
+
+## Update a skill
+
+The skills are held centrally and change over time. Pull the latest changes in
+your clone of the skills repository and copy the skill folders again.
+
+## Suggest a new skill
+
+Skills are community assets. To suggest or improve one, raise it in the
+[i.AI skills repository](https://github.com/i-dot-ai/skills-and-projects/tree/main/skills)
+or contact us on [#iai-design-kit](https://i-dot-ai.slack.com/archives/C0C476E1D4H).

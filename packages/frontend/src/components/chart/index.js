@@ -23,6 +23,7 @@ const TYPES = {
     line: "line",
     area: "line",
     bar: "bar",
+    "stacked-bar": "bar",
     "horizontal-bar": "bar",
     pie: "pie",
     doughnut: "doughnut",
@@ -190,9 +191,10 @@ function scalesFor(variant, font, formatValue, gridLines) {
             y: { grid: yGrid, ticks: { color: LABEL_COLOUR, font } },
         };
     }
+    const stacked = variant === "stacked-bar";
     return {
-        x: { grid: xGrid, ticks: { color: LABEL_COLOUR, font } },
-        y: { beginAtZero: true, grid: yGrid, ticks },
+        x: { grid: xGrid, ticks: { color: LABEL_COLOUR, font }, stacked },
+        y: { beginAtZero: true, grid: yGrid, ticks, stacked },
     };
 }
 
@@ -364,6 +366,8 @@ export function initChart(el, { format: formatValue, showNullValuesAsZero, gridL
     el.querySelector("details")?.before(container);
 
     const perRow = PER_ROW.includes(variant);
+    // Stacked bars read as one stack per category: the tooltip lists every part with the total below it.
+    const stacked = variant === "stacked-bar";
     // Use the kit's font and 1rem size (set on the wrapper in CSS), so chart text follows the browser's font size.
     const style = getComputedStyle(container);
     const font = { family: style.fontFamily, size: parseFloat(style.fontSize) };
@@ -378,6 +382,7 @@ export function initChart(el, { format: formatValue, showNullValuesAsZero, gridL
         plugins: variant === "horizontal-bar" ? [barValueLabels(font, formatValue)] : labelled ? [sliceLabels(font, formatValue)] : [],
         options: {
             animation: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? false : undefined,
+            ...(stacked ? { interaction: { mode: "index", intersect: false } } : {}),
             color: LABEL_COLOUR,
             indexAxis: variant === "horizontal-bar" ? "y" : "x",
             layout: {
@@ -415,6 +420,13 @@ export function initChart(el, { format: formatValue, showNullValuesAsZero, gridL
                     callbacks: {
                         label: (item) =>
                             `${perRow ? item.label : item.dataset.label}: ${formatValue(item.raw)}`,
+                        ...(stacked
+                            ? {
+                                  footer: (items) =>
+                                      // The stacked total, so a bar reads without summing its parts.
+                                      `Total: ${formatValue(items.reduce((sum, item) => sum + (item.parsed.y ?? 0), 0))}`,
+                              }
+                            : {}),
                     },
                 },
             },

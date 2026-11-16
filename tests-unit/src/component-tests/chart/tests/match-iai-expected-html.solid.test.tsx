@@ -8,6 +8,7 @@ import LineColour from "@content/components/chart/examples/line-colour.solid";
 import LineStyle from "@content/components/chart/examples/line-style.solid";
 import Area from "@content/components/chart/examples/area.solid";
 import Bar from "@content/components/chart/examples/bar.solid";
+import StackedBar from "@content/components/chart/examples/stacked-bar.solid";
 import HorizontalBar from "@content/components/chart/examples/horizontal-bar.solid";
 import BarDescription from "@content/components/chart/examples/bar-description.solid";
 import Pie from "@content/components/chart/examples/pie.solid";
@@ -19,6 +20,7 @@ import lineColourHtml from "@content/components/chart/examples/line-colour.html?
 import lineStyleHtml from "@content/components/chart/examples/line-style.html?raw";
 import areaHtml from "@content/components/chart/examples/area.html?raw";
 import barHtml from "@content/components/chart/examples/bar.html?raw";
+import stackedBarHtml from "@content/components/chart/examples/stacked-bar.html?raw";
 import horizontalBarHtml from "@content/components/chart/examples/horizontal-bar.html?raw";
 import barDescriptionHtml from "@content/components/chart/examples/bar-description.html?raw";
 import pieHtml from "@content/components/chart/examples/pie.html?raw";
@@ -32,6 +34,7 @@ const cases: [string, never, string][] = [
     ["line-style", LineStyle, lineStyleHtml],
     ["area", Area, areaHtml],
     ["bar", Bar, barHtml],
+    ["stacked-bar", StackedBar, stackedBarHtml],
     ["horizontal-bar", HorizontalBar, horizontalBarHtml],
     ["bar-description", BarDescription, barDescriptionHtml],
     ["pie", Pie, pieHtml],

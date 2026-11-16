@@ -62,6 +62,30 @@ for (const target of pagesFor("bar")) {
     });
 }
 
+for (const target of pagesFor("stacked-bar")) {
+    test(`stacked-bar: stacks both axes and shows the stack total in the tooltip (${target.framework})`, async ({ page }) => {
+        await page.goto(target.path);
+        await waitForChart(page);
+        const { data } = await readChart(page);
+        expect(data.labels).toEqual(["North", "Midlands", "South", "Wales", "Scotland"]);
+        expect(data.datasets.map((d) => d.label)).toEqual(["Online", "Paper"]);
+        expect(data.datasets[0].data).toEqual([1590, 1260, 2010, 612, 846]);
+        const stacked = await page.locator(".iai-chart").evaluate((el) => {
+            const chart = (el as HTMLElement & {
+                iaiChart: {
+                    options: { scales: { x: { stacked?: boolean }; y: { stacked?: boolean } }; plugins: { tooltip: { callbacks: { footer?: (items: { parsed: { y: number | null } }[]) => string } } } };
+                };
+            }).iaiChart;
+            return {
+                axes: [chart.options.scales.x.stacked, chart.options.scales.y.stacked],
+                total: chart.options.plugins.tooltip.callbacks.footer?.([{ parsed: { y: 1590 } }, { parsed: { y: 1060 } }]),
+            };
+        });
+        expect(stacked.axes).toEqual([true, true]);
+        expect(stacked.total).toBe("Total: 2,650");
+    });
+}
+
 for (const target of pagesFor("pie")) {
     test(`pie: colours slices in the default order and draws no axes (${target.framework})`, async ({ page }) => {
         await page.goto(target.path);
