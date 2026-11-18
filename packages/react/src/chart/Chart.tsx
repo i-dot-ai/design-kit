@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import type { ComponentPropsWithoutRef } from "react";
 import { initChart, formatChartValue } from "@i-dot-ai-npm/component-library-frontend";
-import type { ChartData, ChartHeadingLevel, ChartVariant } from "@i-dot-ai-npm/component-library-frontend";
+import type { ChartData, ChartGridLines, ChartHeadingLevel, ChartVariant } from "@i-dot-ai-npm/component-library-frontend";
 import Details from "../details/Details";
 import DetailsSummary from "../details/DetailsSummary";
 import DetailsText from "../details/DetailsText";
@@ -26,10 +26,12 @@ type ChartProps = Omit<ComponentPropsWithoutRef<"div">, "children" | "title"> & 
     format?: (value: number) => string;
     /** Plots `null` values as 0, keeping a line unbroken; the table still shows –. Intended for line and area charts. */
     showNullValuesAsZero?: boolean;
+    /** Which grid lines to draw. Defaults to the lines along the value axis: horizontal on line, area and bar charts, vertical on horizontal-bar. */
+    gridLines?: ChartGridLines;
     class?: string;
 };
 
-export default function Chart({ variant, title, description, headingLevel = 3, data, format, showNullValuesAsZero, class: className, ...rest }: ChartProps) {
+export default function Chart({ variant, title, description, headingLevel = 3, data, format, showNullValuesAsZero, gridLines, class: className, ...rest }: ChartProps) {
     const ref = useRef<HTMLDivElement>(null);
     const Heading = `h${headingLevel}` as const;
     const classes = ["iai-chart", `iai-chart--${variant}`, className ?? ""].filter(Boolean).join(" ");
@@ -45,13 +47,13 @@ export default function Chart({ variant, title, description, headingLevel = 3, d
 
     useEffect(() => {
         const chart = ref.current
-            ? initChart(ref.current, { format: formatRef.current, showNullValuesAsZero })
+            ? initChart(ref.current, { format: formatRef.current, showNullValuesAsZero, gridLines })
             : undefined;
         return () => chart?.destroy();
-    }, [key, formatKey, variant, title, description, headingLevel, showNullValuesAsZero]);
+    }, [key, formatKey, variant, title, description, headingLevel, showNullValuesAsZero, gridLines]);
 
     return (
-        <div ref={ref} className={classes} data-module="iai-chart" {...rest}>
+        <div ref={ref} className={classes} data-module="iai-chart" data-iai-chart-grid-lines={gridLines} {...rest}>
             <Heading className="govuk-heading-m">{title}</Heading>
             {description && <p className="govuk-body iai-chart__description">{description}</p>}
             <Details>
