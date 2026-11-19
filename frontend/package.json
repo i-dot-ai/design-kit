@@ -16,7 +16,7 @@
     "@astrojs/node": "^11.1.7",
     "@astrojs/react": "^7.0.1",
     "@astrojs/solid-js": "^7.0.2",
-    "@astrojs/svelte": "^9.0.1",
+    "@astrojs/svelte": "^9.1.2",
     "@i-dot-ai-npm/component-library-frontend": "workspace:*",
     "@i-dot-ai-npm/component-library-react": "workspace:*",
     "@i-dot-ai-npm/component-library-solid": "workspace:*",
