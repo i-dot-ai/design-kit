@@ -9,6 +9,7 @@ overrides:
   '@types/react-dom': 19.3.0
   react: 19.3.0
   react-dom: 19.3.0
+  seroval-plugins@1: 1.7.5
 
 importers:
 
@@ -3907,9 +3908,9 @@ packages:
     engines: {node: '>=20.0'}
     hasBin: true
 
-  seroval-plugins@1.6.9:
-    resolution: {integrity: sha512-kiDK/Tb8IWZ61WEU8pA2PDmAuw37gKph9Y77OZlD56mg0Y2g0Bg7gZ1HeHhs5d40w+nRoUq/wj08V26ilbez9g==}
-    engines: {node: '>=10'}
+  seroval-plugins@1.7.5:
+    resolution: {integrity: sha512-Sa/CqIa3cg8WJ+xI1PDDbwArdgRvVvJxQT64pF9Vjfqjp8LK/fACeHurASUaJmF1I/g+40RDBWTR+H0w8UyzWQ==}
+    engines: {node: '>=20'}
     peerDependencies:
       seroval: ^1.0
 
@@ -4143,8 +4144,8 @@ packages:
   undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
 
-  undici@8.11.2:
-    resolution: {integrity: sha512-u4UB2/IrKdU6lFxumHmmo1a3fCQO5tzQllRorfoRS63txhrB7xTpSn1PftwC4qEHkOaqP95fCWW4lJzwErwzhQ==}
+  undici@8.12.4:
+    resolution: {integrity: sha512-8Mx+uNKKER2bA4AdtedkqRbwUCIJFr2nJckXRe5yrDqzePqwLP7VNcctN8/XdmDSbF7mS+jJKIszlL+vbam1VA==}
     engines: {node: '>=22.19.0'}
 
   unified@11.0.5:
@@ -8544,7 +8545,7 @@ snapshots:
 
   sentry@0.45.0: {}
 
-  seroval-plugins@1.6.9(seroval@1.6.9):
+  seroval-plugins@1.7.5(seroval@1.6.9):
     dependencies:
       seroval: 1.6.9
 
@@ -8626,7 +8627,7 @@ snapshots:
     dependencies:
       csstype: 3.2.3
       seroval: 1.6.9
-      seroval-plugins: 1.6.9(seroval@1.6.9)
+      seroval-plugins: 1.7.5(seroval@1.6.9)
 
   solid-refresh@0.6.3(solid-js@1.9.17)(supports-color@8.1.1):
     dependencies:
@@ -8805,7 +8806,7 @@ snapshots:
 
   undici-types@6.21.0: {}
 
-  undici@8.11.2: {}
+  undici@8.12.4: {}
 
   unified@11.0.5:
     dependencies:
@@ -8822,7 +8823,7 @@ snapshots:
       css-tree: 3.2.1
       fnv1a-64: 0.1.2
       std-env: 4.3.0
-      undici: 8.11.2
+      undici: 8.12.4
 
   unist-util-find-after@5.0.0:
     dependencies:
