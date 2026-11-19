@@ -9,6 +9,7 @@ overrides:
   '@types/react-dom': 19.3.0
   react: 19.3.0
   react-dom: 19.3.0
+  seroval@1: 1.7.8
 
 importers:
 
@@ -3591,11 +3592,11 @@ packages:
     resolution: {integrity: sha512-kiDK/Tb8IWZ61WEU8pA2PDmAuw37gKph9Y77OZlD56mg0Y2g0Bg7gZ1HeHhs5d40w+nRoUq/wj08V26ilbez9g==}
     engines: {node: '>=10'}
     peerDependencies:
-      seroval: ^1.0
+      seroval: 1.7.8
 
-  seroval@1.6.9:
-    resolution: {integrity: sha512-UeEzHwAK+yl0YLbsvROV1t5yMYEwZZ0CfKYxDvUgS2fO9Vxdf8djqVIB+OuVpuawRNPqw68LE1Du/GMsW2ZPqA==}
-    engines: {node: '>=10'}
+  seroval@1.7.8:
+    resolution: {integrity: sha512-jmb1u6heSPZW1xP9i95WLGrTjqh4gZWmv9x1BVoh1VXap5R/St2H9qZ3a9rPdYzAUKPi/FrKQ9K80oav5qEZnA==}
+    engines: {node: '>=20'}
 
   server-destroy@1.0.1:
     resolution: {integrity: sha512-rb+9B5YBIEzYcD6x2VKidaa+cqYBJQKnU4oe4E3ANwRRN56yk/ua1YCJT1n21NTS8w6CcOclAKNP3PhdCXKYtQ==}
@@ -7844,11 +7845,11 @@ snapshots:
 
   sentry@0.45.0: {}
 
-  seroval-plugins@1.6.9(seroval@1.6.9):
+  seroval-plugins@1.6.9(seroval@1.7.8):
     dependencies:
-      seroval: 1.6.9
+      seroval: 1.7.8
 
-  seroval@1.6.9: {}
+  seroval@1.7.8: {}
 
   server-destroy@1.0.1: {}
 
@@ -7914,8 +7915,8 @@ snapshots:
   solid-js@1.9.17:
     dependencies:
       csstype: 3.2.3
-      seroval: 1.6.9
-      seroval-plugins: 1.6.9(seroval@1.6.9)
+      seroval: 1.7.8
+      seroval-plugins: 1.6.9(seroval@1.7.8)
 
   solid-refresh@0.6.3(solid-js@1.9.17)(supports-color@8.1.1):
     dependencies:
