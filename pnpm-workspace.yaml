@@ -9,6 +9,7 @@ overrides:
   "@types/react-dom": "19.3.0"
   "react": "19.3.0"
   "react-dom": "19.3.0"
+  "seroval-plugins@1": "1.7.5"
 
 allowBuilds:
   esbuild: true
