@@ -9,6 +9,7 @@ overrides:
   '@types/react-dom': 19.3.0
   react: 19.3.0
   react-dom: 19.3.0
+  seroval-plugins@1: 1.7.5
 
 importers:
 
@@ -3587,9 +3588,9 @@ packages:
     engines: {node: '>=20.0'}
     hasBin: true
 
-  seroval-plugins@1.6.9:
-    resolution: {integrity: sha512-kiDK/Tb8IWZ61WEU8pA2PDmAuw37gKph9Y77OZlD56mg0Y2g0Bg7gZ1HeHhs5d40w+nRoUq/wj08V26ilbez9g==}
-    engines: {node: '>=10'}
+  seroval-plugins@1.7.5:
+    resolution: {integrity: sha512-Sa/CqIa3cg8WJ+xI1PDDbwArdgRvVvJxQT64pF9Vjfqjp8LK/fACeHurASUaJmF1I/g+40RDBWTR+H0w8UyzWQ==}
+    engines: {node: '>=20'}
     peerDependencies:
       seroval: ^1.0
 
@@ -7844,7 +7845,7 @@ snapshots:
 
   sentry@0.45.0: {}
 
-  seroval-plugins@1.6.9(seroval@1.6.9):
+  seroval-plugins@1.7.5(seroval@1.6.9):
     dependencies:
       seroval: 1.6.9
 
@@ -7915,7 +7916,7 @@ snapshots:
     dependencies:
       csstype: 3.2.3
       seroval: 1.6.9
-      seroval-plugins: 1.6.9(seroval@1.6.9)
+      seroval-plugins: 1.7.5(seroval@1.6.9)
 
   solid-refresh@0.6.3(solid-js@1.9.17)(supports-color@8.1.1):
     dependencies:
