@@ -11,6 +11,7 @@ overrides:
   "react-dom": "19.3.0"
   "seroval@1": "1.7.8"
   "seroval-plugins@1": "1.7.5"
+  "@astrojs/markdown-satteri@0": "0.4.10"
 
 allowBuilds:
   esbuild: true
