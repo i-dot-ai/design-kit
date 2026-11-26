@@ -5,6 +5,8 @@ export { default as AccordionSectionHeading } from "./accordion/AccordionSection
 export { default as AccordionSectionSummary } from "./accordion/AccordionSectionSummary.svelte";
 export { default as AccordionSection } from "./accordion/AccordionSection.svelte";
 export { default as Accordion } from "./accordion/Accordion.svelte";
+export { default as Avatar } from "./avatar/Avatar.svelte";
+export { default as AvatarGroup } from "./avatar-group/AvatarGroup.svelte";
 export { default as BackLink } from "./back-link/BackLink.svelte";
 export { default as BreadcrumbItem } from "./breadcrumbs/BreadcrumbItem.svelte";
 export { default as Breadcrumbs } from "./breadcrumbs/Breadcrumbs.svelte";

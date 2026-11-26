@@ -1,0 +1,70 @@
+@use "pkg:govuk-frontend/base" as *;
+
+.iai-avatar {
+    @include govuk-typography-common;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: govuk-functional-colour("brand");
+    color: govuk-functional-colour("inverse-text");
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.iai-avatar svg {
+    display: block;
+    width: 50%;
+    height: 50%;
+}
+
+.iai-avatar--small {
+    width: 32px;
+    height: 32px;
+    font-size: 0.875rem;
+}
+
+.iai-avatar--large {
+    width: 80px;
+    height: 80px;
+    font-size: 2.25rem;
+}
+
+
+
+.iai-avatar-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+
+    .govuk-body,
+    .govuk-body-s,
+    .govuk-body-l,
+    .govuk-heading-s,
+    .govuk-heading-m,
+    .govuk-heading-l,
+    .govuk-heading-xl {
+        margin: 0;
+    }
+}
+
+.iai-avatar-group--inverse .iai-avatar,
+.iai-avatar--inverse {
+    background-color: govuk-functional-colour("inverse-text");
+    color: govuk-functional-colour("brand");
+}
+
+.iai-avatar-group--inverse .govuk-body,
+.iai-avatar-group--inverse .govuk-body-s,
+.iai-avatar-group--inverse .govuk-body-l,
+.iai-avatar-group--inverse .govuk-heading-s,
+.iai-avatar-group--inverse .govuk-heading-m,
+.iai-avatar-group--inverse .govuk-heading-l,
+.iai-avatar-group--inverse .govuk-heading-xl {
+    color: govuk-functional-colour("inverse-text");
+
+}
