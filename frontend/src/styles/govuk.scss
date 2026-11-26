@@ -5,7 +5,7 @@
 // Brand values come from the package so the site and every consumer agree.
 // The site keeps its own font stack: it documents the kit rather than being a product on it.
 @use "@i-dot-ai-npm/component-library-frontend/settings" as iai;
-@use "govuk-frontend/dist/govuk/index.scss" as * with (
+@use "pkg:govuk-frontend" as * with (
   $govuk-font-family: (Inter, Helvetica, Arial, sans-serif),
   $govuk-functional-colours: iai.$iai-functional-colours);
 

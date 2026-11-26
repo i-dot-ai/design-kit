@@ -2,14 +2,16 @@
   import { ServiceNavigation, ServiceNavigationItem } from "@i-dot-ai-npm/component-library-svelte";
 </script>
 
-<ServiceNavigation inverse navigationId="inverse-navigation">
-  <ServiceNavigationItem href="#/1">
-    Navigation item 1
-  </ServiceNavigationItem>
-  <ServiceNavigationItem href="#/2">
-    Navigation item 2
-  </ServiceNavigationItem>
-  <ServiceNavigationItem href="#/3">
-    Navigation item 3
-  </ServiceNavigationItem>
-</ServiceNavigation>
+<div class="component-container--inverse">
+  <ServiceNavigation inverse navigationId="inverse-navigation">
+    <ServiceNavigationItem href="#/1">
+      Navigation item 1
+    </ServiceNavigationItem>
+    <ServiceNavigationItem href="#/2">
+      Navigation item 2
+    </ServiceNavigationItem>
+    <ServiceNavigationItem href="#/3">
+      Navigation item 3
+    </ServiceNavigationItem>
+  </ServiceNavigation>
+</div>

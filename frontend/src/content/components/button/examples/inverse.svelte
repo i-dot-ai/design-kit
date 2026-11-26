@@ -2,6 +2,8 @@
   import { Button, ButtonGroup } from "@i-dot-ai-npm/component-library-svelte";
 </script>
 
-<ButtonGroup>
+<div class="component-container--inverse">
+  <ButtonGroup>
     <Button inverse type="button">Primary action</Button>
-</ButtonGroup>
+  </ButtonGroup>
+</div>

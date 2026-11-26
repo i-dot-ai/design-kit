@@ -32,7 +32,6 @@ interface Props {
     /** Content collection the entry lives in. Defaults to "components". */
     collection?:
         "components" | "styles" | "decisions" | "get-started" | "patterns";
-    variant?: "default" | "inverse";
     /** Link to the page's options section, shown next to "Copy code". For example "#component-options". */
     optionsHref?: string;
 }
@@ -45,7 +44,6 @@ const {
     solid,
     component,
     collection = "components",
-    variant = "default",
     optionsHref,
 } = Astro.props;
 
@@ -67,11 +65,6 @@ const reactCode = resolve(react);
 const nextCode = resolve(next);
 const svelteCode = resolve(svelte);
 const solidCode = resolve(solid);
-
-const containerClass =
-    variant === "inverse"
-        ? "component-container--inverse"
-        : "component-container";
 
 const base = (
     html ||
@@ -117,7 +110,7 @@ if (solidCode)
     tabs.push({ lang: "solid", code: solidCode, label: "Solid", shiki: "tsx" });
 ---
 
-<div class={containerClass}>
+<div class="component-container">
     {
         testHref && (
             <div class="app-example__header">
