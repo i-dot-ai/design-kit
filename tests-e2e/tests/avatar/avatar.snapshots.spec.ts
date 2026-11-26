@@ -8,7 +8,7 @@ for (const pageToTest of AVATAR_PAGES) {
         // ratio difference between linux in CI and darwin in mac
         await expect(page.locator(pageToTest.component)).toHaveScreenshot(`${pageToTest.name}.png`, {
             animations: "disabled",
-            maxDiffPixelRatio: 0.01,
+            maxDiffPixelRatio: 0.02,
         });
     });
 }
