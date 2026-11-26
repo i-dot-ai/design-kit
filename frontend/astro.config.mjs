@@ -6,13 +6,25 @@ import mdx from '@astrojs/mdx';
 import rehypeAddClasses from 'rehype-add-classes';
 import tailwindcss from '@tailwindcss/vite';
 import { NodePackageImporter } from 'sass';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { realpathSync } from 'node:fs';
 import react from '@astrojs/react';
 import solid from '@astrojs/solid-js';
 import svelte from '@astrojs/svelte';
 
 
 const port = 4321;
+
+// pnpm links govuk-frontend separately into each package; point every pkg:govuk-frontend at one real copy so Sass loads it once.
+const govukDir = pathToFileURL(
+  realpathSync(fileURLToPath(new URL('./node_modules/govuk-frontend/dist/govuk/', import.meta.url))) + '/',
+);
+const govukRealpathImporter = {
+  findFileUrl(url) {
+    const match = url.match(/^pkg:govuk-frontend(?:\/(.*))?$/);
+    return match ? new URL(match[1] ?? 'index', govukDir) : null;
+  },
+};
 
 /*
  * Inject GOV.UK / i.AI classes into HTML rendered from Markdown/MDX content
@@ -85,7 +97,7 @@ export default defineConfig({
           // @ts-expect-error valid Vite/Sass option, missing from Astro's types
           api: 'modern-compiler',
           loadPaths: [fileURLToPath(new URL('./node_modules', import.meta.url))],
-          importers: [new NodePackageImporter()],
+          importers: [govukRealpathImporter, new NodePackageImporter()],
         },
       },
     },
