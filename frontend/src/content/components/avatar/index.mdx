@@ -1,0 +1,69 @@
+---
+name: Avatar
+status: new
+---
+
+## Default
+
+Show the person's full name next to the avatar wherever space allows.
+
+<Example optionsHref="#component-options" component="avatar" html="./examples/default.html" react="./examples/default.react.tsx" svelte="./examples/default.svelte" solid="./examples/default.solid.tsx" />
+
+## Small space
+
+If space does not allow the full name, for example on mobile, show the initials-only version.
+
+<Example optionsHref="#component-options" component="avatar" html="./examples/small-space.html" react="./examples/small-space.react.tsx" svelte="./examples/small-space.svelte" solid="./examples/small-space.solid.tsx" />
+
+## Fallback icon
+
+Show the person icon when no name is known, with a label beside it.
+
+<Example optionsHref="#component-options" component="avatar" html="./examples/icon.html" react="./examples/icon.react.tsx" svelte="./examples/icon.svelte" solid="./examples/icon.solid.tsx" />
+
+## Inverse
+
+Use the inverse variant on dark backgrounds. Wrap the avatar and name in a group with the `iai-avatar-group--inverse` modifier and show it on a dark surface — it flips the contained avatars and colours the name for the dark surface. For a single avatar without a name, use the `inverse` option.
+
+<Example optionsHref="#component-options" component="avatar" html="./examples/inverse.html" react="./examples/inverse.react.tsx" svelte="./examples/inverse.svelte" solid="./examples/inverse.solid.tsx" />
+
+## Multiple avatars
+
+Wrap avatars in the `AvatarGroup` component to place several in a row. In plain HTML, use a `div` with the `iai-avatar-group` class.
+
+<Example optionsHref="#component-options" component="avatar" html="./examples/multiple.html" react="./examples/multiple.react.tsx" svelte="./examples/multiple.svelte" solid="./examples/multiple.solid.tsx" />
+
+## Sizes
+
+Use the `small` and `large` options where the default medium size does not fit. The fallback icon scales with the size.
+
+<Example optionsHref="#component-options" component="avatar" html="./examples/sizes.html" react="./examples/sizes.react.tsx" svelte="./examples/sizes.svelte" solid="./examples/sizes.solid.tsx" />
+
+## When to use this component
+
+Use the avatar to represent a person in a compact way — beside their name in a list of users, a comment, a task assignee or an account header.
+
+The avatar is a locator, not a classifier: it points at the person, their name does the identifying. Show the full name next to it wherever space allows.
+
+The avatar is a familiar component, that users will know means a profile. It is therefore, easier for users to understand quickly that the link will be to a profile page.
+
+## When not to use this component
+
+Do not use the avatar in place of a name where there is space for one. Initials are not meaningful on their own, and people who share initials are not distinguishable from each other.
+
+Do not use it to distinguish users by colour. The avatar has one colour and an inverse so that colour never carries meaning — if a product needs to flag status or category, do that with text or a status component, not the avatar. This also enables us to ensure that appropriate contrast is there.
+
+## Component options
+
+These are the same for React, Svelte and Solid.
+
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `fullName` | text | No | The person's full name. The first letter of each of the first two words, uppercased, is shown as initials. |
+| `size` | text | No | `"small"` or `"large"`; the default is medium. Adds the `iai-avatar--small` or `iai-avatar--large` modifier. |
+| `inverse` | boolean | No | Adds the `iai-avatar--inverse` modifier, for use on dark backgrounds. |
+| `children` | node | No | Replaces the initials and fallback icon — your own logo, image or other content. |
+| `class` | text | No | Adds extra classes to the outer `span`. |
+
+The fallback icon is an inline SVG, so no icon library is needed in
+React, Solid or Svelte — the component draws it itself.

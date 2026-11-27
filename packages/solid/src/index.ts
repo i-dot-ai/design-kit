@@ -4,6 +4,8 @@ export { default as AccordionSectionHeading } from "./accordion/AccordionSection
 export { default as AccordionSectionSummary } from "./accordion/AccordionSectionSummary";
 export { default as AccordionSection } from "./accordion/AccordionSection";
 export { default as Accordion } from "./accordion/Accordion";
+export { default as Avatar } from "./avatar/Avatar";
+export { default as AvatarGroup } from "./avatar-group/AvatarGroup";
 export { default as BackLink } from "./back-link/BackLink";
 export { default as BreadcrumbItem } from "./breadcrumbs/BreadcrumbItem";
 export { default as Breadcrumbs } from "./breadcrumbs/Breadcrumbs";
