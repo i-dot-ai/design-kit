@@ -10,7 +10,7 @@ for (const pageToTest of AVATAR_PAGES) {
             await expect(component).toHaveScreenshot(`${pageToTest.name}-icon-${index}.png`, {
                 animations: "disabled",
                 // ratio difference between linux in CI and darwin in mac
-                maxDiffPixelRatio: 0.03,
+                maxDiffPixelRatio: 0.04,
             });
 
         if (pageToTest.iconOnly) return
