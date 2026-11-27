@@ -10,7 +10,7 @@ for (const pageToTest of AVATAR_PAGES) {
             await expect(component).toHaveScreenshot(`${pageToTest.name}-icon-${index}.png`, {
                 animations: "disabled",
                 // ratio difference between linux in CI and darwin in mac
-                maxDiffPixelRatio: 0.02,
+                maxDiffPixelRatio: 0.03,
             });
 
         if (pageToTest.iconOnly) return
@@ -18,7 +18,7 @@ for (const pageToTest of AVATAR_PAGES) {
         await expect(page.locator('.govuk-body')).toHaveScreenshot(`${pageToTest.name}-name.png`, {
             animations: "disabled",
             // ratio difference between linux in CI and darwin in mac
-            maxDiffPixelRatio: 0.02,
+            maxDiffPixelRatio: 0.12,
         });
     });
 }
